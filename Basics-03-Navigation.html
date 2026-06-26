@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basics 03 – Die Oberfläche | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:26px}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  figure{margin:20px 0 0}
+  .shot{width:100%;border:1px solid var(--line);border-radius:var(--radius);display:block}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:center}
+  .points{list-style:none;padding:0;margin:24px 0}
+  .points>li{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;margin-bottom:12px}
+  .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+    font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .points h3{margin:0 0 4px;font-size:16px;font-weight:700}
+  .points p{margin:0;color:var(--muted);font-size:15px}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker">Basics · 03</span>
+  <h1 id="t-h1">Die wichtigsten Punkte der Oberfläche</h1>
+  <p class="lead" id="t-lead">Ein kurzer Rundgang durch ComfyUI: wo du was findest und wie du dich auf der Arbeitsfläche bewegst.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">Basics</span>
+    <span class="chip" id="t-chip2">Orientierung</span>
+    <span class="chip" id="t-chip3">UI</span>
+  </div>
+
+  <p id="t-intro">Bevor wir den ersten Workflow bauen, lohnt sich ein Überblick. ComfyUI hat nur eine Handvoll Bereiche, die du wirklich kennen musst – der Rest erklärt sich von selbst.</p>
+
+  <figure>
+    <svg class="shot" viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="470" fill="#0f0f14"/>
+      <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+        <path d="M30 0H0V30" fill="none" stroke="#17171f" stroke-width="1"/>
+      </pattern>
+      <rect width="800" height="470" fill="url(#grid)"/>
+      <!-- top menu -->
+      <rect x="0" y="0" width="800" height="38" fill="#16161c"/>
+      <text x="16" y="24" fill="#c5c5cf" font-family="sans-serif" font-size="12" font-weight="700">Workflow</text>
+      <text x="92" y="24" fill="#9a9aa6" font-family="sans-serif" font-size="12">Edit</text>
+      <text x="140" y="24" fill="#9a9aa6" font-family="sans-serif" font-size="12">View</text>
+      <rect x="660" y="7" width="86" height="24" rx="6" fill="#ff3b3b"/>
+      <text x="703" y="24" fill="#fff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Manager</text>
+      <!-- sidebar -->
+      <rect x="0" y="38" width="46" height="432" fill="#13131a"/>
+      <rect x="11" y="56" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <rect x="11" y="90" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <rect x="11" y="124" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <!-- sample nodes -->
+      <rect x="120" y="150" width="130" height="90" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="120" y="150" width="130" height="22" rx="8" fill="#2a2a34"/>
+      <text x="130" y="166" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Load Checkpoint</text>
+      <circle cx="250" cy="200" r="4" fill="#b06fff"/>
+      <rect x="330" y="170" width="130" height="80" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="330" y="170" width="130" height="22" rx="8" fill="#2a2a34"/>
+      <text x="340" y="186" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">KSampler</text>
+      <circle cx="330" cy="216" r="4" fill="#b06fff"/>
+      <path d="M250 200 C 290 200 290 216 330 216" fill="none" stroke="#b06fff" stroke-width="2"/>
+      <!-- queue button -->
+      <rect x="610" y="410" width="160" height="44" rx="10" fill="#ff3b3b"/>
+      <text x="690" y="437" fill="#fff" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle">Queue Prompt</text>
+      <!-- callout markers -->
+      <circle cx="60" cy="19" r="13" fill="#fff"/><text x="60" y="24" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">1</text>
+      <circle cx="703" cy="19" r="13" fill="#fff"/><text x="703" y="24" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">2</text>
+      <circle cx="400" cy="320" r="13" fill="#fff"/><text x="400" y="325" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">3</text>
+      <circle cx="23" cy="68" r="13" fill="#fff"/><text x="23" y="73" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">4</text>
+      <circle cx="690" cy="432" r="13" fill="#fff"/><text x="690" y="437" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">5</text>
+    </svg>
+    <figcaption id="t-fig-c">Die ComfyUI-Oberfläche mit den fünf Bereichen, die du kennen solltest</figcaption>
+  </figure>
+
+  <ul class="points">
+    <li><span class="num">1</span><div>
+      <h3 id="t-p1-h">Menüleiste – Workflow laden &amp; speichern</h3>
+      <p id="t-p1-p">Oben links unter <code>Workflow</code> öffnest, speicherst und exportierst du Workflows als <code>.json</code>. Hier liegt auch der Zugriff auf Einstellungen.</p></div></li>
+    <li><span class="num">2</span><div>
+      <h3 id="t-p2-h">Manager-Button</h3>
+      <p id="t-p2-p">Öffnet den ComfyUI Manager (aus Teil 02) – zum Installieren von Custom Nodes, Modellen und für „Install Missing Custom Nodes".</p></div></li>
+    <li><span class="num">3</span><div>
+      <h3 id="t-p3-h">Canvas – die Arbeitsfläche</h3>
+      <p id="t-p3-p">Hier liegen deine Nodes. <strong>Verschieben:</strong> mit gedrückter Maustaste auf leere Fläche ziehen. <strong>Zoomen:</strong> Mausrad. <strong>Node hinzufügen:</strong> Doppelklick öffnet die Suche, oder Rechtsklick → <code>Add Node</code>.</p></div></li>
+    <li><span class="num">4</span><div>
+      <h3 id="t-p4-h">Seitenleiste</h3>
+      <p id="t-p4-p">Links die Panels für Queue/Verlauf, Modelle und (je nach Version) deine gespeicherten Workflows. Hier siehst du laufende und fertige Generierungen samt Ergebnis.</p></div></li>
+    <li><span class="num">5</span><div>
+      <h3 id="t-p5-h">Queue Prompt – ausführen</h3>
+      <p id="t-p5-p">Der wichtigste Button: Er stellt deinen Workflow in die Warteschlange und startet die Generierung. Das Ergebnis landet im Save-Image-Node und im Verlauf.</p></div></li>
+  </ul>
+
+  <div class="box note">
+    <span id="t-tip"><strong>Merke dir vor allem zwei Gesten:</strong> Mausrad zum Zoomen und Doppelklick für die Node-Suche. Damit navigierst du 90 % der Zeit.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <a class="next" href="Basics-04-Erster-Workflow.html">
+    <div>
+      <small id="t-next-s">Basics · 04</small>
+      <strong id="t-next-t">Der erste Workflow – dein erster Prompt</strong>
+    </div>
+    <span style="color:var(--accent);font-size:24px">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-h1":     {de:"Die wichtigsten Punkte der Oberfläche", en:"The Key Points of the Interface"},
+  "t-lead":   {de:"Ein kurzer Rundgang durch ComfyUI: wo du was findest und wie du dich auf der Arbeitsfläche bewegst.",
+               en:"A quick tour of ComfyUI: where to find what, and how to move around the canvas."},
+  "t-chip1":  {de:"Basics", en:"Basics"},
+  "t-chip2":  {de:"Orientierung", en:"Orientation"},
+  "t-chip3":  {de:"UI", en:"UI"},
+  "t-intro":  {de:"Bevor wir den ersten Workflow bauen, lohnt sich ein Überblick. ComfyUI hat nur eine Handvoll Bereiche, die du wirklich kennen musst – der Rest erklärt sich von selbst.",
+               en:"Before we build the first workflow, an overview pays off. ComfyUI has just a handful of areas you really need to know – the rest is self-explanatory."},
+  "t-fig-c":  {de:"Die ComfyUI-Oberfläche mit den fünf Bereichen, die du kennen solltest",
+               en:"The ComfyUI interface with the five areas you should know"},
+  "t-p1-h":   {de:"Menüleiste – Workflow laden &amp; speichern", en:"Menu bar – load &amp; save workflows"},
+  "t-p1-p":   {de:"Oben links unter <code>Workflow</code> öffnest, speicherst und exportierst du Workflows als <code>.json</code>. Hier liegt auch der Zugriff auf Einstellungen.",
+               en:"Top left under <code>Workflow</code> you open, save and export workflows as <code>.json</code>. Settings are accessible here too."},
+  "t-p2-h":   {de:"Manager-Button", en:"Manager button"},
+  "t-p2-p":   {de:"Öffnet den ComfyUI Manager (aus Teil 02) – zum Installieren von Custom Nodes, Modellen und für „Install Missing Custom Nodes\".",
+               en:"Opens the ComfyUI Manager (from part 02) – to install custom nodes, models and for \"Install Missing Custom Nodes\"."},
+  "t-p3-h":   {de:"Canvas – die Arbeitsfläche", en:"Canvas – the workspace"},
+  "t-p3-p":   {de:"Hier liegen deine Nodes. <strong>Verschieben:</strong> mit gedrückter Maustaste auf leere Fläche ziehen. <strong>Zoomen:</strong> Mausrad. <strong>Node hinzufügen:</strong> Doppelklick öffnet die Suche, oder Rechtsklick → <code>Add Node</code>.",
+               en:"This is where your nodes live. <strong>Pan:</strong> drag with the mouse button held on empty space. <strong>Zoom:</strong> mouse wheel. <strong>Add a node:</strong> double-click opens the search, or right-click → <code>Add Node</code>."},
+  "t-p4-h":   {de:"Seitenleiste", en:"Sidebar"},
+  "t-p4-p":   {de:"Links die Panels für Queue/Verlauf, Modelle und (je nach Version) deine gespeicherten Workflows. Hier siehst du laufende und fertige Generierungen samt Ergebnis.",
+               en:"On the left the panels for queue/history, models and (depending on version) your saved workflows. Here you see running and finished generations with their results."},
+  "t-p5-h":   {de:"Queue Prompt – ausführen", en:"Queue Prompt – run it"},
+  "t-p5-p":   {de:"Der wichtigste Button: Er stellt deinen Workflow in die Warteschlange und startet die Generierung. Das Ergebnis landet im Save-Image-Node und im Verlauf.",
+               en:"The most important button: it queues your workflow and starts the generation. The result lands in the Save Image node and in the history."},
+  "t-tip":    {de:"<strong>Merke dir vor allem zwei Gesten:</strong> Mausrad zum Zoomen und Doppelklick für die Node-Suche. Damit navigierst du 90 % der Zeit.",
+               en:"<strong>Remember two gestures above all:</strong> mouse wheel to zoom and double-click for node search. That covers 90 % of your navigation."},
+  "t-next-s": {de:"Basics · 04", en:"Basics · 04"},
+  "t-next-t": {de:"Der erste Workflow – dein erster Prompt", en:"The first workflow – your first prompt"}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+</body>
+</html>

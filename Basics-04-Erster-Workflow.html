@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basics 02 – Der erste Workflow | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:26px}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  h3{font-size:18px;margin:28px 0 8px;font-weight:700}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  figure{margin:24px 0 0}
+  .shot{width:100%;border:1px solid var(--line);border-radius:var(--radius);display:block}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:center}
+  .nodelist{list-style:none;padding:0;margin:24px 0}
+  .nodelist>li{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;margin-bottom:12px}
+  .dot{flex:0 0 auto;width:14px;height:14px;border-radius:50%;margin-top:6px}
+  .nodelist h3{margin:0 0 4px;font-size:16px}
+  .nodelist p{margin:0;color:var(--muted);font-size:15px}
+  .nodelist code{font-size:13px}
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:24px 0}
+  ol.steps>li{position:relative;padding:2px 0 8px 56px;margin:0 0 22px;min-height:40px}
+  ol.steps>li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;
+    width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;
+    font-size:18px;display:flex;align-items:center;justify-content:center}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;
+    padding:14px 26px;border-radius:10px;margin:8px 0}
+  .btn:hover{text-decoration:none;opacity:.92}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker">Basics · 04</span>
+  <h1 id="t-h1">Der erste Workflow</h1>
+  <p class="lead" id="t-lead">Was Workflows und Nodes überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">Basics</span>
+    <span class="chip" id="t-chip2">Bildgenerierung</span>
+    <span class="chip" id="t-chip3">Text-to-Image</span>
+  </div>
+
+  <h2 id="t-wf-h">Was ist ein Workflow?</h2>
+  <p id="t-wf-1">Ein <strong>Workflow</strong> ist der komplette Graph in ComfyUI: alle Bausteine plus ihre Verbindungen, die zusammen ein Ergebnis erzeugen. Du kannst ihn als <code>.json</code>-Datei speichern, teilen und jederzeit wieder laden – genau das machen wir hier mit einer fertigen Vorlage.</p>
+
+  <h2 id="t-node-h">Was sind Nodes?</h2>
+  <p id="t-node-1">Ein <strong>Node</strong> ist ein einzelner Baustein mit einer klaren Aufgabe. Links sitzen die <strong>Eingänge</strong>, rechts die <strong>Ausgänge</strong>. Du ziehst von einem Ausgang eine Verbindung zum Eingang des nächsten Nodes – so fließen die Daten durch den Graphen.</p>
+  <p id="t-node-2">Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.</p>
+
+  <h2 id="t-flow-h">Der simple Bild-Workflow</h2>
+  <p id="t-flow-1">Dieser Workflow erzeugt aus einem Textprompt ein Bild (Text-to-Image). Er besteht aus sechs Nodes, die der Reihe nach durchlaufen werden:</p>
+
+  <figure>
+    <svg class="shot" viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="470" fill="#0f0f14"/>
+      <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+        <path d="M30 0H0V30" fill="none" stroke="#17171f" stroke-width="1"/>
+      </pattern>
+      <rect width="800" height="470" fill="url(#grid)"/>
+      <!-- Load Checkpoint -->
+      <rect x="30" y="180" width="150" height="120" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="30" y="180" width="150" height="26" rx="8" fill="#2a2a34"/>
+      <text x="42" y="198" fill="#c5c5cf" font-family="sans-serif" font-size="11" font-weight="700">Load Checkpoint</text>
+      <text x="158" y="230" fill="#8a8a96" font-family="sans-serif" font-size="9" text-anchor="end">MODEL</text>
+      <circle cx="180" cy="227" r="5" fill="#b06fff"/>
+      <text x="158" y="252" fill="#8a8a96" font-family="sans-serif" font-size="9" text-anchor="end">CLIP</text>
+      <circle cx="180" cy="249" r="5" fill="#ffd24a"/>
+      <text x="158" y="274" fill="#8a8a96" font-family="sans-serif" font-size="9" text-anchor="end">VAE</text>
+      <circle cx="180" cy="271" r="5" fill="#ff5f8f"/>
+      <!-- Positive prompt -->
+      <rect x="250" y="60" width="160" height="70" rx="8" fill="#1b1b22" stroke="#3a6a3a"/>
+      <rect x="250" y="60" width="160" height="24" rx="8" fill="#234a23"/>
+      <text x="262" y="77" fill="#bfe0bf" font-family="sans-serif" font-size="10" font-weight="700">CLIP Text Encode (+)</text>
+      <circle cx="250" cy="110" r="5" fill="#ffd24a"/>
+      <circle cx="410" cy="110" r="5" fill="#ff8a3a"/>
+      <!-- Negative prompt -->
+      <rect x="250" y="150" width="160" height="70" rx="8" fill="#1b1b22" stroke="#6a3a3a"/>
+      <rect x="250" y="150" width="160" height="24" rx="8" fill="#4a2323"/>
+      <text x="262" y="167" fill="#e0bfbf" font-family="sans-serif" font-size="10" font-weight="700">CLIP Text Encode (–)</text>
+      <circle cx="250" cy="200" r="5" fill="#ffd24a"/>
+      <circle cx="410" cy="200" r="5" fill="#ff8a3a"/>
+      <!-- Empty Latent -->
+      <rect x="250" y="300" width="160" height="70" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="250" y="300" width="160" height="24" rx="8" fill="#2a2a34"/>
+      <text x="262" y="317" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Empty Latent Image</text>
+      <text x="262" y="352" fill="#6f6f7c" font-family="sans-serif" font-size="10">512 × 512</text>
+      <circle cx="410" cy="345" r="5" fill="#ff4fa3"/>
+      <!-- KSampler -->
+      <rect x="470" y="150" width="150" height="150" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="470" y="150" width="150" height="26" rx="8" fill="#2a2a34"/>
+      <text x="482" y="168" fill="#c5c5cf" font-family="sans-serif" font-size="11" font-weight="700">KSampler</text>
+      <circle cx="470" cy="200" r="5" fill="#b06fff"/>
+      <circle cx="470" cy="222" r="5" fill="#ff8a3a"/>
+      <circle cx="470" cy="244" r="5" fill="#ff8a3a"/>
+      <circle cx="470" cy="266" r="5" fill="#ff4fa3"/>
+      <text x="482" y="292" fill="#6f6f7c" font-family="sans-serif" font-size="9">steps · cfg · seed</text>
+      <circle cx="620" cy="225" r="5" fill="#ff4fa3"/>
+      <!-- VAE Decode -->
+      <rect x="660" y="190" width="120" height="60" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="660" y="190" width="120" height="24" rx="8" fill="#2a2a34"/>
+      <text x="672" y="207" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">VAE Decode</text>
+      <circle cx="660" cy="236" r="5" fill="#ff4fa3"/>
+      <!-- Save Image -->
+      <rect x="640" y="320" width="140" height="110" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="640" y="320" width="140" height="24" rx="8" fill="#2a2a34"/>
+      <text x="652" y="337" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Save Image</text>
+      <rect x="652" y="352" width="116" height="68" rx="4" fill="#0d0d10" stroke="#26262f"/>
+      <text x="710" y="390" fill="#3f3f4a" font-family="sans-serif" font-size="10" text-anchor="middle">🖼️</text>
+      <!-- wires -->
+      <path d="M180 227 C 430 227 240 110 470 200" fill="none" stroke="#b06fff" stroke-width="2"/>
+      <path d="M180 249 C 215 249 215 110 250 110" fill="none" stroke="#ffd24a" stroke-width="2"/>
+      <path d="M180 249 C 215 249 215 200 250 200" fill="none" stroke="#ffd24a" stroke-width="2"/>
+      <path d="M410 110 C 440 110 440 222 470 222" fill="none" stroke="#ff8a3a" stroke-width="2"/>
+      <path d="M410 200 C 440 200 440 244 470 244" fill="none" stroke="#ff8a3a" stroke-width="2"/>
+      <path d="M410 345 C 440 345 440 266 470 266" fill="none" stroke="#ff4fa3" stroke-width="2"/>
+      <path d="M620 225 C 640 225 640 236 660 236" fill="none" stroke="#ff4fa3" stroke-width="2"/>
+      <path d="M780 236 C 800 236 660 375 700 352" fill="none" stroke="#4ad0ff" stroke-width="2"/>
+    </svg>
+    <figcaption id="t-flow-c">Der komplette Text-to-Image-Workflow – von links (Modell) nach rechts (fertiges Bild)</figcaption>
+  </figure>
+
+  <ul class="nodelist">
+    <li><span class="dot" style="background:#b06fff"></span><div>
+      <h3 id="t-n1-h">Load Checkpoint</h3><p id="t-n1-p">Lädt das KI-Modell und liefert dessen drei Bestandteile: <code>MODEL</code>, <code>CLIP</code> und <code>VAE</code>.</p></div></li>
+    <li><span class="dot" style="background:#ffd24a"></span><div>
+      <h3 id="t-n2-h">CLIP Text Encode (positiv &amp; negativ)</h3><p id="t-n2-p">Übersetzt deine Prompts in eine Form, die das Modell versteht. Der positive Node beschreibt, was im Bild sein soll, der negative, was nicht.</p></div></li>
+    <li><span class="dot" style="background:#ff4fa3"></span><div>
+      <h3 id="t-n3-h">Empty Latent Image</h3><p id="t-n3-p">Legt die Leinwand fest: Auflösung (z. B. <code>512×512</code>) und wie viele Bilder gleichzeitig erzeugt werden.</p></div></li>
+    <li><span class="dot" style="background:#ff8a3a"></span><div>
+      <h3 id="t-n4-h">KSampler</h3><p id="t-n4-p">Das Herzstück. Er rechnet aus Rauschen schrittweise das Bild. Stellschrauben: <code>steps</code>, <code>cfg</code>, <code>seed</code> und Sampler.</p></div></li>
+    <li><span class="dot" style="background:#4ad0ff"></span><div>
+      <h3 id="t-n5-h">VAE Decode</h3><p id="t-n5-p">Wandelt das latente Ergebnis des Samplers in ein sichtbares Bild um.</p></div></li>
+    <li><span class="dot" style="background:#8a8a96"></span><div>
+      <h3 id="t-n6-h">Save Image</h3><p id="t-n6-p">Zeigt das fertige Bild an und speichert es automatisch im Output-Ordner.</p></div></li>
+  </ul>
+
+  <h2 id="t-use-h">So nutzt du den Workflow</h2>
+  <ol class="steps">
+    <li id="t-u1">Lade die Vorlage über <code>Workflow → Open</code> und wähle die heruntergeladene <code>.json</code>-Datei.</li>
+    <li id="t-u2">Wähle im Node <strong>Load Checkpoint</strong> dein installiertes Modell aus.</li>
+    <li id="t-u3">Tippe deinen Wunsch in den <strong>positiven</strong> Prompt-Node (der negative bleibt erstmal wie er ist).</li>
+    <li id="t-u4">Klick auf <strong>Queue Prompt</strong> – nach kurzer Rechenzeit erscheint dein Bild im Save-Image-Node.</li>
+  </ol>
+
+  <div class="box note">
+    <span id="t-tip"><strong>Kein Modell installiert?</strong> Ein Checkpoint ist eine Modell-Datei (z. B. SD 1.5 oder SDXL), die in den ComfyUI-Models-Ordner gehört. Im Load-Checkpoint-Node taucht sie danach zur Auswahl auf.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <a class="btn" id="t-btn" href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">↓ Workflow herunterladen (.json)</a>
+
+  <h2 id="t-next-h">Nächster Schritt</h2>
+  <a class="next" href="#">
+    <div>
+      <small id="t-next-s">Basics · 05</small>
+      <strong id="t-next-t">Modelle verstehen &amp; den Prompt steuern</strong>
+    </div>
+    <span style="color:var(--accent);font-size:24px">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-h1":     {de:"Der erste Workflow", en:"Your First Workflow"},
+  "t-lead":   {de:"Was Workflows und Nodes überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst.",
+               en:"What workflows and nodes actually are – and the simplest workflow to generate your first image."},
+  "t-chip1":  {de:"Basics", en:"Basics"},
+  "t-chip2":  {de:"Bildgenerierung", en:"Image generation"},
+  "t-chip3":  {de:"Text-to-Image", en:"Text-to-Image"},
+  "t-wf-h":   {de:"Was ist ein Workflow?", en:"What is a workflow?"},
+  "t-wf-1":   {de:"Ein <strong>Workflow</strong> ist der komplette Graph in ComfyUI: alle Bausteine plus ihre Verbindungen, die zusammen ein Ergebnis erzeugen. Du kannst ihn als <code>.json</code>-Datei speichern, teilen und jederzeit wieder laden – genau das machen wir hier mit einer fertigen Vorlage.",
+               en:"A <strong>workflow</strong> is the complete graph in ComfyUI: all the building blocks plus their connections that together produce a result. You can save it as a <code>.json</code> file, share it and reload it anytime – which is exactly what we do here with a ready-made template."},
+  "t-node-h": {de:"Was sind Nodes?", en:"What are nodes?"},
+  "t-node-1": {de:"Ein <strong>Node</strong> ist ein einzelner Baustein mit einer klaren Aufgabe. Links sitzen die <strong>Eingänge</strong>, rechts die <strong>Ausgänge</strong>. Du ziehst von einem Ausgang eine Verbindung zum Eingang des nächsten Nodes – so fließen die Daten durch den Graphen.",
+               en:"A <strong>node</strong> is a single building block with one clear job. Inputs are on the left, <strong>outputs</strong> on the right. You drag a connection from an output to the input of the next node – that's how data flows through the graph."},
+  "t-node-2": {de:"Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.",
+               en:"The colored dots indicate the <strong>data type</strong> (e.g. MODEL, CLIP, LATENT, IMAGE). Only matching types connect – same color to same color. That's all you need to know for now."},
+  "t-flow-h": {de:"Der simple Bild-Workflow", en:"The simple image workflow"},
+  "t-flow-1": {de:"Dieser Workflow erzeugt aus einem Textprompt ein Bild (Text-to-Image). Er besteht aus sechs Nodes, die der Reihe nach durchlaufen werden:",
+               en:"This workflow turns a text prompt into an image (text-to-image). It consists of six nodes that run in sequence:"},
+  "t-flow-c": {de:"Der komplette Text-to-Image-Workflow – von links (Modell) nach rechts (fertiges Bild)",
+               en:"The complete text-to-image workflow – from left (model) to right (finished image)"},
+  "t-n1-h":   {de:"Load Checkpoint", en:"Load Checkpoint"},
+  "t-n1-p":   {de:"Lädt das KI-Modell und liefert dessen drei Bestandteile: <code>MODEL</code>, <code>CLIP</code> und <code>VAE</code>.",
+               en:"Loads the AI model and provides its three parts: <code>MODEL</code>, <code>CLIP</code> and <code>VAE</code>."},
+  "t-n2-h":   {de:"CLIP Text Encode (positiv &amp; negativ)", en:"CLIP Text Encode (positive &amp; negative)"},
+  "t-n2-p":   {de:"Übersetzt deine Prompts in eine Form, die das Modell versteht. Der positive Node beschreibt, was im Bild sein soll, der negative, was nicht.",
+               en:"Translates your prompts into a form the model understands. The positive node describes what should be in the image, the negative what shouldn't."},
+  "t-n3-h":   {de:"Empty Latent Image", en:"Empty Latent Image"},
+  "t-n3-p":   {de:"Legt die Leinwand fest: Auflösung (z. B. <code>512×512</code>) und wie viele Bilder gleichzeitig erzeugt werden.",
+               en:"Sets the canvas: resolution (e.g. <code>512×512</code>) and how many images are generated at once."},
+  "t-n4-h":   {de:"KSampler", en:"KSampler"},
+  "t-n4-p":   {de:"Das Herzstück. Er rechnet aus Rauschen schrittweise das Bild. Stellschrauben: <code>steps</code>, <code>cfg</code>, <code>seed</code> und Sampler.",
+               en:"The heart of it. It computes the image from noise step by step. Knobs: <code>steps</code>, <code>cfg</code>, <code>seed</code> and sampler."},
+  "t-n5-h":   {de:"VAE Decode", en:"VAE Decode"},
+  "t-n5-p":   {de:"Wandelt das latente Ergebnis des Samplers in ein sichtbares Bild um.",
+               en:"Converts the sampler's latent result into a visible image."},
+  "t-n6-h":   {de:"Save Image", en:"Save Image"},
+  "t-n6-p":   {de:"Zeigt das fertige Bild an und speichert es automatisch im Output-Ordner.",
+               en:"Displays the finished image and saves it automatically to the output folder."},
+  "t-use-h":  {de:"So nutzt du den Workflow", en:"How to use the workflow"},
+  "t-u1":     {de:'Lade die Vorlage über <code>Workflow → Open</code> und wähle die heruntergeladene <code>.json</code>-Datei.',
+               en:'Load the template via <code>Workflow → Open</code> and select the downloaded <code>.json</code> file.'},
+  "t-u2":     {de:"Wähle im Node <strong>Load Checkpoint</strong> dein installiertes Modell aus.",
+               en:"In the <strong>Load Checkpoint</strong> node, select your installed model."},
+  "t-u3":     {de:"Tippe deinen Wunsch in den <strong>positiven</strong> Prompt-Node (der negative bleibt erstmal wie er ist).",
+               en:"Type what you want into the <strong>positive</strong> prompt node (leave the negative one as it is for now)."},
+  "t-u4":     {de:"Klick auf <strong>Queue Prompt</strong> – nach kurzer Rechenzeit erscheint dein Bild im Save-Image-Node.",
+               en:"Click <strong>Queue Prompt</strong> – after a short compute time your image appears in the Save Image node."},
+  "t-tip":    {de:"<strong>Kein Modell installiert?</strong> Ein Checkpoint ist eine Modell-Datei (z. B. SD 1.5 oder SDXL), die in den ComfyUI-Models-Ordner gehört. Im Load-Checkpoint-Node taucht sie danach zur Auswahl auf.",
+               en:"<strong>No model installed?</strong> A checkpoint is a model file (e.g. SD 1.5 or SDXL) that goes into the ComfyUI models folder. It then shows up for selection in the Load Checkpoint node."},
+  "t-btn":    {de:"↓ Workflow herunterladen (.json)", en:"↓ Download workflow (.json)"},
+  "t-next-h": {de:"Nächster Schritt", en:"Next step"},
+  "t-next-s": {de:"Basics · 05", en:"Basics · 05"},
+  "t-next-t": {de:"Modelle verstehen &amp; den Prompt steuern", en:"Understanding models &amp; steering the prompt"}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basics 02 – ComfyUI Manager installieren | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:flex-end;margin-bottom:26px}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  h3{font-size:18px;margin:28px 0 8px;font-weight:700}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  pre{background:#0a0a0d;border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;color:#d8d8e0;margin:14px 0}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  figure{margin:20px 0 0}
+  .shot{width:100%;border:1px solid var(--line);border-radius:var(--radius);display:block}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:center}
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:24px 0}
+  ol.steps>li{position:relative;padding:2px 0 8px 56px;margin:0 0 22px;min-height:40px}
+  ol.steps>li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;
+    width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;
+    font-size:18px;display:flex;align-items:center;justify-content:center}
+  ol.steps>li h3{margin-top:4px}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker">Basics · 02</span>
+  <h1 id="t-h1">Den ComfyUI Manager installieren</h1>
+  <p class="lead" id="t-lead">Der Manager ist das wichtigste Add-on für ComfyUI: Er installiert Custom Nodes und Modelle per Klick – inklusive aller Abhängigkeiten.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">Basics</span>
+    <span class="chip" id="t-chip2">Setup</span>
+    <span class="chip" id="t-chip3">Custom Nodes</span>
+  </div>
+
+  <h2 id="t-what-h">Wofür der Manager?</h2>
+  <p id="t-what-1">ComfyUI im Auslieferungszustand kennt nur seine Standard-Nodes. Die meisten interessanten Workflows nutzen aber <strong>Custom Nodes</strong> – Erweiterungen von der Community. Der <strong>ComfyUI Manager</strong> installiert, aktualisiert und verwaltet diese Erweiterungen über eine Oberfläche, statt dass du manuell mit Git und Abhängigkeiten hantierst.</p>
+  <p id="t-what-2">Der Vorteil: Lädst du einen fremden Workflow, der unbekannte Nodes enthält, findet der Manager per <code>Install Missing Custom Nodes</code> automatisch die passenden Erweiterungen. Genau deshalb installieren wir ihn früh.</p>
+
+  <h2 id="t-desk-h">Schon dabei? ComfyUI Desktop</h2>
+  <p id="t-desk-1">In aktuellen Versionen von <strong>ComfyUI Desktop</strong> ist der Manager bereits vorinstalliert. Suche oben in der Menüleiste nach dem <strong>Manager</strong>-Button. Ist er da, kannst du diesen Teil überspringen – du musst nichts installieren.</p>
+  <figure>
+    <svg class="shot" viewBox="0 0 800 150" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="150" fill="#0f0f14"/>
+      <rect x="0" y="0" width="800" height="42" fill="#16161c"/>
+      <text x="16" y="27" fill="#c5c5cf" font-family="sans-serif" font-size="13" font-weight="700">Workflow</text>
+      <text x="100" y="27" fill="#9a9aa6" font-family="sans-serif" font-size="13">Edit</text>
+      <text x="150" y="27" fill="#9a9aa6" font-family="sans-serif" font-size="13">View</text>
+      <rect x="640" y="8" width="100" height="26" rx="7" fill="#ff3b3b"/>
+      <text x="690" y="26" fill="#fff" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">Manager</text>
+      <text x="400" y="100" fill="#6f6f7c" font-family="sans-serif" font-size="14" text-anchor="middle">Der Manager-Button sitzt oben rechts in der Menüleiste</text>
+    </svg>
+    <figcaption id="t-desk-c">ComfyUI Desktop: der Manager-Button in der Menüleiste</figcaption>
+  </figure>
+
+  <h2 id="t-inst-h">Manuell nachinstallieren (Portable)</h2>
+  <p id="t-inst-1">Nutzt du die Portable-Version oder fehlt der Button, installierst du den Manager so:</p>
+
+  <ol class="steps">
+    <li>
+      <h3 id="t-s1-h">In den custom_nodes-Ordner wechseln</h3>
+      <p id="t-s1-p">Der Manager kommt – wie jede Erweiterung – in den Ordner <code>custom_nodes</code> deiner ComfyUI-Installation.</p>
+    </li>
+    <li>
+      <h3 id="t-s2-h">Repository klonen</h3>
+      <p id="t-s2-p">Per Git holst du den Manager direkt vom offiziellen Repo:</p>
+      <pre id="t-s2-code">cd ComfyUI/custom_nodes
+git clone https://github.com/ltdrdata/ComfyUI-Manager.git</pre>
+      <p id="t-s2-p2">Ohne Git geht es auch per Doppelklick: Lade <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und führe sie aus.</p>
+    </li>
+    <li>
+      <h3 id="t-s3-h">ComfyUI neu starten</h3>
+      <p id="t-s3-p">Nach einem Neustart taucht der <strong>Manager</strong>-Button in der Menüleiste auf. Fertig.</p>
+    </li>
+  </ol>
+
+  <h2 id="t-use-h">Der Manager im Überblick</h2>
+  <p id="t-use-1">Ein Klick auf den Button öffnet das Manager-Fenster. Die wichtigsten Funktionen:</p>
+  <figure>
+    <svg class="shot" viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="320" fill="#0f0f14"/>
+      <rect x="210" y="30" width="380" height="260" rx="12" fill="#16161c" stroke="#26262f"/>
+      <rect x="210" y="30" width="380" height="40" rx="12" fill="#1d1d25"/>
+      <text x="232" y="56" fill="#c5c5cf" font-family="sans-serif" font-size="14" font-weight="700">ComfyUI Manager</text>
+      <rect x="240" y="92" width="320" height="40" rx="8" fill="#22222b"/>
+      <text x="256" y="117" fill="#e0e0e8" font-family="sans-serif" font-size="13" font-weight="700">Install Custom Nodes</text>
+      <rect x="240" y="142" width="320" height="40" rx="8" fill="#ff3b3b"/>
+      <text x="256" y="167" fill="#fff" font-family="sans-serif" font-size="13" font-weight="700">Install Missing Custom Nodes</text>
+      <rect x="240" y="192" width="320" height="40" rx="8" fill="#22222b"/>
+      <text x="256" y="217" fill="#e0e0e8" font-family="sans-serif" font-size="13" font-weight="700">Model Manager</text>
+      <rect x="240" y="242" width="320" height="34" rx="8" fill="#22222b"/>
+      <text x="256" y="264" fill="#e0e0e8" font-family="sans-serif" font-size="13" font-weight="700">Update All</text>
+    </svg>
+    <figcaption id="t-use-c">Das Manager-Fenster mit den wichtigsten Aktionen</figcaption>
+  </figure>
+  <p id="t-use-2"><strong>Install Custom Nodes</strong> – durchsuche und installiere Erweiterungen. <strong>Install Missing Custom Nodes</strong> – ergänzt fehlende Nodes eines geladenen Workflows. <strong>Model Manager</strong> – lädt Modelle direkt herunter. <strong>Update All</strong> – hält alles aktuell. Nach jeder Installation einfach ComfyUI neu starten.</p>
+
+  <div class="box note">
+    <span id="t-tip"><strong>Abhängigkeiten?</strong> Übernimmt der Manager. Installierst du eine Erweiterung, zieht er die benötigten Pakete automatisch mit – du musst nur neu starten.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <a class="next" href="Basics-03-Navigation.html">
+    <div>
+      <small id="t-next-s">Basics · 03</small>
+      <strong id="t-next-t">Die wichtigsten Punkte der Oberfläche</strong>
+    </div>
+    <span style="color:var(--accent);font-size:24px">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-h1":     {de:"Den ComfyUI Manager installieren", en:"Installing the ComfyUI Manager"},
+  "t-lead":   {de:"Der Manager ist das wichtigste Add-on für ComfyUI: Er installiert Custom Nodes und Modelle per Klick – inklusive aller Abhängigkeiten.",
+               en:"The Manager is the most important add-on for ComfyUI: it installs custom nodes and models with a click – including all dependencies."},
+  "t-chip1":  {de:"Basics", en:"Basics"},
+  "t-chip2":  {de:"Setup", en:"Setup"},
+  "t-chip3":  {de:"Custom Nodes", en:"Custom Nodes"},
+  "t-what-h": {de:"Wofür der Manager?", en:"What's the Manager for?"},
+  "t-what-1": {de:"ComfyUI im Auslieferungszustand kennt nur seine Standard-Nodes. Die meisten interessanten Workflows nutzen aber <strong>Custom Nodes</strong> – Erweiterungen von der Community. Der <strong>ComfyUI Manager</strong> installiert, aktualisiert und verwaltet diese Erweiterungen über eine Oberfläche, statt dass du manuell mit Git und Abhängigkeiten hantierst.",
+               en:"Out of the box, ComfyUI only knows its standard nodes. Most interesting workflows, however, use <strong>custom nodes</strong> – community extensions. The <strong>ComfyUI Manager</strong> installs, updates and manages these extensions through a UI, instead of you juggling Git and dependencies by hand."},
+  "t-what-2": {de:"Der Vorteil: Lädst du einen fremden Workflow, der unbekannte Nodes enthält, findet der Manager per <code>Install Missing Custom Nodes</code> automatisch die passenden Erweiterungen. Genau deshalb installieren wir ihn früh.",
+               en:"The advantage: load someone else's workflow that contains unknown nodes, and the Manager automatically finds the right extensions via <code>Install Missing Custom Nodes</code>. That's exactly why we install it early."},
+  "t-desk-h": {de:"Schon dabei? ComfyUI Desktop", en:"Already included? ComfyUI Desktop"},
+  "t-desk-1": {de:"In aktuellen Versionen von <strong>ComfyUI Desktop</strong> ist der Manager bereits vorinstalliert. Suche oben in der Menüleiste nach dem <strong>Manager</strong>-Button. Ist er da, kannst du diesen Teil überspringen – du musst nichts installieren.",
+               en:"In current versions of <strong>ComfyUI Desktop</strong> the Manager is already pre-installed. Look for the <strong>Manager</strong> button in the top menu bar. If it's there, you can skip this part – there's nothing to install."},
+  "t-desk-c": {de:"ComfyUI Desktop: der Manager-Button in der Menüleiste", en:"ComfyUI Desktop: the Manager button in the menu bar"},
+  "t-inst-h": {de:"Manuell nachinstallieren (Portable)", en:"Install manually (Portable)"},
+  "t-inst-1": {de:"Nutzt du die Portable-Version oder fehlt der Button, installierst du den Manager so:",
+               en:"If you use the portable version or the button is missing, install the Manager like this:"},
+  "t-s1-h":   {de:"In den custom_nodes-Ordner wechseln", en:"Go to the custom_nodes folder"},
+  "t-s1-p":   {de:"Der Manager kommt – wie jede Erweiterung – in den Ordner <code>custom_nodes</code> deiner ComfyUI-Installation.",
+               en:"The Manager goes – like every extension – into the <code>custom_nodes</code> folder of your ComfyUI installation."},
+  "t-s2-h":   {de:"Repository klonen", en:"Clone the repository"},
+  "t-s2-p":   {de:"Per Git holst du den Manager direkt vom offiziellen Repo:", en:"Use Git to pull the Manager straight from the official repo:"},
+  "t-s2-code":{de:"cd ComfyUI/custom_nodes\ngit clone https://github.com/ltdrdata/ComfyUI-Manager.git",
+               en:"cd ComfyUI/custom_nodes\ngit clone https://github.com/ltdrdata/ComfyUI-Manager.git"},
+  "t-s2-p2":  {de:"Ohne Git geht es auch per Doppelklick: Lade <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und führe sie aus.",
+               en:"No Git? Use the double-click route: download <code>install-manager-for-portable-version.bat</code> into your <code>ComfyUI_windows_portable</code> folder and run it."},
+  "t-s3-h":   {de:"ComfyUI neu starten", en:"Restart ComfyUI"},
+  "t-s3-p":   {de:"Nach einem Neustart taucht der <strong>Manager</strong>-Button in der Menüleiste auf. Fertig.",
+               en:"After a restart the <strong>Manager</strong> button appears in the menu bar. Done."},
+  "t-use-h":  {de:"Der Manager im Überblick", en:"The Manager at a glance"},
+  "t-use-1":  {de:"Ein Klick auf den Button öffnet das Manager-Fenster. Die wichtigsten Funktionen:",
+               en:"A click on the button opens the Manager window. The most important functions:"},
+  "t-use-c":  {de:"Das Manager-Fenster mit den wichtigsten Aktionen", en:"The Manager window with the key actions"},
+  "t-use-2":  {de:"<strong>Install Custom Nodes</strong> – durchsuche und installiere Erweiterungen. <strong>Install Missing Custom Nodes</strong> – ergänzt fehlende Nodes eines geladenen Workflows. <strong>Model Manager</strong> – lädt Modelle direkt herunter. <strong>Update All</strong> – hält alles aktuell. Nach jeder Installation einfach ComfyUI neu starten.",
+               en:"<strong>Install Custom Nodes</strong> – browse and install extensions. <strong>Install Missing Custom Nodes</strong> – fills in missing nodes of a loaded workflow. <strong>Model Manager</strong> – downloads models directly. <strong>Update All</strong> – keeps everything current. After each install just restart ComfyUI."},
+  "t-tip":    {de:"<strong>Abhängigkeiten?</strong> Übernimmt der Manager. Installierst du eine Erweiterung, zieht er die benötigten Pakete automatisch mit – du musst nur neu starten.",
+               en:"<strong>Dependencies?</strong> The Manager handles them. Install an extension and it pulls the required packages automatically – you just restart."},
+  "t-next-s": {de:"Basics · 03", en:"Basics · 03"},
+  "t-next-t": {de:"Die wichtigsten Punkte der Oberfläche", en:"The key points of the interface"}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+</body>
+</html>
