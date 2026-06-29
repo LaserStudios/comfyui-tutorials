@@ -72,104 +72,109 @@
 
   <span class="kicker">Basics · 01</span>
   <h1 id="t-h1">Erste Schritte</h1>
-  <p class="lead" id="t-lead">Der Einstieg: was ComfyUI ist, welche Hardware du brauchst, und wie du es installierst und startest. Danach läuft die Oberfläche bei dir im Browser.</p>
+  <p class="lead" id="t-lead">Der Einstieg: was ComfyUI ist, welche Hardware du brauchst, und wie du die Portable-Version entpackst und startest. Danach läuft die Oberfläche bei dir im Browser.</p>
 
   <div class="meta">
     <span class="chip" id="t-chip1">Basics</span>
     <span class="chip" id="t-chip2">Einstieg</span>
-    <span class="chip" id="t-chip3">Windows · NVIDIA</span>
+    <span class="chip" id="t-chip3">Windows · NVIDIA · Portable</span>
   </div>
 
   <h2 id="t-what-h">Was ist ComfyUI?</h2>
   <p id="t-what-1">ComfyUI ist eine kostenlose, quelloffene Oberfläche, um KI-Bilder und -Videos lokal auf deinem eigenen Rechner zu erzeugen. Statt eines simplen „Prompt rein, Bild raus" baust du die Generierungs-Pipeline selbst aus einzelnen Bausteinen – den sogenannten Nodes – zusammen.</p>
   <p id="t-what-2">Jeder Node übernimmt eine Aufgabe: Modell laden, Prompt verarbeiten, das Bild berechnen, speichern. Du verbindest sie zu einem Graphen. Das gibt dir volle Kontrolle über jeden Schritt – genau deshalb ist ComfyUI bei allen ernst gemeinten Workflows der Standard. Keine Sorge, mit dem Node-Graph beschäftigen wir uns erst im nächsten Teil. Hier geht es erstmal nur ans Laufen.</p>
 
+  <h2 id="t-why-h">Warum die Portable-Version?</h2>
+  <p id="t-why-1">Wir nutzen in dieser Reihe bewusst die <strong>Portable-Version</strong> statt des Desktop-Installers. „Portable" heißt: kein Installer, keine Einträge in der Windows-Registry, nichts wird systemweit verändert. Du bekommst einen einzigen Ordner, in dem <strong>alles</strong> drinsteckt – eine eigene mitgelieferte Python-Umgebung, ComfyUI selbst und deine Modelle.</p>
+  <p id="t-why-2">Und genau das macht <strong>mehrere Installationen kinderleicht</strong>:</p>
+  <ul id="t-why-list">
+    <li><strong>Kopieren statt neu installieren:</strong> Eine zweite Installation ist einfach eine Kopie des Ordners. Ordner duplizieren, fertig – jede Kopie läuft komplett für sich.</li>
+    <li><strong>Vollständig isoliert:</strong> Jeder Ordner hat seine eigene Python-Umgebung und seine eigenen Custom Nodes. Du kannst also eine stabile Installation zum Arbeiten und eine zum Experimentieren haben, ohne dass sich beide ins Gehege kommen.</li>
+    <li><strong>Überall lauffähig:</strong> Auf eine andere Festplatte, einen USB-Stick oder einen anderen PC schieben – einfach Ordner mitnehmen. Keine Admin-Rechte nötig.</li>
+    <li><strong>Sauber wieder weg:</strong> Zum Deinstallieren reicht es, den Ordner zu löschen. Es bleibt nichts zurück.</li>
+    <li><strong>Modelle teilen:</strong> Die großen Modell-Dateien musst du nicht doppelt vorhalten – über die <code>extra_model_paths.yaml</code> greifen mehrere Installationen auf denselben Modell-Ordner zu.</li>
+  </ul>
+
   <h2 id="t-hw-h">Voraussetzung</h2>
-  <p id="t-hw-1">Wir fokussieren uns in dieser Reihe auf <strong>NVIDIA-Hardware</strong>. NVIDIA-Grafikkarten sind über CUDA mit Abstand am besten für KI-Generierung geeignet, am breitesten unterstützt und liefern die schnellsten Ergebnisse. AMD und Apple funktionieren grundsätzlich auch, sind aber umständlicher – die lassen wir hier außen vor.</p>
+  <p id="t-hw-1">Wir fokussieren uns in dieser Reihe auf <strong>NVIDIA-Hardware unter Windows</strong>. Die Portable-Version gibt es genau für diese Kombination – NVIDIA-Grafikkarten sind über CUDA mit Abstand am besten für KI-Generierung geeignet, am breitesten unterstützt und liefern die schnellsten Ergebnisse.</p>
   <p id="t-hw-2">Wichtig zu verstehen: Die Modelle werden beim Generieren in den <strong>VRAM</strong> (den Speicher der Grafikkarte) geladen. Je größer und komplexer ein Modell, desto mehr VRAM belegt es – deshalb ist VRAM beim KI-Generieren oft der entscheidende Faktor.</p>
   <ul id="t-hw-list">
     <li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (6 GB als Minimum, 8 GB+ angenehm).</li>
-    <li>Windows (Mac wird vom Desktop-Build ebenfalls unterstützt).</li>
-    <li>Mehrere GB freier Speicher für das Programm und die Modelle.</li>
+    <li>Windows (die Portable-Version ist Windows-only).</li>
+    <li>7-Zip zum Entpacken sowie mehrere GB freier Speicher für das Programm und die Modelle.</li>
   </ul>
 
-  <h2 id="t-get-h">Installieren &amp; starten</h2>
+  <h2 id="t-get-h">Entpacken &amp; starten</h2>
 
   <ol class="steps">
 
     <li>
-      <h3 id="t-s1-h">ComfyUI Desktop holen</h3>
-      <p id="t-s1-p">Wir nutzen <strong>ComfyUI Desktop</strong> – den offiziellen Ein-Klick-Build. Er bringt die komplette Python-Umgebung mit, du musst nichts manuell einrichten. Download: <a href="https://www.comfy.org/download" target="_blank" rel="noopener">comfy.org/download</a>.</p>
+      <h3 id="t-s1-h">Portable-Version herunterladen</h3>
+      <p id="t-s1-p">Auf der ComfyUI-Releases-Seite gibt es die Portable-Version als <code>.7z</code>-Datei. Wir nehmen die NVIDIA-Variante: <code>ComfyUI_windows_portable_nvidia.7z</code>. Download: <a href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" rel="noopener">github.com/comfyanonymous/ComfyUI/releases</a>.</p>
       <figure>
         <svg class="shot" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img">
           <rect width="800" height="420" fill="#0f0f14"/>
           <rect x="0" y="0" width="800" height="52" fill="#16161c"/>
           <circle cx="26" cy="26" r="6" fill="#ff5f57"/><circle cx="46" cy="26" r="6" fill="#febc2e"/><circle cx="66" cy="26" r="6" fill="#28c840"/>
           <rect x="110" y="14" width="560" height="24" rx="12" fill="#0d0d10"/>
-          <text x="126" y="31" fill="#6f6f7c" font-family="monospace" font-size="13">comfy.org/download</text>
-          <text x="400" y="150" fill="#e8e8ee" font-family="sans-serif" font-size="30" font-weight="800" text-anchor="middle">ComfyUI Desktop</text>
-          <text x="400" y="182" fill="#9a9aa6" font-family="sans-serif" font-size="15" text-anchor="middle">Run AI on your own hardware</text>
-          <rect x="260" y="225" width="130" height="68" rx="10" fill="#16161c" stroke="#26262f"/>
-          <text x="325" y="262" fill="#c5c5cf" font-family="sans-serif" font-size="14" text-anchor="middle" font-weight="700">Windows</text>
-          <text x="325" y="282" fill="#6f6f7c" font-family="sans-serif" font-size="12" text-anchor="middle">.exe</text>
-          <rect x="410" y="225" width="130" height="68" rx="10" fill="#16161c" stroke="#26262f"/>
-          <text x="475" y="262" fill="#c5c5cf" font-family="sans-serif" font-size="14" text-anchor="middle" font-weight="700">macOS</text>
-          <text x="475" y="282" fill="#6f6f7c" font-family="sans-serif" font-size="12" text-anchor="middle">.dmg</text>
-          <rect x="320" y="330" width="160" height="48" rx="10" fill="#ff3b3b"/>
-          <text x="400" y="360" fill="#fff" font-family="sans-serif" font-size="16" font-weight="700" text-anchor="middle">Download</text>
+          <text x="126" y="31" fill="#6f6f7c" font-family="monospace" font-size="13">github.com/comfyanonymous/ComfyUI/releases</text>
+          <text x="400" y="130" fill="#e8e8ee" font-family="sans-serif" font-size="26" font-weight="800" text-anchor="middle">Latest Release · Assets</text>
+          <rect x="150" y="170" width="500" height="46" rx="9" fill="#16161c" stroke="#ff3b3b"/>
+          <text x="172" y="198" fill="#e8e8ee" font-family="monospace" font-size="14" font-weight="700">ComfyUI_windows_portable_nvidia.7z</text>
+          <text x="630" y="198" fill="#6f6f7c" font-family="sans-serif" font-size="12" text-anchor="end">~2 GB</text>
+          <rect x="150" y="226" width="500" height="40" rx="9" fill="#16161c" stroke="#26262f"/>
+          <text x="172" y="251" fill="#9a9aa6" font-family="monospace" font-size="13">Source code (zip)</text>
+          <rect x="320" y="320" width="160" height="48" rx="10" fill="#ff3b3b"/>
+          <text x="400" y="350" fill="#fff" font-family="sans-serif" font-size="16" font-weight="700" text-anchor="middle">Download .7z</text>
         </svg>
-        <figcaption id="t-s1-c">comfy.org – Download für dein Betriebssystem</figcaption>
+        <figcaption id="t-s1-c">Releases-Seite – die NVIDIA-Portable als .7z laden</figcaption>
       </figure>
     </li>
 
     <li>
-      <h3 id="t-s2-h">Installer durchlaufen lassen</h3>
-      <p id="t-s2-p">Datei ausführen, dem Assistenten folgen, Speicherort bestätigen. Beim ersten Start richtet ComfyUI die Umgebung ein – das passiert einmalig und kann ein paar Minuten dauern.</p>
+      <h3 id="t-s2-h">Mit 7-Zip entpacken</h3>
+      <p id="t-s2-p">Rechtsklick auf die <code>.7z</code>-Datei → <em>7-Zip → Hier entpacken</em>. Den entstandenen Ordner legst du an einen Ort mit genug Platz (z. B. <code>D:\ComfyUI</code>). Du installierst nichts – der Ordner <strong>ist</strong> bereits die fertige Installation.</p>
       <figure>
         <svg class="shot" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img">
           <rect width="800" height="420" fill="#0f0f14"/>
-          <rect x="190" y="60" width="420" height="300" rx="12" fill="#16161c" stroke="#26262f"/>
-          <rect x="190" y="60" width="420" height="42" rx="12" fill="#1d1d25"/>
-          <text x="214" y="87" fill="#c5c5cf" font-family="sans-serif" font-size="14" font-weight="700">ComfyUI Setup</text>
-          <text x="400" y="185" font-family="sans-serif" font-size="32" text-anchor="middle">⚙️</text>
-          <text x="400" y="232" fill="#e8e8ee" font-family="sans-serif" font-size="17" font-weight="700" text-anchor="middle">Installing…</text>
-          <rect x="250" y="258" width="300" height="10" rx="5" fill="#0d0d10"/>
-          <rect x="250" y="258" width="205" height="10" rx="5" fill="#ff3b3b"/>
-          <text x="400" y="294" fill="#6f6f7c" font-family="sans-serif" font-size="12" text-anchor="middle">Setting up Python environment &amp; dependencies</text>
-          <rect x="468" y="318" width="120" height="34" rx="8" fill="#ff3b3b"/>
-          <text x="528" y="340" fill="#fff" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">Next</text>
+          <rect x="120" y="50" width="560" height="320" rx="12" fill="#16161c" stroke="#26262f"/>
+          <rect x="120" y="50" width="560" height="40" rx="12" fill="#1d1d25"/>
+          <text x="144" y="76" fill="#c5c5cf" font-family="monospace" font-size="13">D:\ComfyUI_windows_portable</text>
+          <g font-family="monospace" font-size="14" fill="#c5c5cf">
+            <text x="160" y="135">📁  ComfyUI</text>
+            <text x="160" y="170">📁  python_embeded</text>
+            <text x="160" y="205">📁  update</text>
+            <text x="160" y="245" fill="#ff6b6b">▶  run_nvidia_gpu.bat</text>
+            <text x="160" y="280">▶  run_cpu.bat</text>
+            <text x="160" y="315" fill="#6f6f7c">📄  README_VERY_IMPORTANT.txt</text>
+          </g>
         </svg>
-        <figcaption id="t-s2-c">Der Installer bringt die komplette Umgebung mit</figcaption>
+        <figcaption id="t-s2-c">Der entpackte Ordner – bereits eine komplette, eigenständige Installation</figcaption>
       </figure>
     </li>
 
     <li>
       <h3 id="t-s3-h">Starten – die Oberfläche öffnet sich im Browser</h3>
-      <p id="t-s3-p">Nach dem Start läuft ComfyUI als lokaler Server im Hintergrund, und die Bedienoberfläche öffnet sich automatisch in einem <strong>Browser-Fenster</strong>. Falls sie sich nicht von selbst öffnet, rufst du im Browser einfach <code>127.0.0.1:8188</code> auf.</p>
+      <p id="t-s3-p">Doppelklick auf <code>run_nvidia_gpu.bat</code>. Es öffnet sich ein Konsolenfenster, ComfyUI läuft als lokaler Server im Hintergrund, und die Bedienoberfläche öffnet sich automatisch in einem <strong>Browser-Fenster</strong>. Falls nicht, rufst du im Browser einfach <code>127.0.0.1:8188</code> auf. Das Konsolenfenster lässt du offen, solange du arbeitest.</p>
       <figure>
         <svg class="shot" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img">
           <rect width="800" height="420" fill="#0f0f14"/>
-          <!-- browser chrome -->
           <rect x="0" y="0" width="800" height="56" fill="#16161c"/>
           <circle cx="26" cy="20" r="6" fill="#ff5f57"/><circle cx="46" cy="20" r="6" fill="#febc2e"/><circle cx="66" cy="20" r="6" fill="#28c840"/>
           <rect x="20" y="34" width="140" height="22" rx="6" fill="#0d0d10"/>
           <text x="34" y="50" fill="#9a9aa6" font-family="sans-serif" font-size="12">ComfyUI</text>
           <rect x="110" y="10" width="640" height="22" rx="11" fill="#0d0d10"/>
           <text x="126" y="26" fill="#6f6f7c" font-family="monospace" font-size="12">127.0.0.1:8188</text>
-          <!-- comfy app canvas -->
           <rect x="0" y="56" width="800" height="364" fill="#0f0f14"/>
           <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
             <path d="M30 0H0V30" fill="none" stroke="#17171f" stroke-width="1"/>
           </pattern>
           <rect x="0" y="56" width="800" height="364" fill="url(#grid)"/>
-          <!-- top menu bar -->
           <rect x="0" y="56" width="800" height="34" fill="#16161c"/>
           <text x="16" y="78" fill="#c5c5cf" font-family="sans-serif" font-size="12" font-weight="700">Workflow</text>
           <text x="100" y="78" fill="#9a9aa6" font-family="sans-serif" font-size="12">Edit</text>
           <text x="150" y="78" fill="#9a9aa6" font-family="sans-serif" font-size="12">View</text>
-          <!-- empty hint -->
           <text x="400" y="240" fill="#3f3f4a" font-family="sans-serif" font-size="16" text-anchor="middle">Dein Arbeitsbereich (Canvas)</text>
-          <!-- queue button -->
           <rect x="624" y="360" width="150" height="40" rx="9" fill="#ff3b3b"/>
           <text x="699" y="385" fill="#fff" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle">Queue Prompt</text>
         </svg>
@@ -180,11 +185,15 @@
   </ol>
 
   <div class="box note">
+    <span id="t-update"><strong>Updaten?</strong> Im Ordner <code>update</code> liegt <code>update_comfyui.bat</code> – Doppelklick, und deine Installation wird aktualisiert. Da alles im Ordner steckt, betrifft das nur diese eine Installation.</span>
+  </div>
+
+  <div class="box note">
     <span id="t-english"><strong>Nur die englische Version:</strong> Falls dir irgendwo eine eingedeutschte ComfyUI begegnet – Finger weg. Wir arbeiten ausschließlich mit der <strong>englischen Originalversion</strong>. Die Node-Namen sind dort identisch zu jeder Anleitung und jedem Video da draußen; das macht das Weiterlernen massiv einfacher.</span>
   </div>
 
   <div class="box note">
-    <span id="t-tip"><strong>Noch keine Modelle?</strong> Völlig normal nach der Installation. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.</span>
+    <span id="t-tip"><strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.</span>
   </div>
 
   <div class="box note">
@@ -193,7 +202,7 @@
 
   <div class="divider"></div>
 
-  <a class="btn" id="t-btn" href="https://www.comfy.org/download" target="_blank" rel="noopener">→ ComfyUI Desktop herunterladen</a>
+  <a class="btn" id="t-btn" href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" rel="noopener">→ ComfyUI Portable herunterladen</a>
 
   <h2 id="t-next-h">Nächster Schritt</h2>
   <a class="next" href="Basics-02-ComfyUI-Manager.html">
@@ -211,43 +220,52 @@
 <script>
 const STR = {
   "t-h1":     {de:"Erste Schritte", en:"Getting Started"},
-  "t-lead":   {de:"Der Einstieg: was ComfyUI ist, welche Hardware du brauchst, und wie du es installierst und startest. Danach läuft die Oberfläche bei dir im Browser.",
-               en:"The entry point: what ComfyUI is, what hardware you need, and how to install and start it. After that the interface runs in your browser."},
+  "t-lead":   {de:"Der Einstieg: was ComfyUI ist, welche Hardware du brauchst, und wie du die Portable-Version entpackst und startest. Danach läuft die Oberfläche bei dir im Browser.",
+               en:"The entry point: what ComfyUI is, what hardware you need, and how to unpack and start the Portable version. After that the interface runs in your browser."},
   "t-chip1":  {de:"Basics", en:"Basics"},
   "t-chip2":  {de:"Einstieg", en:"Getting started"},
-  "t-chip3":  {de:"Windows · NVIDIA", en:"Windows · NVIDIA"},
+  "t-chip3":  {de:"Windows · NVIDIA · Portable", en:"Windows · NVIDIA · Portable"},
   "t-what-h": {de:"Was ist ComfyUI?", en:"What is ComfyUI?"},
   "t-what-1": {de:"ComfyUI ist eine kostenlose, quelloffene Oberfläche, um KI-Bilder und -Videos lokal auf deinem eigenen Rechner zu erzeugen. Statt eines simplen „Prompt rein, Bild raus\" baust du die Generierungs-Pipeline selbst aus einzelnen Bausteinen – den sogenannten Nodes – zusammen.",
                en:"ComfyUI is a free, open-source interface for generating AI images and videos locally on your own machine. Instead of a simple \"prompt in, image out\", you build the generation pipeline yourself from individual blocks – the so-called nodes."},
   "t-what-2": {de:"Jeder Node übernimmt eine Aufgabe: Modell laden, Prompt verarbeiten, das Bild berechnen, speichern. Du verbindest sie zu einem Graphen. Das gibt dir volle Kontrolle über jeden Schritt – genau deshalb ist ComfyUI bei allen ernst gemeinten Workflows der Standard. Keine Sorge, mit dem Node-Graph beschäftigen wir uns erst im nächsten Teil. Hier geht es erstmal nur ans Laufen.",
                en:"Each node handles one job: load the model, process the prompt, compute the image, save it. You wire them into a graph. That gives you full control over every step – which is exactly why ComfyUI is the standard for any serious workflow. Don't worry, we'll get into the node graph in the next part. Here it's just about getting it running."},
+  "t-why-h":  {de:"Warum die Portable-Version?", en:"Why the Portable version?"},
+  "t-why-1":  {de:"Wir nutzen in dieser Reihe bewusst die <strong>Portable-Version</strong> statt des Desktop-Installers. „Portable\" heißt: kein Installer, keine Einträge in der Windows-Registry, nichts wird systemweit verändert. Du bekommst einen einzigen Ordner, in dem <strong>alles</strong> drinsteckt – eine eigene mitgelieferte Python-Umgebung, ComfyUI selbst und deine Modelle.",
+               en:"In this series we deliberately use the <strong>Portable version</strong> instead of the desktop installer. \"Portable\" means: no installer, no entries in the Windows registry, nothing changed system-wide. You get a single folder that contains <strong>everything</strong> – its own bundled Python environment, ComfyUI itself, and your models."},
+  "t-why-2":  {de:"Und genau das macht <strong>mehrere Installationen kinderleicht</strong>:",
+               en:"And that's exactly what makes <strong>multiple installations dead simple</strong>:"},
+  "t-why-list":{de:"<li><strong>Kopieren statt neu installieren:</strong> Eine zweite Installation ist einfach eine Kopie des Ordners. Ordner duplizieren, fertig – jede Kopie läuft komplett für sich.</li><li><strong>Vollständig isoliert:</strong> Jeder Ordner hat seine eigene Python-Umgebung und seine eigenen Custom Nodes. Du kannst also eine stabile Installation zum Arbeiten und eine zum Experimentieren haben, ohne dass sich beide ins Gehege kommen.</li><li><strong>Überall lauffähig:</strong> Auf eine andere Festplatte, einen USB-Stick oder einen anderen PC schieben – einfach Ordner mitnehmen. Keine Admin-Rechte nötig.</li><li><strong>Sauber wieder weg:</strong> Zum Deinstallieren reicht es, den Ordner zu löschen. Es bleibt nichts zurück.</li><li><strong>Modelle teilen:</strong> Die großen Modell-Dateien musst du nicht doppelt vorhalten – über die <code>extra_model_paths.yaml</code> greifen mehrere Installationen auf denselben Modell-Ordner zu.</li>",
+               en:"<li><strong>Copy instead of reinstall:</strong> A second installation is simply a copy of the folder. Duplicate it – done. Each copy runs completely on its own.</li><li><strong>Fully isolated:</strong> Every folder has its own Python environment and its own custom nodes. So you can keep one stable install for work and one for experimenting without the two interfering.</li><li><strong>Runs anywhere:</strong> Move it to another drive, a USB stick, or another PC – just take the folder with you. No admin rights needed.</li><li><strong>Clean removal:</strong> To uninstall, just delete the folder. Nothing is left behind.</li><li><strong>Share models:</strong> You don't have to keep the big model files twice – via <code>extra_model_paths.yaml</code> several installations point at the same models folder.</li>"},
   "t-hw-h":   {de:"Voraussetzung", en:"Requirements"},
-  "t-hw-1":   {de:"Wir fokussieren uns in dieser Reihe auf <strong>NVIDIA-Hardware</strong>. NVIDIA-Grafikkarten sind über CUDA mit Abstand am besten für KI-Generierung geeignet, am breitesten unterstützt und liefern die schnellsten Ergebnisse. AMD und Apple funktionieren grundsätzlich auch, sind aber umständlicher – die lassen wir hier außen vor.",
-               en:"In this series we focus on <strong>NVIDIA hardware</strong>. NVIDIA graphics cards are by far the best suited for AI generation via CUDA, the most broadly supported, and deliver the fastest results. AMD and Apple work too in principle, but are more cumbersome – we leave them out here."},
+  "t-hw-1":   {de:"Wir fokussieren uns in dieser Reihe auf <strong>NVIDIA-Hardware unter Windows</strong>. Die Portable-Version gibt es genau für diese Kombination – NVIDIA-Grafikkarten sind über CUDA mit Abstand am besten für KI-Generierung geeignet, am breitesten unterstützt und liefern die schnellsten Ergebnisse.",
+               en:"In this series we focus on <strong>NVIDIA hardware on Windows</strong>. The Portable version is built for exactly that combination – NVIDIA graphics cards are by far the best suited for AI generation via CUDA, the most broadly supported, and deliver the fastest results."},
   "t-hw-2":   {de:"Wichtig zu verstehen: Die Modelle werden beim Generieren in den <strong>VRAM</strong> (den Speicher der Grafikkarte) geladen. Je größer und komplexer ein Modell, desto mehr VRAM belegt es – deshalb ist VRAM beim KI-Generieren oft der entscheidende Faktor.",
                en:"Important to understand: during generation the models are loaded into <strong>VRAM</strong> (the graphics card's memory). The larger and more complex a model, the more VRAM it takes up – which is why VRAM is often the decisive factor in AI generation."},
-  "t-hw-list":{de:"<li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (6 GB als Minimum, 8 GB+ angenehm).</li><li>Windows (Mac wird vom Desktop-Build ebenfalls unterstützt).</li><li>Mehrere GB freier Speicher für das Programm und die Modelle.</li>",
-               en:"<li>An NVIDIA GPU – the more VRAM the better (6 GB minimum, 8 GB+ comfortable).</li><li>Windows (the Desktop build supports Mac as well).</li><li>Several GB of free disk space for the program and the models.</li>"},
-  "t-get-h":  {de:"Installieren &amp; starten", en:"Install &amp; start"},
-  "t-s1-h":   {de:"ComfyUI Desktop holen", en:"Get ComfyUI Desktop"},
-  "t-s1-p":   {de:'Wir nutzen <strong>ComfyUI Desktop</strong> – den offiziellen Ein-Klick-Build. Er bringt die komplette Python-Umgebung mit, du musst nichts manuell einrichten. Download: <a href="https://www.comfy.org/download" target="_blank" rel="noopener">comfy.org/download</a>.',
-               en:'We use <strong>ComfyUI Desktop</strong> – the official one-click build. It ships the entire Python environment, so there\'s nothing to set up manually. Download: <a href="https://www.comfy.org/download" target="_blank" rel="noopener">comfy.org/download</a>.'},
-  "t-s1-c":   {de:"comfy.org – Download für dein Betriebssystem", en:"comfy.org – download for your operating system"},
-  "t-s2-h":   {de:"Installer durchlaufen lassen", en:"Run through the installer"},
-  "t-s2-p":   {de:"Datei ausführen, dem Assistenten folgen, Speicherort bestätigen. Beim ersten Start richtet ComfyUI die Umgebung ein – das passiert einmalig und kann ein paar Minuten dauern.",
-               en:"Run the file, follow the wizard, confirm the install location. On first start ComfyUI sets up the environment – this happens once and can take a few minutes."},
-  "t-s2-c":   {de:"Der Installer bringt die komplette Umgebung mit", en:"The installer ships the entire environment"},
+  "t-hw-list":{de:"<li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (6 GB als Minimum, 8 GB+ angenehm).</li><li>Windows (die Portable-Version ist Windows-only).</li><li>7-Zip zum Entpacken sowie mehrere GB freier Speicher für das Programm und die Modelle.</li>",
+               en:"<li>An NVIDIA GPU – the more VRAM the better (6 GB minimum, 8 GB+ comfortable).</li><li>Windows (the Portable version is Windows-only).</li><li>7-Zip to unpack it, plus several GB of free disk space for the program and the models.</li>"},
+  "t-get-h":  {de:"Entpacken &amp; starten", en:"Unpack &amp; start"},
+  "t-s1-h":   {de:"Portable-Version herunterladen", en:"Download the Portable version"},
+  "t-s1-p":   {de:'Auf der ComfyUI-Releases-Seite gibt es die Portable-Version als <code>.7z</code>-Datei. Wir nehmen die NVIDIA-Variante: <code>ComfyUI_windows_portable_nvidia.7z</code>. Download: <a href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" rel="noopener">github.com/comfyanonymous/ComfyUI/releases</a>.',
+               en:'On the ComfyUI releases page the Portable version is offered as a <code>.7z</code> file. We take the NVIDIA variant: <code>ComfyUI_windows_portable_nvidia.7z</code>. Download: <a href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" rel="noopener">github.com/comfyanonymous/ComfyUI/releases</a>.'},
+  "t-s1-c":   {de:"Releases-Seite – die NVIDIA-Portable als .7z laden", en:"Releases page – grab the NVIDIA portable as .7z"},
+  "t-s2-h":   {de:"Mit 7-Zip entpacken", en:"Unpack with 7-Zip"},
+  "t-s2-p":   {de:'Rechtsklick auf die <code>.7z</code>-Datei → <em>7-Zip → Hier entpacken</em>. Den entstandenen Ordner legst du an einen Ort mit genug Platz (z. B. <code>D:\\ComfyUI</code>). Du installierst nichts – der Ordner <strong>ist</strong> bereits die fertige Installation.',
+               en:'Right-click the <code>.7z</code> file → <em>7-Zip → Extract here</em>. Put the resulting folder somewhere with enough space (e.g. <code>D:\\ComfyUI</code>). You install nothing – the folder <strong>is</strong> already the finished installation.'},
+  "t-s2-c":   {de:"Der entpackte Ordner – bereits eine komplette, eigenständige Installation", en:"The unpacked folder – already a complete, self-contained installation"},
   "t-s3-h":   {de:"Starten – die Oberfläche öffnet sich im Browser", en:"Start it – the interface opens in the browser"},
-  "t-s3-p":   {de:'Nach dem Start läuft ComfyUI als lokaler Server im Hintergrund, und die Bedienoberfläche öffnet sich automatisch in einem <strong>Browser-Fenster</strong>. Falls sie sich nicht von selbst öffnet, rufst du im Browser einfach <code>127.0.0.1:8188</code> auf.',
-               en:'After launching, ComfyUI runs as a local server in the background, and the interface opens automatically in a <strong>browser window</strong>. If it doesn\'t open by itself, just go to <code>127.0.0.1:8188</code> in your browser.'},
+  "t-s3-p":   {de:'Doppelklick auf <code>run_nvidia_gpu.bat</code>. Es öffnet sich ein Konsolenfenster, ComfyUI läuft als lokaler Server im Hintergrund, und die Bedienoberfläche öffnet sich automatisch in einem <strong>Browser-Fenster</strong>. Falls nicht, rufst du im Browser einfach <code>127.0.0.1:8188</code> auf. Das Konsolenfenster lässt du offen, solange du arbeitest.',
+               en:'Double-click <code>run_nvidia_gpu.bat</code>. A console window opens, ComfyUI runs as a local server in the background, and the interface opens automatically in a <strong>browser window</strong>. If it doesn\'t, just go to <code>127.0.0.1:8188</code> in your browser. Leave the console window open while you work.'},
   "t-s3-c":   {de:"ComfyUI läuft im Browser-Fenster – hier auf 127.0.0.1:8188", en:"ComfyUI runs in a browser window – here on 127.0.0.1:8188"},
+  "t-update": {de:"<strong>Updaten?</strong> Im Ordner <code>update</code> liegt <code>update_comfyui.bat</code> – Doppelklick, und deine Installation wird aktualisiert. Da alles im Ordner steckt, betrifft das nur diese eine Installation.",
+               en:"<strong>Updating?</strong> The <code>update</code> folder contains <code>update_comfyui.bat</code> – double-click it and your installation gets updated. Since everything lives in the folder, this only affects that one installation."},
   "t-english":{de:"<strong>Nur die englische Version:</strong> Falls dir irgendwo eine eingedeutschte ComfyUI begegnet – Finger weg. Wir arbeiten ausschließlich mit der <strong>englischen Originalversion</strong>. Die Node-Namen sind dort identisch zu jeder Anleitung und jedem Video da draußen; das macht das Weiterlernen massiv einfacher.",
                en:"<strong>English version only:</strong> If you ever run into a German-localized ComfyUI – stay away. We work exclusively with the <strong>original English version</strong>. Its node names are identical to every guide and video out there, which makes learning further far easier."},
+  "t-tip":    {de:"<strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.",
+               en:"<strong>No models yet?</strong> Completely normal after unpacking. In the next part we load a model and build the first minimal workflow for your first prompt."},
   "t-go":     {de:'<strong>Du willst sofort loslegen?</strong> Hier ist unser fertiger Beispiel-Workflow zum direkt Reinladen: <a href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">basics-first-workflow.json</a>. In ComfyUI per <code>Workflow → Open</code> öffnen oder einfach ins Fenster ziehen. Wie er funktioniert, erklären wir in Teil 04.',
                en:'<strong>Want to jump right in?</strong> Here\'s our ready-made example workflow to load directly: <a href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">basics-first-workflow.json</a>. In ComfyUI open it via <code>Workflow → Open</code> or just drag it into the window. We explain how it works in part 04.'},
-  "t-tip":    {de:"<strong>Noch keine Modelle?</strong> Völlig normal nach der Installation. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.",
-               en:"<strong>No models yet?</strong> Completely normal after installation. In the next part we load a model and build the first minimal workflow for your first prompt."},
-  "t-btn":    {de:"→ ComfyUI Desktop herunterladen", en:"→ Download ComfyUI Desktop"},
+  "t-btn":    {de:"→ ComfyUI Portable herunterladen", en:"→ Download ComfyUI Portable"},
   "t-next-h": {de:"Nächster Schritt", en:"Next step"},
   "t-next-s": {de:"Basics · 02", en:"Basics · 02"},
   "t-next-t": {de:"Den ComfyUI Manager installieren", en:"Install the ComfyUI Manager"}
