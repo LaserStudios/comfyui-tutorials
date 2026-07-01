@@ -118,6 +118,11 @@ git clone https://github.com/ltdrdata/ComfyUI-Manager.git</pre>
     </li>
   </ol>
 
+  <div class="box note">
+    <p id="t-cmd1" style="margin-bottom:14px"><strong>Was bedeuten <code>cd</code> und <code>git clone</code>?</strong> <code>cd</code> steht für „change directory" und wechselt die Konsole in einen Ordner – <code>cd ComfyUI/custom_nodes</code> heißt also „wechsle in den Unterordner custom_nodes". <code>git clone &lt;URL&gt;</code> lädt ein komplettes Repository von GitHub herunter und legt es als neuen Ordner an – nach dem Klonen liegt also ein Ordner <code>ComfyUI-Manager</code> in <code>custom_nodes</code>.</p>
+    <p id="t-cmd2" style="margin-bottom:0"><strong>So öffnest du eine Konsole direkt im richtigen Ordner:</strong> Windows-Explorer öffnen und zu deinem ComfyUI-Ordner navigieren. Dann in die Adresszeile ganz oben klicken (wo der Pfad steht), <code>cmd</code> eintippen und Enter drücken – es öffnet sich ein Konsolenfenster, das schon genau in diesem Ordner steht. So sparst du dir das manuelle <code>cd</code>.</p>
+  </div>
+
   <h2 id="t-use-h">Der Manager im Überblick</h2>
   <p id="t-use-1">Ein Klick auf den Button öffnet das Manager-Fenster. Die wichtigsten Funktionen:</p>
   <figure>
@@ -186,6 +191,10 @@ const STR = {
                en:"cd ComfyUI/custom_nodes\ngit clone https://github.com/ltdrdata/ComfyUI-Manager.git"},
   "t-s2-p2":  {de:"Ohne Git geht es auch per Doppelklick: Lade <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und führe sie aus.",
                en:"No Git? Use the double-click route: download <code>install-manager-for-portable-version.bat</code> into your <code>ComfyUI_windows_portable</code> folder and run it."},
+  "t-cmd1":   {de:'<strong>Was bedeuten <code>cd</code> und <code>git clone</code>?</strong> <code>cd</code> steht für „change directory\" und wechselt die Konsole in einen Ordner – <code>cd ComfyUI/custom_nodes</code> heißt also „wechsle in den Unterordner custom_nodes\". <code>git clone &lt;URL&gt;</code> lädt ein komplettes Repository von GitHub herunter und legt es als neuen Ordner an – nach dem Klonen liegt also ein Ordner <code>ComfyUI-Manager</code> in <code>custom_nodes</code>.',
+               en:'<strong>What do <code>cd</code> and <code>git clone</code> mean?</strong> <code>cd</code> stands for "change directory" and moves the console into a folder – <code>cd ComfyUI/custom_nodes</code> means "switch into the custom_nodes subfolder". <code>git clone &lt;URL&gt;</code> downloads a complete repository from GitHub and creates it as a new folder – so after cloning, a folder called <code>ComfyUI-Manager</code> ends up inside <code>custom_nodes</code>.'},
+  "t-cmd2":   {de:'<strong>So öffnest du eine Konsole direkt im richtigen Ordner:</strong> Windows-Explorer öffnen und zu deinem ComfyUI-Ordner navigieren. Dann in die Adresszeile ganz oben klicken (wo der Pfad steht), <code>cmd</code> eintippen und Enter drücken – es öffnet sich ein Konsolenfenster, das schon genau in diesem Ordner steht. So sparst du dir das manuelle <code>cd</code>.',
+               en:'<strong>How to open a console directly in the right folder:</strong> Open Windows Explorer and navigate to your ComfyUI folder. Click into the address bar at the top (where the path is shown), type <code>cmd</code> and press Enter – a console window opens that\'s already sitting in exactly that folder. That way you skip the manual <code>cd</code>.'},
   "t-s3-h":   {de:"ComfyUI neu starten", en:"Restart ComfyUI"},
   "t-s3-p":   {de:"Nach einem Neustart taucht der <strong>Manager</strong>-Button in der Menüleiste auf. Fertig.",
                en:"After a restart the <strong>Manager</strong> button appears in the menu bar. Done."},
