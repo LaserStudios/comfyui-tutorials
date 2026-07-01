@@ -76,12 +76,13 @@
 
   <span class="kicker">Basics · 04</span>
   <h1 id="t-h1">Der erste Workflow</h1>
-  <p class="lead" id="t-lead">Was Workflows und Nodes überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst.</p>
+  <p class="lead" id="t-lead">Was Workflows, Nodes und Checkpoints überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst, sobald ein Modell geladen ist.</p>
 
   <div class="meta">
     <span class="chip" id="t-chip1">Basics</span>
     <span class="chip" id="t-chip2">Bildgenerierung</span>
     <span class="chip" id="t-chip3">Text-to-Image</span>
+    <span class="chip" id="t-chip4">Checkpoints</span>
   </div>
 
   <h2 id="t-wf-h">Was ist ein Workflow?</h2>
@@ -90,6 +91,11 @@
   <h2 id="t-node-h">Was sind Nodes?</h2>
   <p id="t-node-1">Ein <strong>Node</strong> ist ein einzelner Baustein mit einer klaren Aufgabe. Links sitzen die <strong>Eingänge</strong>, rechts die <strong>Ausgänge</strong>. Du ziehst von einem Ausgang eine Verbindung zum Eingang des nächsten Nodes – so fließen die Daten durch den Graphen.</p>
   <p id="t-node-2">Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.</p>
+
+  <h2 id="t-ckpt-h">Was sind Checkpoints?</h2>
+  <p id="t-ckpt-1">Ein <strong>Checkpoint</strong> ist die eigentliche KI-Modell-Datei (z. B. Stable Diffusion 1.5 oder SDXL) – sie enthält das trainierte Wissen, aus dem das Bild entsteht. Du wählst sie im Node <strong>Load Checkpoint</strong> aus. Ohne ausgewähltes Modell bleibt der Node leer und <strong>kein</strong> Workflow in ComfyUI kann rechnen – das gilt immer, nicht nur für diesen Workflow.</p>
+  <p id="t-ckpt-2">Lade die Datei herunter und leg sie in den Ordner <code>ComfyUI/models/checkpoints/</code>. Nach einem Neustart von ComfyUI (oder Klick auf <strong>Refresh</strong>) taucht sie im Load-Checkpoint-Node zur Auswahl auf.</p>
+  <p><strong id="t-model-l">Für diesen Workflow:</strong> Stable Diffusion 1.5 – <code>v1-5-pruned-emaonly.ckpt</code> (ca. 4,3 GB) · <a href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt" target="_blank" rel="noopener" id="t-model-dl">Download bei Hugging Face</a></p>
 
   <h2 id="t-flow-h">Der simple Bild-Workflow</h2>
   <p id="t-flow-1">Dieser Workflow erzeugt aus einem Textprompt ein Bild (Text-to-Image). Er besteht aus sechs Nodes, die der Reihe nach durchlaufen werden:</p>
@@ -178,6 +184,8 @@
       <h3 id="t-n6-h">Save Image</h3><p id="t-n6-p">Zeigt das fertige Bild an und speichert es automatisch im Output-Ordner.</p></div></li>
   </ul>
 
+  <a class="btn" id="t-btn" href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" download="basics-first-workflow.json" onclick="return downloadWorkflow(event,this.href)">↓ Workflow herunterladen (.json)</a>
+
   <h2 id="t-use-h">So nutzt du den Workflow</h2>
   <ol class="steps">
     <li id="t-u1">Lade die Vorlage über <code>Workflow → Open</code> und wähle die heruntergeladene <code>.json</code>-Datei.</li>
@@ -185,15 +193,6 @@
     <li id="t-u3">Tippe deinen Wunsch in den <strong>positiven</strong> Prompt-Node (der negative bleibt erstmal wie er ist).</li>
     <li id="t-u4">Klick auf <strong>Queue Prompt</strong> – nach kurzer Rechenzeit erscheint dein Bild im Save-Image-Node.</li>
   </ol>
-
-  <a class="btn" id="t-btn" href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" download="basics-first-workflow.json" onclick="return downloadWorkflow(event,this.href)">↓ Workflow herunterladen (.json)</a>
-
-  <div class="box note">
-    <h3 id="t-tip-h">Wichtig: Ohne Modell läuft nichts</h3>
-    <p id="t-tip-1">Bevor du <strong>Queue Prompt</strong> klicken kannst, muss im Node <strong>Load Checkpoint</strong> ein Modell ausgewählt sein. Ein <strong>Checkpoint</strong> ist die eigentliche KI-Modell-Datei (z. B. Stable Diffusion 1.5 oder SDXL) – sie enthält das trainierte Wissen, aus dem das Bild entsteht. Ohne sie bleibt der Node leer und der Workflow kann nicht rechnen.</p>
-    <p id="t-tip-2">Lade die Datei herunter und leg sie in den Ordner <code>ComfyUI/models/checkpoints/</code>. Nach einem Neustart von ComfyUI (oder Klick auf <strong>Refresh</strong>) taucht sie im Load-Checkpoint-Node zur Auswahl auf.</p>
-    <p><strong id="t-model-l">Für diesen Workflow:</strong> Stable Diffusion 1.5 – <code>v1-5-pruned-emaonly.ckpt</code> (ca. 4,3 GB) · <a href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt" target="_blank" rel="noopener" id="t-model-dl">Download bei Hugging Face</a></p>
-  </div>
 
   <div class="divider"></div>
 
@@ -213,11 +212,12 @@
 <script>
 const STR = {
   "t-h1":     {de:"Der erste Workflow", en:"Your First Workflow"},
-  "t-lead":   {de:"Was Workflows und Nodes überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst.",
-               en:"What workflows and nodes actually are – and the simplest workflow to generate your first image."},
+  "t-lead":   {de:"Was Workflows, Nodes und Checkpoints überhaupt sind – und der einfachste Workflow, mit dem du dein erstes Bild generierst, sobald ein Modell geladen ist.",
+               en:"What workflows, nodes and checkpoints actually are – and the simplest workflow to generate your first image, once a model is loaded."},
   "t-chip1":  {de:"Basics", en:"Basics"},
   "t-chip2":  {de:"Bildgenerierung", en:"Image generation"},
   "t-chip3":  {de:"Text-to-Image", en:"Text-to-Image"},
+  "t-chip4":  {de:"Checkpoints", en:"Checkpoints"},
   "t-wf-h":   {de:"Was ist ein Workflow?", en:"What is a workflow?"},
   "t-wf-1":   {de:"Ein <strong>Workflow</strong> ist der komplette Graph in ComfyUI: alle Bausteine plus ihre Verbindungen, die zusammen ein Ergebnis erzeugen. Du kannst ihn als <code>.json</code>-Datei speichern, teilen und jederzeit wieder laden – genau das machen wir hier mit einer fertigen Vorlage.",
                en:"A <strong>workflow</strong> is the complete graph in ComfyUI: all the building blocks plus their connections that together produce a result. You can save it as a <code>.json</code> file, share it and reload it anytime – which is exactly what we do here with a ready-made template."},
@@ -226,6 +226,13 @@ const STR = {
                en:"A <strong>node</strong> is a single building block with one clear job. Inputs are on the left, <strong>outputs</strong> on the right. You drag a connection from an output to the input of the next node – that's how data flows through the graph."},
   "t-node-2": {de:"Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.",
                en:"The colored dots indicate the <strong>data type</strong> (e.g. MODEL, CLIP, LATENT, IMAGE). Only matching types connect – same color to same color. That's all you need to know for now."},
+  "t-ckpt-h": {de:"Was sind Checkpoints?", en:"What are checkpoints?"},
+  "t-ckpt-1": {de:"Ein <strong>Checkpoint</strong> ist die eigentliche KI-Modell-Datei (z. B. Stable Diffusion 1.5 oder SDXL) – sie enthält das trainierte Wissen, aus dem das Bild entsteht. Du wählst sie im Node <strong>Load Checkpoint</strong> aus. Ohne ausgewähltes Modell bleibt der Node leer und <strong>kein</strong> Workflow in ComfyUI kann rechnen – das gilt immer, nicht nur für diesen Workflow.",
+               en:"A <strong>checkpoint</strong> is the actual AI model file (e.g. Stable Diffusion 1.5 or SDXL) – it holds the trained knowledge the image is generated from. You select it in the <strong>Load Checkpoint</strong> node. Without a selected model, the node stays empty and <strong>no</strong> workflow in ComfyUI can run – that's always true, not just for this one."},
+  "t-ckpt-2": {de:"Lade die Datei herunter und leg sie in den Ordner <code>ComfyUI/models/checkpoints/</code>. Nach einem Neustart von ComfyUI (oder Klick auf <strong>Refresh</strong>) taucht sie im Load-Checkpoint-Node zur Auswahl auf.",
+               en:"Download the file and place it in the <code>ComfyUI/models/checkpoints/</code> folder. After restarting ComfyUI (or clicking <strong>Refresh</strong>), it shows up for selection in the Load Checkpoint node."},
+  "t-model-l":{de:"Für diesen Workflow:", en:"For this workflow:"},
+  "t-model-dl":{de:"Download bei Hugging Face", en:"Download on Hugging Face"},
   "t-flow-h": {de:"Der simple Bild-Workflow", en:"The simple image workflow"},
   "t-flow-1": {de:"Dieser Workflow erzeugt aus einem Textprompt ein Bild (Text-to-Image). Er besteht aus sechs Nodes, die der Reihe nach durchlaufen werden:",
                en:"This workflow turns a text prompt into an image (text-to-image). It consists of six nodes that run in sequence:"},
@@ -258,13 +265,6 @@ const STR = {
                en:"Type what you want into the <strong>positive</strong> prompt node (leave the negative one as it is for now)."},
   "t-u4":     {de:"Klick auf <strong>Queue Prompt</strong> – nach kurzer Rechenzeit erscheint dein Bild im Save-Image-Node.",
                en:"Click <strong>Queue Prompt</strong> – after a short compute time your image appears in the Save Image node."},
-  "t-tip-h":  {de:"Wichtig: Ohne Modell läuft nichts", en:"Important: nothing runs without a model"},
-  "t-tip-1":  {de:"Bevor du <strong>Queue Prompt</strong> klicken kannst, muss im Node <strong>Load Checkpoint</strong> ein Modell ausgewählt sein. Ein <strong>Checkpoint</strong> ist die eigentliche KI-Modell-Datei (z. B. Stable Diffusion 1.5 oder SDXL) – sie enthält das trainierte Wissen, aus dem das Bild entsteht. Ohne sie bleibt der Node leer und der Workflow kann nicht rechnen.",
-               en:"Before you can click <strong>Queue Prompt</strong>, a model must be selected in the <strong>Load Checkpoint</strong> node. A <strong>checkpoint</strong> is the actual AI model file (e.g. Stable Diffusion 1.5 or SDXL) – it holds the trained knowledge the image is generated from. Without it, the node stays empty and the workflow can't compute."},
-  "t-tip-2":  {de:"Lade die Datei herunter und leg sie in den Ordner <code>ComfyUI/models/checkpoints/</code>. Nach einem Neustart von ComfyUI (oder Klick auf <strong>Refresh</strong>) taucht sie im Load-Checkpoint-Node zur Auswahl auf.",
-               en:"Download the file and place it in the <code>ComfyUI/models/checkpoints/</code> folder. After restarting ComfyUI (or clicking <strong>Refresh</strong>), it shows up for selection in the Load Checkpoint node."},
-  "t-model-l":{de:"Für diesen Workflow:", en:"For this workflow:"},
-  "t-model-dl":{de:"Download bei Hugging Face", en:"Download on Hugging Face"},
   "t-btn":    {de:"↓ Workflow herunterladen (.json)", en:"↓ Download workflow (.json)"},
   "t-next-h": {de:"Nächster Schritt", en:"Next step"},
   "t-next-s": {de:"Basics · 05", en:"Basics · 05"},
