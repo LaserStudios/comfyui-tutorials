@@ -98,10 +98,13 @@
   <h2 id="t-hw-h">Voraussetzung</h2>
   <p id="t-hw-1">Wir fokussieren uns in dieser Reihe auf <strong>NVIDIA-Hardware</strong>. NVIDIA-Grafikkarten sind über CUDA besonders gut für KI-Generierung geeignet, am breitesten unterstützt und liefern die schnellsten Ergebnisse. AMD und Apple funktionieren grundsätzlich auch, sind aber mit anderen Workflows verbunden, die hier nicht behandelt werden.</p>
   <p id="t-hw-2">Wichtig zu verstehen: Die Modelle werden beim Generieren in den <strong>VRAM</strong> (den Speicher der Grafikkarte) geladen. Je größer und komplexer ein Modell, desto mehr VRAM belegt es – deshalb ist VRAM beim KI-Generieren oft der entscheidende Faktor.</p>
+  <div class="box note">
+    <p style="margin:0" id="t-hw-tip"><strong>So findest du deinen VRAM heraus:</strong> Task-Manager öffnen (<code>Strg+Umschalt+Esc</code>) → Reiter <strong>Leistung</strong> → <strong>GPU</strong> → dort steht der <em>„Dedizierter GPU-Speicher“</em>.</p>
+  </div>
   <ul id="t-hw-list">
-    <li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (6 GB als Minimum, 8 GB+ angenehm).</li>
+    <li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (8 GB als Minimum für unser Startmodell Wan 2.2, 12 GB+ angenehm).</li>
     <li>Windows (die Portable-Version ist Windows-only).</li>
-    <li>7-Zip zum Entpacken sowie mehrere GB freier Speicher für das Programm und die Modelle.</li>
+    <li>7-Zip zum Entpacken sowie ca. 15 GB freier Speicher für das Programm (~2 GB) und die Modelle (~10 GB).</li>
   </ul>
 
   <h2 id="t-get-h">Entpacken &amp; starten</h2>
@@ -197,7 +200,7 @@
   </div>
 
   <div class="box note">
-    <span id="t-go"><strong>Du willst sofort loslegen?</strong> Hier ist unser fertiger Beispiel-Workflow zum direkt Reinladen: <a href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">basics-first-workflow.json</a>. In ComfyUI per <code>Workflow → Open</code> öffnen oder einfach ins Fenster ziehen. Wie er funktioniert, erklären wir in Teil 04.</span>
+    <span id="t-go"><strong>Du willst sofort loslegen?</strong> In ComfyUI findest du unter <code>Workflow → Browse Templates</code> die eingebaute Vorlage <strong>„Wan 2.2 5B video generation“</strong> – fehlende Modelle bietet ComfyUI automatisch zum Download an. Wie das alles funktioniert, erklären wir Schritt für Schritt in Teil 04.</span>
   </div>
 
   <div class="divider"></div>
@@ -242,8 +245,10 @@ const STR = {
                en:"In this series we focus on <strong>NVIDIA hardware</strong>. NVIDIA graphics cards are particularly well suited for AI generation via CUDA, the most broadly supported, and deliver the fastest results. AMD and Apple work too in principle, but involve different workflows that we don't cover here."},
   "t-hw-2":   {de:"Wichtig zu verstehen: Die Modelle werden beim Generieren in den <strong>VRAM</strong> (den Speicher der Grafikkarte) geladen. Je größer und komplexer ein Modell, desto mehr VRAM belegt es – deshalb ist VRAM beim KI-Generieren oft der entscheidende Faktor.",
                en:"Important to understand: during generation the models are loaded into <strong>VRAM</strong> (the graphics card's memory). The larger and more complex a model, the more VRAM it takes up – which is why VRAM is often the decisive factor in AI generation."},
-  "t-hw-list":{de:"<li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (6 GB als Minimum, 8 GB+ angenehm).</li><li>Windows (die Portable-Version ist Windows-only).</li><li>7-Zip zum Entpacken sowie mehrere GB freier Speicher für das Programm und die Modelle.</li>",
-               en:"<li>An NVIDIA GPU – the more VRAM the better (6 GB minimum, 8 GB+ comfortable).</li><li>Windows (the Portable version is Windows-only).</li><li>7-Zip to unpack it, plus several GB of free disk space for the program and the models.</li>"},
+  "t-hw-tip": {de:"<strong>So findest du deinen VRAM heraus:</strong> Task-Manager öffnen (<code>Strg+Umschalt+Esc</code>) → Reiter <strong>Leistung</strong> → <strong>GPU</strong> → dort steht der <em>„Dedizierter GPU-Speicher“</em>.",
+               en:"<strong>How to check your VRAM:</strong> open Task Manager (<code>Ctrl+Shift+Esc</code>) → <strong>Performance</strong> tab → <strong>GPU</strong> → look for <em>“Dedicated GPU memory”</em>."},
+  "t-hw-list":{de:"<li>Eine NVIDIA-GPU – je mehr VRAM, desto besser (8 GB als Minimum für unser Startmodell Wan 2.2, 12 GB+ angenehm).</li><li>Windows (die Portable-Version ist Windows-only).</li><li>7-Zip zum Entpacken sowie ca. 15 GB freier Speicher für das Programm (~2 GB) und die Modelle (~10 GB).</li>",
+               en:"<li>An NVIDIA GPU – the more VRAM the better (8 GB minimum for our starter model Wan 2.2, 12 GB+ comfortable).</li><li>Windows (the Portable version is Windows-only).</li><li>7-Zip to unpack it, plus about 15 GB of free disk space for the program (~2 GB) and the models (~10 GB).</li>"},
   "t-get-h":  {de:"Entpacken &amp; starten", en:"Unpack &amp; start"},
   "t-s1-h":   {de:"Portable-Version herunterladen", en:"Download the Portable version"},
   "t-s1-p":   {de:'Auf der ComfyUI-Releases-Seite gibt es die Portable-Version als <code>.7z</code>-Datei. Wir nehmen die NVIDIA-Variante: <code>ComfyUI_windows_portable_nvidia.7z</code>. Download: <a href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" rel="noopener">github.com/comfyanonymous/ComfyUI/releases</a>.',
@@ -263,8 +268,8 @@ const STR = {
                en:"<strong>English version only:</strong> If you ever run into a German-localized ComfyUI – stay away. We work exclusively with the <strong>original English version</strong>. Its node names are identical to every guide and video out there, which makes learning further far easier."},
   "t-tip":    {de:"<strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.",
                en:"<strong>No models yet?</strong> Completely normal after unpacking. In the next part we load a model and build the first minimal workflow for your first prompt."},
-  "t-go":     {de:'<strong>Du willst sofort loslegen?</strong> Hier ist unser fertiger Beispiel-Workflow zum direkt Reinladen: <a href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">basics-first-workflow.json</a>. In ComfyUI per <code>Workflow → Open</code> öffnen oder einfach ins Fenster ziehen. Wie er funktioniert, erklären wir in Teil 04.',
-               en:'<strong>Want to jump right in?</strong> Here\'s our ready-made example workflow to load directly: <a href="https://raw.githubusercontent.com/LaserStudios/comfyui-workflows/main/basics/basics-first-workflow.json" target="_blank" rel="noopener">basics-first-workflow.json</a>. In ComfyUI open it via <code>Workflow → Open</code> or just drag it into the window. We explain how it works in part 04.'},
+  "t-go":     {de:'<strong>Du willst sofort loslegen?</strong> In ComfyUI findest du unter <code>Workflow → Browse Templates</code> die eingebaute Vorlage <strong>„Wan 2.2 5B video generation“</strong> – fehlende Modelle bietet ComfyUI automatisch zum Download an. Wie das alles funktioniert, erklären wir Schritt für Schritt in Teil 04.',
+               en:'<strong>Want to jump right in?</strong> In ComfyUI, go to <code>Workflow → Browse Templates</code> and pick the built-in <strong>“Wan 2.2 5B video generation”</strong> template – ComfyUI offers to download any missing models automatically. We explain how it all works step by step in part 04.'},
   "t-btn":    {de:"→ ComfyUI Portable herunterladen", en:"→ Download ComfyUI Portable"},
   "t-next-h": {de:"Nächster Schritt", en:"Next step"},
   "t-next-s": {de:"Basics · 02", en:"Basics · 02"},
