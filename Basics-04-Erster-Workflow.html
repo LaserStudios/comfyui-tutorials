@@ -76,13 +76,13 @@
 
   <span class="kicker">Basics · 04</span>
   <h1 id="t-h1">Der erste Workflow</h1>
-  <p class="lead" id="t-lead">Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.2 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.</p>
+  <p class="lead" id="t-lead">Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.1 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.</p>
 
   <div class="meta">
     <span class="chip" id="t-chip1">Basics</span>
     <span class="chip" id="t-chip2">Videogenerierung</span>
     <span class="chip" id="t-chip3">Text-to-Video</span>
-    <span class="chip" id="t-chip4">Wan 2.2</span>
+    <span class="chip" id="t-chip4">Wan 2.1</span>
   </div>
 
   <h2 id="t-wf-h">Was ist ein Workflow?</h2>
@@ -92,8 +92,15 @@
   <p id="t-node-1">Ein <strong>Node</strong> ist ein einzelner Baustein mit einer klaren Aufgabe. Links sitzen die <strong>Eingänge</strong>, rechts die <strong>Ausgänge</strong>. Du ziehst von einem Ausgang eine Verbindung zum Eingang des nächsten Nodes – so fließen die Daten durch den Graphen.</p>
   <p id="t-node-2">Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.</p>
 
-  <h2 id="t-model-h">Das Modell: Wan 2.2 – in drei Teilen</h2>
-  <p id="t-model-1">Wir starten direkt mit <strong>Wan 2.2 (5B)</strong> – einem modernen, quelloffenen Videomodell unter <strong>Apache-2.0-Lizenz</strong> (auch kommerziell frei nutzbar). Anders als ältere Modelle kommt es nicht als eine einzige Datei, sondern in <strong>drei Teilen</strong> – und jeder Teil hat seinen eigenen Loader-Node:</p>
+  <h2 id="t-model-h">Das Modell: Wan 2.1</h2>
+  <p id="t-model-1">Wir arbeiten mit <strong>Wan 2.1</strong> – einem quelloffenen Videomodell von Alibaba (Februar 2025). Unter der <strong>Apache-2.0-Lizenz</strong> ist es auch kommerziell frei nutzbar. Wan 2.1 gibt es in zwei Größen, aus denen du je nach Hardware und Qualitätsanspruch wählst:</p>
+
+  <div class="box" id="t-size">
+    <h3 style="margin-top:0">Zwei Größen – du wählst</h3>
+    <p style="margin:0;color:var(--muted)"><strong>1.3B</strong> – die leichte Variante: schnell, läuft schon ab ca. <strong>8 GB VRAM</strong>, ideal zum Einstieg (Auflösung um 480p). · <strong>14B</strong> – die große Variante: <strong>deutlich bessere Bewegung und Details</strong>, braucht mehr VRAM, dafür bis 720p. Für beste Ergebnisse jeweils die <code>fp16</code>-Version nehmen.</p>
+  </div>
+
+  <p id="t-parts">Wie bei modernen Modellen üblich kommt Wan 2.1 nicht als eine einzige Datei, sondern in <strong>drei Teilen</strong> – und jeder Teil hat seinen eigenen Loader-Node:</p>
 
   <div class="box" id="t-mod-a">
     <h3 style="margin-top:0">🧠 Diffusion Model – das Bild-Wissen</h3>
@@ -113,10 +120,10 @@
   </div>
 
   <div class="box note">
-    <p style="margin:0" id="t-dl-1"><strong>Das Beste:</strong> Du musst keine dieser Dateien manuell herunterladen. Die eingebaute Vorlage erkennt, was fehlt, und ComfyUI bietet den Download automatisch an – alle drei Dateien (zusammen ca. 10 GB) landen von selbst in den richtigen Ordnern.</p>
+    <p style="margin:0" id="t-dl-1"><strong>Das Beste:</strong> Du musst die Dateien nicht von Hand suchen. Die Vorlage erkennt, was fehlt, und ComfyUI bietet den Download direkt an. Für die leichte 1.3B-Variante sind das zusammen rund <strong>8 GB</strong> (Modell + UMT5-Text-Encoder + VAE); die 14B-Variante ist deutlich größer.</p>
   </div>
 
-  <h2 id="t-flow-h">Der Wan-2.2-Workflow</h2>
+  <h2 id="t-flow-h">Der Wan-2.1-Workflow</h2>
   <p id="t-flow-1">Dieser Workflow erzeugt aus einem Textprompt ein kurzes Video (Text-to-Video). Er besteht aus acht Nodes, die der Reihe nach durchlaufen werden:</p>
 
   <figure>
@@ -156,11 +163,11 @@
       <text x="262" y="187" fill="#e0bfbf" font-family="sans-serif" font-size="10" font-weight="700">CLIP Text Encode (–)</text>
       <circle cx="250" cy="220" r="5" fill="#ffd24a"/>
       <circle cx="410" cy="220" r="5" fill="#ff8a3a"/>
-      <!-- Wan Latent -->
+      <!-- Empty Latent Video -->
       <rect x="250" y="310" width="160" height="80" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
       <rect x="250" y="310" width="160" height="24" rx="8" fill="#2a2a34"/>
-      <text x="262" y="327" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Wan 2.2 Latent</text>
-      <text x="262" y="362" fill="#6f6f7c" font-family="sans-serif" font-size="10">1280 × 704 · Länge</text>
+      <text x="262" y="327" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Empty Latent Video</text>
+      <text x="262" y="362" fill="#6f6f7c" font-family="sans-serif" font-size="10">832 × 480 · Länge</text>
       <circle cx="410" cy="355" r="5" fill="#ff4fa3"/>
       <!-- KSampler -->
       <rect x="470" y="150" width="150" height="150" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
@@ -199,15 +206,15 @@
 
   <ul class="nodelist">
     <li><span class="dot" style="background:#b06fff"></span><div>
-      <h3 id="t-n1-h">Load Diffusion Model</h3><p id="t-n1-p">Lädt das Bild-Wissen – das eigentliche Wan-2.2-Modell (<code>wan2.2_ti2v_5B_fp16.safetensors</code>).</p></div></li>
+      <h3 id="t-n1-h">Load Diffusion Model</h3><p id="t-n1-p">Lädt das Bild-Wissen – das eigentliche Wan-2.1-Modell (<code>wan2.1_t2v_1.3B_fp16.safetensors</code> bzw. <code>wan2.1_t2v_14B_fp16.safetensors</code>).</p></div></li>
     <li><span class="dot" style="background:#ffd24a"></span><div>
-      <h3 id="t-n2-h">Load CLIP</h3><p id="t-n2-p">Lädt das Sprachverständnis – den UMT5-Text-Encoder, der deine Prompts für das Modell übersetzt.</p></div></li>
+      <h3 id="t-n2-h">Load CLIP</h3><p id="t-n2-p">Lädt das Sprachverständnis – den UMT5-Text-Encoder (<code>umt5_xxl_fp8_e4m3fn_scaled.safetensors</code>), der deine Prompts für das Modell übersetzt.</p></div></li>
     <li><span class="dot" style="background:#ff5f8f"></span><div>
-      <h3 id="t-n3-h">Load VAE</h3><p id="t-n3-p">Lädt den Bild-Dekoder, der am Ende aus dem latenten Ergebnis sichtbare Frames macht.</p></div></li>
+      <h3 id="t-n3-h">Load VAE</h3><p id="t-n3-p">Lädt den Bild-Dekoder (<code>wan_2.1_vae.safetensors</code>), der am Ende aus dem latenten Ergebnis sichtbare Frames macht.</p></div></li>
     <li><span class="dot" style="background:#3a9a5a"></span><div>
       <h3 id="t-n4-h">CLIP Text Encode (positiv &amp; negativ)</h3><p id="t-n4-p">Hier tippst du. Der positive Node beschreibt, was im Video passieren soll, der negative, was nicht. Wan versteht <strong>natürliche Sprache</strong> – ganze Sätze funktionieren besser als Stichwort-Listen.</p></div></li>
     <li><span class="dot" style="background:#ff4fa3"></span><div>
-      <h3 id="t-n5-h">Wan 2.2 Latent</h3><p id="t-n5-p">Legt die Leinwand fest: Auflösung (z. B. <code>1280×704</code>) und die <strong>Länge</strong> in Frames – also wie lang dein Video wird.</p></div></li>
+      <h3 id="t-n5-h">Empty Latent Video</h3><p id="t-n5-p">Legt die Leinwand fest: Auflösung (z. B. <code>832×480</code> bei 1.3B, bis <code>1280×720</code> bei 14B) und die <strong>Länge</strong> in Frames. Der Node heißt <code>EmptyHunyuanLatentVideo</code>.</p></div></li>
     <li><span class="dot" style="background:#ff8a3a"></span><div>
       <h3 id="t-n6-h">KSampler</h3><p id="t-n6-p">Das Herzstück. Er rechnet aus Rauschen schrittweise die Frames. Stellschrauben: <code>steps</code>, <code>cfg</code>, <code>seed</code> und Sampler.</p></div></li>
     <li><span class="dot" style="background:#4ad0ff"></span><div>
@@ -218,14 +225,15 @@
 
   <h2 id="t-use-h">So startest du</h2>
   <ol class="steps">
-    <li id="t-u1">Öffne <code>Workflow → Browse Templates</code>, wähle die Kategorie <strong>Video</strong> und dort die Vorlage <strong>„Wan 2.2 5B video generation“</strong>.</li>
-    <li id="t-u2">ComfyUI erkennt die fehlenden Modell-Dateien und bietet den <strong>Download automatisch an</strong> – bestätigen, kurz warten (ca. 10 GB), alles landet in den richtigen Ordnern.</li>
-    <li id="t-u3">Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).</li>
-    <li id="t-u4">Klick auf <strong>Queue Prompt</strong> – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.</li>
+    <li id="t-u1">Öffne <code>Workflow → Browse Templates</code>, wähle die Kategorie <strong>Video</strong> und dort die Vorlage <strong>„Wan 2.1 Text to Video“</strong>.</li>
+    <li id="t-u2">ComfyUI erkennt die fehlenden Modell-Dateien und bietet den <strong>Download automatisch an</strong> – bestätigen und kurz warten. (Standard ist die leichte 1.3B-Variante.)</li>
+    <li id="t-u3">Für <strong>bessere Ergebnisse</strong> wählst du im Node <strong>Load Diffusion Model</strong> die <code>14B</code>-Datei (einmalig herunterladen) – optional, sonst bleibt es bei 1.3B.</li>
+    <li id="t-u4">Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).</li>
+    <li id="t-u5">Klick auf <strong>Queue Prompt</strong> – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.</li>
   </ol>
 
   <div class="box note">
-    <p style="margin:0" id="t-vram-1"><strong>Hardware-Check:</strong> Wan 2.2 5B braucht mindestens <strong>8 GB VRAM</strong>. Wenn die Generierung sehr lange dauert oder abbricht, reduziere zuerst die Auflösung und die Video-Länge im Latent-Node.</p>
+    <p style="margin:0" id="t-vram-1"><strong>Hardware-Check:</strong> Die <strong>1.3B</strong>-Variante läuft schon ab ca. <strong>8 GB VRAM</strong>. Die <strong>14B</strong>-Variante liefert bessere Ergebnisse, braucht aber deutlich mehr VRAM (16 GB+ empfohlen, für 720p mehr). Wenn eine Generierung sehr lange dauert oder abbricht, reduziere zuerst Auflösung und Länge im Latent-Node – oder bleib bei 1.3B.</p>
   </div>
 
   <div class="box note">
@@ -250,12 +258,12 @@
 <script>
 const STR = {
   "t-h1":     {de:"Der erste Workflow", en:"Your First Workflow"},
-  "t-lead":   {de:"Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.2 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.",
-               en:"What workflows and nodes are, how a modern model like Wan 2.2 is structured – and how to generate your first video using the built-in template."},
+  "t-lead":   {de:"Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.1 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.",
+               en:"What workflows and nodes are, how a modern model like Wan 2.1 is structured – and how to generate your first video using the built-in template."},
   "t-chip1":  {de:"Basics", en:"Basics"},
   "t-chip2":  {de:"Videogenerierung", en:"Video generation"},
   "t-chip3":  {de:"Text-to-Video", en:"Text-to-Video"},
-  "t-chip4":  {de:"Wan 2.2", en:"Wan 2.2"},
+  "t-chip4":  {de:"Wan 2.1", en:"Wan 2.1"},
   "t-wf-h":   {de:"Was ist ein Workflow?", en:"What is a workflow?"},
   "t-wf-1":   {de:"Ein <strong>Workflow</strong> ist der komplette Graph in ComfyUI: alle Bausteine plus ihre Verbindungen, die zusammen ein Ergebnis erzeugen. Du kannst ihn als <code>.json</code>-Datei speichern, teilen und jederzeit wieder laden. Für den Einstieg nutzen wir eine <strong>fertige Vorlage, die in ComfyUI bereits eingebaut ist</strong> – du musst also nichts selbst verdrahten.",
                en:"A <strong>workflow</strong> is the complete graph in ComfyUI: all the building blocks plus their connections that together produce a result. You can save it as a <code>.json</code> file, share it and reload it anytime. To get started we use a <strong>ready-made template that ships with ComfyUI</strong> – so there's nothing to wire up yourself."},
@@ -264,9 +272,13 @@ const STR = {
                en:"A <strong>node</strong> is a single building block with one clear job. Inputs are on the left, <strong>outputs</strong> on the right. You drag a connection from an output to the input of the next node – that's how data flows through the graph."},
   "t-node-2": {de:"Die farbigen Punkte zeigen den <strong>Datentyp</strong> (z. B. MODEL, CLIP, LATENT, IMAGE). Verbinden lassen sich nur gleiche Typen – gleiche Farbe an gleiche Farbe. Mehr musst du fürs Erste nicht wissen.",
                en:"The colored dots indicate the <strong>data type</strong> (e.g. MODEL, CLIP, LATENT, IMAGE). Only matching types connect – same color to same color. That's all you need to know for now."},
-  "t-model-h":{de:"Das Modell: Wan 2.2 – in drei Teilen", en:"The model: Wan 2.2 – in three parts"},
-  "t-model-1":{de:"Wir starten direkt mit <strong>Wan 2.2 (5B)</strong> – einem modernen, quelloffenen Videomodell unter <strong>Apache-2.0-Lizenz</strong> (auch kommerziell frei nutzbar). Anders als ältere Modelle kommt es nicht als eine einzige Datei, sondern in <strong>drei Teilen</strong> – und jeder Teil hat seinen eigenen Loader-Node:",
-               en:"We start straight away with <strong>Wan 2.2 (5B)</strong> – a modern, open-source video model under the <strong>Apache 2.0 license</strong> (free for commercial use too). Unlike older models, it doesn't come as a single file but in <strong>three parts</strong> – and each part has its own loader node:"},
+  "t-model-h":{de:"Das Modell: Wan 2.1", en:"The model: Wan 2.1"},
+  "t-model-1":{de:"Wir arbeiten mit <strong>Wan 2.1</strong> – einem quelloffenen Videomodell von Alibaba (Februar 2025). Unter der <strong>Apache-2.0-Lizenz</strong> ist es auch kommerziell frei nutzbar. Wan 2.1 gibt es in zwei Größen, aus denen du je nach Hardware und Qualitätsanspruch wählst:",
+               en:"We work with <strong>Wan 2.1</strong> – an open-source video model from Alibaba (February 2025). Under the <strong>Apache 2.0 license</strong> it's free for commercial use too. Wan 2.1 comes in two sizes, so you can pick based on your hardware and quality needs:"},
+  "t-size":   {de:'<h3 style="margin-top:0">Zwei Größen – du wählst</h3><p style="margin:0;color:var(--muted)"><strong>1.3B</strong> – die leichte Variante: schnell, läuft schon ab ca. <strong>8 GB VRAM</strong>, ideal zum Einstieg (Auflösung um 480p). · <strong>14B</strong> – die große Variante: <strong>deutlich bessere Bewegung und Details</strong>, braucht mehr VRAM, dafür bis 720p. Für beste Ergebnisse jeweils die <code>fp16</code>-Version nehmen.</p>',
+               en:'<h3 style="margin-top:0">Two sizes – your choice</h3><p style="margin:0;color:var(--muted)"><strong>1.3B</strong> – the light version: fast, runs from about <strong>8 GB VRAM</strong>, ideal for getting started (around 480p). · <strong>14B</strong> – the large version: <strong>noticeably better motion and detail</strong>, needs more VRAM but goes up to 720p. For the best results use the <code>fp16</code> version of each.</p>'},
+  "t-parts":  {de:"Wie bei modernen Modellen üblich kommt Wan 2.1 nicht als eine einzige Datei, sondern in <strong>drei Teilen</strong> – und jeder Teil hat seinen eigenen Loader-Node:",
+               en:"As is common with modern models, Wan 2.1 doesn't come as a single file but in <strong>three parts</strong> – and each part has its own loader node:"},
   "t-mod-a":  {de:'<h3 style="margin-top:0">🧠 Diffusion Model – das Bild-Wissen</h3><p style="margin:0;color:var(--muted)">Das eigentliche trainierte Modell. Es rechnet aus Rauschen Schritt für Schritt die Bilder deines Videos. Node: <strong>Load Diffusion Model</strong> · Ordner: <code>models/diffusion_models/</code></p>',
                en:'<h3 style="margin-top:0">🧠 Diffusion Model – the image knowledge</h3><p style="margin:0;color:var(--muted)">The actual trained model. It computes the frames of your video from noise, step by step. Node: <strong>Load Diffusion Model</strong> · folder: <code>models/diffusion_models/</code></p>'},
   "t-mod-b":  {de:'<h3 style="margin-top:0">💬 Text Encoder (UMT5) – das Sprachverständnis</h3><p style="margin:0;color:var(--muted)">Übersetzt deinen Prompt in eine Form, mit der das Modell arbeiten kann. Node: <strong>Load CLIP</strong> · Ordner: <code>models/text_encoders/</code></p>',
@@ -275,28 +287,28 @@ const STR = {
                en:'<h3 style="margin-top:0">🎞️ VAE – the image decoder</h3><p style="margin:0;color:var(--muted)">Converts the compressed (latent) result into visible pixels at the end. Node: <strong>Load VAE</strong> · folder: <code>models/vae/</code></p>'},
   "t-why-1":  {de:"<strong>Warum kein „Load Checkpoint“?</strong> Ältere Modelle wie Stable Diffusion packten alle drei Teile in eine einzige Datei – den <em>Checkpoint</em>. Moderne Modelle liefern sie getrennt aus: Das spart Speicher und ist flexibler, weil z. B. derselbe Text Encoder für mehrere Modelle genutzt werden kann. Merksatz: <strong>Ein Modell = Wissen + Sprachverständnis + Dekoder.</strong>",
                en:"<strong>Why no “Load Checkpoint”?</strong> Older models like Stable Diffusion bundled all three parts into a single file – the <em>checkpoint</em>. Modern models ship them separately: it saves disk space and is more flexible, e.g. the same text encoder can serve several models. Rule of thumb: <strong>a model = knowledge + language understanding + decoder.</strong>"},
-  "t-dl-1":   {de:"<strong>Das Beste:</strong> Du musst keine dieser Dateien manuell herunterladen. Die eingebaute Vorlage erkennt, was fehlt, und ComfyUI bietet den Download automatisch an – alle drei Dateien (zusammen ca. 10 GB) landen von selbst in den richtigen Ordnern.",
-               en:"<strong>Best part:</strong> you don't have to download any of these files manually. The built-in template detects what's missing and ComfyUI offers the download automatically – all three files (about 10 GB total) end up in the right folders by themselves."},
-  "t-flow-h": {de:"Der Wan-2.2-Workflow", en:"The Wan 2.2 workflow"},
+  "t-dl-1":   {de:"<strong>Das Beste:</strong> Du musst die Dateien nicht von Hand suchen. Die Vorlage erkennt, was fehlt, und ComfyUI bietet den Download direkt an. Für die leichte 1.3B-Variante sind das zusammen rund <strong>8 GB</strong> (Modell + UMT5-Text-Encoder + VAE); die 14B-Variante ist deutlich größer.",
+               en:"<strong>Best part:</strong> you don't have to hunt down the files. The template detects what's missing and ComfyUI offers the download directly. For the light 1.3B setup that's around <strong>8 GB</strong> total (model + UMT5 text encoder + VAE); the 14B version is considerably larger."},
+  "t-flow-h": {de:"Der Wan-2.1-Workflow", en:"The Wan 2.1 workflow"},
   "t-flow-1": {de:"Dieser Workflow erzeugt aus einem Textprompt ein kurzes Video (Text-to-Video). Er besteht aus acht Nodes, die der Reihe nach durchlaufen werden:",
                en:"This workflow turns a text prompt into a short video (text-to-video). It consists of eight nodes that run in sequence:"},
   "t-flow-c": {de:"Der komplette Text-to-Video-Workflow – links die drei Modell-Teile, rechts das fertige Video",
                en:"The complete text-to-video workflow – the three model parts on the left, the finished video on the right"},
   "t-n1-h":   {de:"Load Diffusion Model", en:"Load Diffusion Model"},
-  "t-n1-p":   {de:"Lädt das Bild-Wissen – das eigentliche Wan-2.2-Modell (<code>wan2.2_ti2v_5B_fp16.safetensors</code>).",
-               en:"Loads the image knowledge – the actual Wan 2.2 model (<code>wan2.2_ti2v_5B_fp16.safetensors</code>)."},
+  "t-n1-p":   {de:"Lädt das Bild-Wissen – das eigentliche Wan-2.1-Modell (<code>wan2.1_t2v_1.3B_fp16.safetensors</code> bzw. <code>wan2.1_t2v_14B_fp16.safetensors</code>).",
+               en:"Loads the image knowledge – the actual Wan 2.1 model (<code>wan2.1_t2v_1.3B_fp16.safetensors</code> or <code>wan2.1_t2v_14B_fp16.safetensors</code>)."},
   "t-n2-h":   {de:"Load CLIP", en:"Load CLIP"},
-  "t-n2-p":   {de:"Lädt das Sprachverständnis – den UMT5-Text-Encoder, der deine Prompts für das Modell übersetzt.",
-               en:"Loads the language understanding – the UMT5 text encoder that translates your prompts for the model."},
+  "t-n2-p":   {de:"Lädt das Sprachverständnis – den UMT5-Text-Encoder (<code>umt5_xxl_fp8_e4m3fn_scaled.safetensors</code>), der deine Prompts für das Modell übersetzt.",
+               en:"Loads the language understanding – the UMT5 text encoder (<code>umt5_xxl_fp8_e4m3fn_scaled.safetensors</code>) that translates your prompts for the model."},
   "t-n3-h":   {de:"Load VAE", en:"Load VAE"},
-  "t-n3-p":   {de:"Lädt den Bild-Dekoder, der am Ende aus dem latenten Ergebnis sichtbare Frames macht.",
-               en:"Loads the image decoder that turns the latent result into visible frames at the end."},
+  "t-n3-p":   {de:"Lädt den Bild-Dekoder (<code>wan_2.1_vae.safetensors</code>), der am Ende aus dem latenten Ergebnis sichtbare Frames macht.",
+               en:"Loads the image decoder (<code>wan_2.1_vae.safetensors</code>) that turns the latent result into visible frames at the end."},
   "t-n4-h":   {de:"CLIP Text Encode (positiv &amp; negativ)", en:"CLIP Text Encode (positive &amp; negative)"},
   "t-n4-p":   {de:"Hier tippst du. Der positive Node beschreibt, was im Video passieren soll, der negative, was nicht. Wan versteht <strong>natürliche Sprache</strong> – ganze Sätze funktionieren besser als Stichwort-Listen.",
                en:"This is where you type. The positive node describes what should happen in the video, the negative what shouldn't. Wan understands <strong>natural language</strong> – full sentences work better than keyword lists."},
-  "t-n5-h":   {de:"Wan 2.2 Latent", en:"Wan 2.2 Latent"},
-  "t-n5-p":   {de:"Legt die Leinwand fest: Auflösung (z. B. <code>1280×704</code>) und die <strong>Länge</strong> in Frames – also wie lang dein Video wird.",
-               en:"Sets the canvas: resolution (e.g. <code>1280×704</code>) and the <strong>length</strong> in frames – i.e. how long your video will be."},
+  "t-n5-h":   {de:"Empty Latent Video", en:"Empty Latent Video"},
+  "t-n5-p":   {de:"Legt die Leinwand fest: Auflösung (z. B. <code>832×480</code> bei 1.3B, bis <code>1280×720</code> bei 14B) und die <strong>Länge</strong> in Frames. Der Node heißt <code>EmptyHunyuanLatentVideo</code>.",
+               en:"Sets the canvas: resolution (e.g. <code>832×480</code> for 1.3B, up to <code>1280×720</code> for 14B) and the <strong>length</strong> in frames. The node is called <code>EmptyHunyuanLatentVideo</code>."},
   "t-n6-h":   {de:"KSampler", en:"KSampler"},
   "t-n6-p":   {de:"Das Herzstück. Er rechnet aus Rauschen schrittweise die Frames. Stellschrauben: <code>steps</code>, <code>cfg</code>, <code>seed</code> und Sampler.",
                en:"The heart of it. It computes the frames from noise step by step. Knobs: <code>steps</code>, <code>cfg</code>, <code>seed</code> and sampler."},
@@ -307,16 +319,18 @@ const STR = {
   "t-n8-p":   {de:"Zeigt das fertige Video an und speichert es automatisch im Output-Ordner.",
                en:"Displays the finished video and saves it automatically to the output folder."},
   "t-use-h":  {de:"So startest du", en:"How to get going"},
-  "t-u1":     {de:'Öffne <code>Workflow → Browse Templates</code>, wähle die Kategorie <strong>Video</strong> und dort die Vorlage <strong>„Wan 2.2 5B video generation“</strong>.',
-               en:'Open <code>Workflow → Browse Templates</code>, pick the <strong>Video</strong> category and select the <strong>“Wan 2.2 5B video generation”</strong> template.'},
-  "t-u2":     {de:"ComfyUI erkennt die fehlenden Modell-Dateien und bietet den <strong>Download automatisch an</strong> – bestätigen, kurz warten (ca. 10 GB), alles landet in den richtigen Ordnern.",
-               en:"ComfyUI detects the missing model files and <strong>offers to download them automatically</strong> – confirm, wait a bit (about 10 GB), everything lands in the right folders."},
-  "t-u3":     {de:"Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).",
+  "t-u1":     {de:'Öffne <code>Workflow → Browse Templates</code>, wähle die Kategorie <strong>Video</strong> und dort die Vorlage <strong>„Wan 2.1 Text to Video“</strong>.',
+               en:'Open <code>Workflow → Browse Templates</code>, pick the <strong>Video</strong> category and select the <strong>“Wan 2.1 Text to Video”</strong> template.'},
+  "t-u2":     {de:"ComfyUI erkennt die fehlenden Modell-Dateien und bietet den <strong>Download automatisch an</strong> – bestätigen und kurz warten. (Standard ist die leichte 1.3B-Variante.)",
+               en:"ComfyUI detects the missing model files and <strong>offers to download them automatically</strong> – confirm and wait a moment. (The default is the light 1.3B version.)"},
+  "t-u3":     {de:"Für <strong>bessere Ergebnisse</strong> wählst du im Node <strong>Load Diffusion Model</strong> die <code>14B</code>-Datei (einmalig herunterladen) – optional, sonst bleibt es bei 1.3B.",
+               en:"For <strong>better results</strong>, load the <code>14B</code> file in the <strong>Load Diffusion Model</strong> node (one-time download) – optional, otherwise you stay on 1.3B."},
+  "t-u4":     {de:"Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).",
                en:"In the <strong>positive</strong> prompt node, describe in full sentences what should happen (leave the negative one as it is for now)."},
-  "t-u4":     {de:"Klick auf <strong>Queue Prompt</strong> – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.",
+  "t-u5":     {de:"Klick auf <strong>Queue Prompt</strong> – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.",
                en:"Click <strong>Queue Prompt</strong> – the first generation takes a few minutes (the models load first), after that it gets faster. Your video appears in the Save Video node."},
-  "t-vram-1": {de:"<strong>Hardware-Check:</strong> Wan 2.2 5B braucht mindestens <strong>8 GB VRAM</strong>. Wenn die Generierung sehr lange dauert oder abbricht, reduziere zuerst die Auflösung und die Video-Länge im Latent-Node.",
-               en:"<strong>Hardware check:</strong> Wan 2.2 5B needs at least <strong>8 GB of VRAM</strong>. If generation takes very long or fails, reduce the resolution and video length in the latent node first."},
+  "t-vram-1": {de:"<strong>Hardware-Check:</strong> Die <strong>1.3B</strong>-Variante läuft schon ab ca. <strong>8 GB VRAM</strong>. Die <strong>14B</strong>-Variante liefert bessere Ergebnisse, braucht aber deutlich mehr VRAM (16 GB+ empfohlen, für 720p mehr). Wenn eine Generierung sehr lange dauert oder abbricht, reduziere zuerst Auflösung und Länge im Latent-Node – oder bleib bei 1.3B.",
+               en:"<strong>Hardware check:</strong> the <strong>1.3B</strong> version runs from about <strong>8 GB VRAM</strong>. The <strong>14B</strong> version gives better results but needs considerably more VRAM (16 GB+ recommended, more for 720p). If a generation takes very long or fails, reduce resolution and length in the latent node first – or stick with 1.3B."},
   "t-img-1":  {de:"<strong>Tipp – nur ein Bild statt Video?</strong> Stell im Latent-Node die Länge auf <strong>1 Frame</strong>. Damit wird Wan zum Bildgenerator – perfekt zum schnellen Testen von Prompts.",
                en:"<strong>Tip – just an image instead of a video?</strong> Set the length in the latent node to <strong>1 frame</strong>. That turns Wan into an image generator – perfect for quickly testing prompts."},
   "t-next-h": {de:"Nächster Schritt", en:"Next step"},
