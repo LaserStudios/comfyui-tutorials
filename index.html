@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ComfyUI Basics – Tutorials | Laser Studios</title>
+<title>ComfyUI – Free & Local AI Tools | Laser Studios</title>
 <style>
   :root{
     --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
@@ -23,17 +23,21 @@
   .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--accent);font-weight:700;margin-bottom:14px}
   h1{font-size:44px;line-height:1.1;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
-  .lead{font-size:18px;color:var(--muted);margin:0 0 40px;max-width:620px}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 40px;max-width:640px}
   .grid{display:grid;gap:16px}
-  a.card{display:flex;gap:18px;align-items:flex-start;text-decoration:none;color:inherit;
+  a.card,div.card{display:flex;gap:18px;align-items:flex-start;text-decoration:none;color:inherit;
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
     transition:border-color .15s ease,transform .15s ease}
   a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card.soon{opacity:.65;cursor:default}
+  .card.soon:hover{border-color:var(--line);transform:none}
   .no{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
     color:var(--accent);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
   .card h2{margin:2px 0 5px;font-size:19px;font-weight:700}
   .card p{margin:0;color:var(--muted);font-size:15px}
   .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
+  .soon-tag{margin-left:auto;align-self:center;font-size:11px;font-weight:700;letter-spacing:.08em;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;text-transform:uppercase;white-space:nowrap}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
 </style>
 </head>
@@ -48,60 +52,43 @@
     </div>
   </div>
 
-  <span class="kicker" id="t-kicker">Tutorials</span>
-  <h1 id="t-h1">ComfyUI Basics</h1>
-  <p class="lead" id="t-lead">Von der Installation bis zum ersten generierten Video – Schritt für Schritt, für Technikbegeisterte ohne Vorwissen. Die passenden Workflows gibt es zum Download.</p>
+  <span class="kicker" id="t-kicker">Tools &amp; Tutorials</span>
+  <h1 id="t-h1">Frei. Lokal. Kommerziell nutzbar.</h1>
+  <p class="lead" id="t-lead">Jede hier vorgestellte Software ist kostenlos herunterzuladen, frei nutzbar und für kommerzielle Produktionen lizenziert. Keine Abos, keine Nutzungsgebühren, keine Kosten pro Render – und keine Daten, die das Studio verlassen. Professionelle KI-Tools, die vollständig auf lokaler Hardware laufen: dieselben Werkzeuge, die VFX-Studios, Game-Entwickler und Broadcast-Teams weltweit einsetzen. Alles, was hier folgt, ist genau diesem Anspruch gewidmet.</p>
 
   <div class="grid">
 
-    <a class="card" href="Basics-01-ComfyUI.html">
+    <a class="card" href="basics.html">
       <span class="no">01</span>
-      <div><h2 id="t-c1-h">Erste Schritte</h2><p id="t-c1-p">Was ComfyUI ist, welche Hardware du brauchst, installieren &amp; im Browser starten.</p></div>
+      <div><h2 id="t-c1-h">ComfyUI Basics</h2><p id="t-c1-p">Von der Installation bis zum ersten generierten Video – Schritt für Schritt, ohne Vorwissen.</p></div>
       <span class="arrow">→</span>
     </a>
 
-    <a class="card" href="Basics-02-ComfyUI-Manager.html">
+    <div class="card soon">
       <span class="no">02</span>
-      <div><h2 id="t-c2-h">Den ComfyUI Manager installieren</h2><p id="t-c2-p">Das wichtigste Add-on: Custom Nodes und Modelle per Klick installieren.</p></div>
-      <span class="arrow">→</span>
-    </a>
-
-    <a class="card" href="Basics-03-Navigation.html">
-      <span class="no">03</span>
-      <div><h2 id="t-c3-h">Die wichtigsten Punkte der Oberfläche</h2><p id="t-c3-p">Menü, Manager, Canvas, Seitenleiste und Queue Prompt – ein kurzer Rundgang.</p></div>
-      <span class="arrow">→</span>
-    </a>
-
-    <a class="card" href="Basics-04-Erster-Workflow.html">
-      <span class="no">04</span>
-      <div><h2 id="t-c4-h">Der erste Workflow</h2><p id="t-c4-p">Was Workflows und Nodes sind – und dein erstes eigenes Video mit Wan 2.2.</p></div>
-      <span class="arrow">→</span>
-    </a>
+      <div><h2 id="t-c2-h">Fix it in prompt</h2><p id="t-c2-p">Tools und Workflows für Postproduction.</p></div>
+      <span class="soon-tag" id="t-soon">Bald</span>
+    </div>
 
   </div>
 
-  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI · laser-studios.de</p>
 
 </div>
 
 <script>
 const STR = {
-  "t-kicker":{de:"Tutorials", en:"Tutorials"},
-  "t-h1":    {de:"ComfyUI Basics", en:"ComfyUI Basics"},
-  "t-lead":  {de:"Von der Installation bis zum ersten generierten Video – Schritt für Schritt, für Technikbegeisterte ohne Vorwissen. Die passenden Workflows gibt es zum Download.",
-              en:"From installation to your first generated video – step by step, for tech enthusiasts with no prior knowledge. The matching workflows are available for download."},
-  "t-c1-h":  {de:"Erste Schritte", en:"Getting Started"},
-  "t-c1-p":  {de:"Was ComfyUI ist, welche Hardware du brauchst, installieren &amp; im Browser starten.",
-              en:"What ComfyUI is, what hardware you need, installing &amp; starting it in the browser."},
-  "t-c2-h":  {de:"Den ComfyUI Manager installieren", en:"Installing the ComfyUI Manager"},
-  "t-c2-p":  {de:"Das wichtigste Add-on: Custom Nodes und Modelle per Klick installieren.",
-              en:"The most important add-on: install custom nodes and models with a click."},
-  "t-c3-h":  {de:"Die wichtigsten Punkte der Oberfläche", en:"The Key Points of the Interface"},
-  "t-c3-p":  {de:"Menü, Manager, Canvas, Seitenleiste und Queue Prompt – ein kurzer Rundgang.",
-              en:"Menu, Manager, canvas, sidebar and Queue Prompt – a quick tour."},
-  "t-c4-h":  {de:"Der erste Workflow", en:"Your First Workflow"},
-  "t-c4-p":  {de:"Was Workflows und Nodes sind – und dein erstes eigenes Video mit Wan 2.2.",
-              en:"What workflows and nodes are – and your first video with Wan 2.2."}
+  "t-kicker":{de:"Tools &amp; Tutorials", en:"Tools &amp; Tutorials"},
+  "t-h1":    {de:"Frei. Lokal. Kommerziell nutzbar.", en:"Free. Local. Commercial-ready."},
+  "t-lead":  {de:"Jede hier vorgestellte Software ist kostenlos herunterzuladen, frei nutzbar und für kommerzielle Produktionen lizenziert. Keine Abos, keine Nutzungsgebühren, keine Kosten pro Render – und keine Daten, die das Studio verlassen. Professionelle KI-Tools, die vollständig auf lokaler Hardware laufen: dieselben Werkzeuge, die VFX-Studios, Game-Entwickler und Broadcast-Teams weltweit einsetzen. Alles, was hier folgt, ist genau diesem Anspruch gewidmet.",
+              en:"Every tool featured here is free to download, free to use, and licensed for commercial production. No subscriptions, no usage fees, no per-render costs – and no data ever leaving the studio. Professional-grade AI tools that run entirely on local hardware: the same tools used by VFX studios, game developers, and broadcast teams worldwide. Everything that follows is dedicated to exactly that."},
+  "t-c1-h":  {de:"ComfyUI Basics", en:"ComfyUI Basics"},
+  "t-c1-p":  {de:"Von der Installation bis zum ersten generierten Video – Schritt für Schritt, ohne Vorwissen.",
+              en:"From installation to your first generated video – step by step, no prior knowledge needed."},
+  "t-c2-h":  {de:"Fix it in prompt", en:"Fix it in prompt"},
+  "t-c2-p":  {de:"Tools und Workflows für Postproduction.",
+              en:"Tools and workflows for post-production."},
+  "t-soon":  {de:"Bald", en:"Soon"}
 };
 function setLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
