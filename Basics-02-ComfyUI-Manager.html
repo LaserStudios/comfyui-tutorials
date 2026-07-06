@@ -81,46 +81,31 @@
   <p id="t-what-1">ComfyUI im Auslieferungszustand kennt nur seine Standard-Nodes. Die meisten interessanten Workflows nutzen aber <strong>Custom Nodes</strong> – Erweiterungen von der Community. Der <strong>ComfyUI Manager</strong> installiert, aktualisiert und verwaltet diese Erweiterungen über eine Oberfläche, statt dass du manuell mit Git und Abhängigkeiten hantierst.</p>
   <p id="t-what-2">Der Vorteil: Lädst du einen fremden Workflow, der unbekannte Nodes enthält, findet der Manager per <code>Install Missing Custom Nodes</code> automatisch die passenden Erweiterungen. Genau deshalb installieren wir ihn früh.</p>
 
-  <h2 id="t-desk-h">Schon dabei? ComfyUI Desktop</h2>
-  <p id="t-desk-1">In aktuellen Versionen von <strong>ComfyUI Desktop</strong> ist der Manager bereits vorinstalliert. Suche oben in der Menüleiste nach dem <strong>Manager</strong>-Button. Ist er da, kannst du diesen Teil überspringen – du musst nichts installieren.</p>
-  <figure>
-    <svg class="shot" viewBox="0 0 800 150" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect width="800" height="150" fill="#0f0f14"/>
-      <rect x="0" y="0" width="800" height="42" fill="#16161c"/>
-      <text x="16" y="27" fill="#c5c5cf" font-family="sans-serif" font-size="13" font-weight="700">Workflow</text>
-      <text x="100" y="27" fill="#9a9aa6" font-family="sans-serif" font-size="13">Edit</text>
-      <text x="150" y="27" fill="#9a9aa6" font-family="sans-serif" font-size="13">View</text>
-      <rect x="640" y="8" width="100" height="26" rx="7" fill="#ff3b3b"/>
-      <text x="690" y="26" fill="#fff" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">Manager</text>
-      <text x="400" y="100" fill="#6f6f7c" font-family="sans-serif" font-size="14" text-anchor="middle">Der Manager-Button sitzt oben rechts in der Menüleiste</text>
-    </svg>
-    <figcaption id="t-desk-c">ComfyUI Desktop: der Manager-Button in der Menüleiste</figcaption>
-  </figure>
-
-  <h2 id="t-inst-h">Manuell nachinstallieren (Portable)</h2>
-  <p id="t-inst-1">Nutzt du die Portable-Version oder fehlt der Button, installierst du den Manager so:</p>
+  <h2 id="t-inst-h">Den Manager in der Portable-Version aktivieren</h2>
+  <p id="t-inst-1">In den aktuellen Portable-Versionen ist der Manager bereits <strong>Teil von ComfyUI</strong> – er ist nur standardmäßig noch nicht eingeschaltet. So aktivierst du ihn:</p>
 
   <ol class="steps">
     <li>
-      <h3 id="t-s1-h">In den custom_nodes-Ordner wechseln</h3>
-      <p id="t-s1-p">Der Manager kommt – wie jede Erweiterung – in den Ordner <code>custom_nodes</code> deiner ComfyUI-Installation.</p>
+      <h3 id="t-s1-h">Ein schwarzes Eingabefenster öffnen</h3>
+      <p id="t-s1-p">Damit ist die <strong>Konsole</strong> gemeint – ein Fenster, in das man Befehle tippt, statt zu klicken. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>. Klicke dann ganz oben in die <strong>Adresszeile</strong> (die Leiste, in der der Ordnerpfad steht), tippe dort <code>cmd</code> und drücke <strong>Enter</strong>. Es öffnet sich ein schwarzes Fenster – das gehört automatisch schon zu genau diesem Ordner, du musst also nichts weiter einstellen.</p>
     </li>
     <li>
-      <h3 id="t-s2-h">Repository klonen</h3>
-      <p id="t-s2-p">Per Git holst du den Manager direkt vom offiziellen Repo:</p>
-      <pre id="t-s2-code">cd ComfyUI/custom_nodes
-git clone https://github.com/ltdrdata/ComfyUI-Manager.git</pre>
-      <p id="t-s2-p2">Ohne Git geht es auch per Doppelklick: Lade <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und führe sie aus.</p>
+      <h3 id="t-s2-h">Einen Befehl hineinkopieren</h3>
+      <p id="t-s2-p">Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), klicke ins schwarze Fenster, füge sie mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht – tippen musst du nichts selbst:</p>
+      <pre id="t-s2-code">.\python_embeded\python.exe -m pip install -r ComfyUI\manager_requirements.txt</pre>
+      <p id="t-s2-p3">Kurz warten, bis das Fenster fertig durchgelaufen ist (es zeigt am Ende wieder eine Eingabezeile an). Dann kannst du es schließen.</p>
+      <p id="t-s2-p2"><em>Nur falls deine Version den Manager noch nicht eingebaut hat:</em> Lade dir aus dem offiziellen Repo die Datei <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und starte sie per Doppelklick. Das erledigt dasselbe ganz ohne Befehle.</p>
     </li>
     <li>
-      <h3 id="t-s3-h">ComfyUI neu starten</h3>
-      <p id="t-s3-p">Nach einem Neustart taucht der <strong>Manager</strong>-Button in der Menüleiste auf. Fertig.</p>
+      <h3 id="t-s3-h">Den Manager beim Start mit einschalten</h3>
+      <p id="t-s3-p">ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager</code> dahinter. Die Zeile sieht dann so aus:</p>
+      <pre id="t-s3-code">.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --enable-manager</pre>
+      <p id="t-s3-p2">Speichern (Strg+S), Editor schließen, und ComfyUI wie gewohnt per Doppelklick auf die <code>.bat</code> starten. Nach dem Start erscheint oben der <strong>Manager</strong>-Button. Fertig – das machst du nur dieses eine Mal.</p>
     </li>
   </ol>
 
   <div class="box note">
-    <p id="t-cmd1" style="margin-bottom:14px"><strong>Was bedeuten <code>cd</code> und <code>git clone</code>?</strong> <code>cd</code> steht für „change directory" und wechselt die Konsole in einen Ordner – <code>cd ComfyUI/custom_nodes</code> heißt also „wechsle in den Unterordner custom_nodes". <code>git clone &lt;URL&gt;</code> lädt ein komplettes Repository von GitHub herunter und legt es als neuen Ordner an – nach dem Klonen liegt also ein Ordner <code>ComfyUI-Manager</code> in <code>custom_nodes</code>.</p>
-    <p id="t-cmd2" style="margin-bottom:0"><strong>So öffnest du eine Konsole direkt im richtigen Ordner:</strong> Windows-Explorer öffnen und zu deinem ComfyUI-Ordner navigieren. Dann in die Adresszeile ganz oben klicken (wo der Pfad steht), <code>cmd</code> eintippen und Enter drücken – es öffnet sich ein Konsolenfenster, das schon genau in diesem Ordner steht. So sparst du dir das manuelle <code>cd</code>.</p>
+    <p id="t-cmd2" style="margin:0"><strong>Was ist diese „Adresszeile"-mit-<code>cmd</code>-Sache?</strong> Das ist nur ein Trick, um das schwarze Eingabefenster direkt im richtigen Ordner zu öffnen – dann findet der Befehl die passenden Dateien von allein. Alternativ kannst du die Konsole auch über das Startmenü öffnen (nach <em>Eingabeaufforderung</em> suchen); der Adresszeilen-Weg ist nur bequemer.</p>
   </div>
 
   <h2 id="t-use-h">Der Manager im Überblick</h2>
@@ -175,29 +160,30 @@ const STR = {
                en:"Out of the box, ComfyUI only knows its standard nodes. Most interesting workflows, however, use <strong>custom nodes</strong> – community extensions. The <strong>ComfyUI Manager</strong> installs, updates and manages these extensions through a UI, instead of you juggling Git and dependencies by hand."},
   "t-what-2": {de:"Der Vorteil: Lädst du einen fremden Workflow, der unbekannte Nodes enthält, findet der Manager per <code>Install Missing Custom Nodes</code> automatisch die passenden Erweiterungen. Genau deshalb installieren wir ihn früh.",
                en:"The advantage: load someone else's workflow that contains unknown nodes, and the Manager automatically finds the right extensions via <code>Install Missing Custom Nodes</code>. That's exactly why we install it early."},
-  "t-desk-h": {de:"Schon dabei? ComfyUI Desktop", en:"Already included? ComfyUI Desktop"},
-  "t-desk-1": {de:"In aktuellen Versionen von <strong>ComfyUI Desktop</strong> ist der Manager bereits vorinstalliert. Suche oben in der Menüleiste nach dem <strong>Manager</strong>-Button. Ist er da, kannst du diesen Teil überspringen – du musst nichts installieren.",
-               en:"In current versions of <strong>ComfyUI Desktop</strong> the Manager is already pre-installed. Look for the <strong>Manager</strong> button in the top menu bar. If it's there, you can skip this part – there's nothing to install."},
-  "t-desk-c": {de:"ComfyUI Desktop: der Manager-Button in der Menüleiste", en:"ComfyUI Desktop: the Manager button in the menu bar"},
-  "t-inst-h": {de:"Manuell nachinstallieren (Portable)", en:"Install manually (Portable)"},
-  "t-inst-1": {de:"Nutzt du die Portable-Version oder fehlt der Button, installierst du den Manager so:",
-               en:"If you use the portable version or the button is missing, install the Manager like this:"},
-  "t-s1-h":   {de:"In den custom_nodes-Ordner wechseln", en:"Go to the custom_nodes folder"},
-  "t-s1-p":   {de:"Der Manager kommt – wie jede Erweiterung – in den Ordner <code>custom_nodes</code> deiner ComfyUI-Installation.",
-               en:"The Manager goes – like every extension – into the <code>custom_nodes</code> folder of your ComfyUI installation."},
-  "t-s2-h":   {de:"Repository klonen", en:"Clone the repository"},
-  "t-s2-p":   {de:"Per Git holst du den Manager direkt vom offiziellen Repo:", en:"Use Git to pull the Manager straight from the official repo:"},
-  "t-s2-code":{de:"cd ComfyUI/custom_nodes\ngit clone https://github.com/ltdrdata/ComfyUI-Manager.git",
-               en:"cd ComfyUI/custom_nodes\ngit clone https://github.com/ltdrdata/ComfyUI-Manager.git"},
-  "t-s2-p2":  {de:"Ohne Git geht es auch per Doppelklick: Lade <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und führe sie aus.",
-               en:"No Git? Use the double-click route: download <code>install-manager-for-portable-version.bat</code> into your <code>ComfyUI_windows_portable</code> folder and run it."},
-  "t-cmd1":   {de:'<strong>Was bedeuten <code>cd</code> und <code>git clone</code>?</strong> <code>cd</code> steht für „change directory\" und wechselt die Konsole in einen Ordner – <code>cd ComfyUI/custom_nodes</code> heißt also „wechsle in den Unterordner custom_nodes\". <code>git clone &lt;URL&gt;</code> lädt ein komplettes Repository von GitHub herunter und legt es als neuen Ordner an – nach dem Klonen liegt also ein Ordner <code>ComfyUI-Manager</code> in <code>custom_nodes</code>.',
-               en:'<strong>What do <code>cd</code> and <code>git clone</code> mean?</strong> <code>cd</code> stands for "change directory" and moves the console into a folder – <code>cd ComfyUI/custom_nodes</code> means "switch into the custom_nodes subfolder". <code>git clone &lt;URL&gt;</code> downloads a complete repository from GitHub and creates it as a new folder – so after cloning, a folder called <code>ComfyUI-Manager</code> ends up inside <code>custom_nodes</code>.'},
-  "t-cmd2":   {de:'<strong>So öffnest du eine Konsole direkt im richtigen Ordner:</strong> Windows-Explorer öffnen und zu deinem ComfyUI-Ordner navigieren. Dann in die Adresszeile ganz oben klicken (wo der Pfad steht), <code>cmd</code> eintippen und Enter drücken – es öffnet sich ein Konsolenfenster, das schon genau in diesem Ordner steht. So sparst du dir das manuelle <code>cd</code>.',
-               en:'<strong>How to open a console directly in the right folder:</strong> Open Windows Explorer and navigate to your ComfyUI folder. Click into the address bar at the top (where the path is shown), type <code>cmd</code> and press Enter – a console window opens that\'s already sitting in exactly that folder. That way you skip the manual <code>cd</code>.'},
-  "t-s3-h":   {de:"ComfyUI neu starten", en:"Restart ComfyUI"},
-  "t-s3-p":   {de:"Nach einem Neustart taucht der <strong>Manager</strong>-Button in der Menüleiste auf. Fertig.",
-               en:"After a restart the <strong>Manager</strong> button appears in the menu bar. Done."},
+  "t-inst-h": {de:"Den Manager in der Portable-Version aktivieren", en:"Enable the Manager in the portable version"},
+  "t-inst-1": {de:"In den aktuellen Portable-Versionen ist der Manager bereits <strong>Teil von ComfyUI</strong> – er ist nur standardmäßig noch nicht eingeschaltet. So aktivierst du ihn:",
+               en:"In current portable versions the Manager is already <strong>part of ComfyUI</strong> – it's just not switched on by default. Here's how to enable it:"},
+  "t-s1-h":   {de:"Ein schwarzes Eingabefenster öffnen", en:"Open a black input window"},
+  "t-s1-p":   {de:"Damit ist die <strong>Konsole</strong> gemeint – ein Fenster, in das man Befehle tippt, statt zu klicken. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>. Klicke dann ganz oben in die <strong>Adresszeile</strong> (die Leiste, in der der Ordnerpfad steht), tippe dort <code>cmd</code> und drücke <strong>Enter</strong>. Es öffnet sich ein schwarzes Fenster – das gehört automatisch schon zu genau diesem Ordner, du musst also nichts weiter einstellen.",
+               en:"That means the <strong>console</strong> – a window where you type commands instead of clicking. In Windows Explorer, open your <code>ComfyUI_windows_portable</code> folder. Then click into the <strong>address bar</strong> at the very top (the strip showing the folder path), type <code>cmd</code> there and press <strong>Enter</strong>. A black window opens – it's automatically tied to exactly this folder, so there's nothing else to set up."},
+  "t-s2-h":   {de:"Einen Befehl hineinkopieren", en:"Paste in one command"},
+  "t-s2-p":   {de:"Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), klicke ins schwarze Fenster, füge sie mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht – tippen musst du nichts selbst:",
+               en:"Copy the following line <strong>in full</strong> (Ctrl+C), click into the black window, paste it with a <strong>right-click</strong> and press <strong>Enter</strong>. This makes ComfyUI download the building blocks the Manager needs, one time only – you don't have to type anything yourself:"},
+  "t-s2-code":{de:".\\python_embeded\\python.exe -m pip install -r ComfyUI\\manager_requirements.txt",
+               en:".\\python_embeded\\python.exe -m pip install -r ComfyUI\\manager_requirements.txt"},
+  "t-s2-p3":  {de:"Kurz warten, bis das Fenster fertig durchgelaufen ist (es zeigt am Ende wieder eine Eingabezeile an). Dann kannst du es schließen.",
+               en:"Wait a moment until the window has finished (it shows an input line again at the end). Then you can close it."},
+  "t-s2-p2":  {de:"<em>Nur falls deine Version den Manager noch nicht eingebaut hat:</em> Lade dir aus dem offiziellen Repo die Datei <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und starte sie per Doppelklick. Das erledigt dasselbe ganz ohne Befehle.",
+               en:"<em>Only if your version doesn't have the Manager built in yet:</em> from the official repo, download the file <code>install-manager-for-portable-version.bat</code> into your <code>ComfyUI_windows_portable</code> folder and run it with a double-click. That does the same thing entirely without commands."},
+  "t-s3-h":   {de:"Den Manager beim Start mit einschalten", en:"Switch the Manager on at startup"},
+  "t-s3-p":   {de:"ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager</code> dahinter. Die Zeile sieht dann so aus:",
+               en:"You normally start ComfyUI via the file <code>run_nvidia_gpu.bat</code>. For the Manager to load with it, you add a small bit of text to that file. <strong>Right-click</strong> it → <em>Edit</em> (opens in a text editor). At the very end of the line that begins with <code>.\\python_embeded</code>, add – after a space – <code>--enable-manager</code>. The line then looks like this:"},
+  "t-s3-code":{de:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager",
+               en:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager"},
+  "t-s3-p2":  {de:"Speichern (Strg+S), Editor schließen, und ComfyUI wie gewohnt per Doppelklick auf die <code>.bat</code> starten. Nach dem Start erscheint oben der <strong>Manager</strong>-Button. Fertig – das machst du nur dieses eine Mal.",
+               en:"Save (Ctrl+S), close the editor, and start ComfyUI as usual by double-clicking the <code>.bat</code>. After it starts, the <strong>Manager</strong> button appears at the top. Done – you only do this once."},
+  "t-cmd2":   {de:'<strong>Was ist diese „Adresszeile"-mit-<code>cmd</code>-Sache?</strong> Das ist nur ein Trick, um das schwarze Eingabefenster direkt im richtigen Ordner zu öffnen – dann findet der Befehl die passenden Dateien von allein. Alternativ kannst du die Konsole auch über das Startmenü öffnen (nach <em>Eingabeaufforderung</em> suchen); der Adresszeilen-Weg ist nur bequemer.',
+               en:'<strong>What\'s this "address bar" + <code>cmd</code> thing?</strong> It\'s just a trick to open the black input window directly in the right folder – then the command finds the matching files on its own. Alternatively you can open the console from the Start menu (search for <em>Command Prompt</em>); the address-bar route is simply more convenient.'},
   "t-use-h":  {de:"Der Manager im Überblick", en:"The Manager at a glance"},
   "t-use-1":  {de:"Ein Klick auf den Button öffnet das Manager-Fenster. Die wichtigsten Funktionen:",
                en:"A click on the button opens the Manager window. The most important functions:"},
