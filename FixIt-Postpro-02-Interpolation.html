@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Framerate erhöhen mit FILM – Fix it in Prompt | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:24px 0}
+  ol.steps>li{position:relative;padding:2px 0 8px 56px;margin:0 0 22px;min-height:40px}
+  ol.steps>li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;
+    width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;
+    font-size:18px;display:flex;align-items:center;justify-content:center}
+  .dl{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-weight:700;
+    text-decoration:none;padding:14px 22px;border-radius:var(--radius);margin:6px 0 4px}
+  .dl:hover{text-decoration:none;filter:brightness(1.08)}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap;text-decoration:none;color:inherit}
+  .next:hover{border-color:var(--accent);text-decoration:none}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .next .arrow{color:var(--accent);font-size:22px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" id="t-back" href="fix-it-in-prompt.html">← Fix it in Prompt</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker" id="t-kicker">Fix it in Prompt · Postproduction</span>
+  <h1 id="t-h1">Framerate erhöhen mit FILM</h1>
+  <p class="lead" id="t-lead">Ein fertiger Workflow, der zusätzliche Zwischenbilder berechnet – für flüssigere Bewegung. Läuft komplett lokal, kostenlos und kommerziell nutzbar.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">FILM VFI</span>
+    <span class="chip" id="t-chip2">100 % lokal</span>
+    <span class="chip" id="t-chip3">kostenlos & kommerziell</span>
+  </div>
+
+  <h2 id="t-what-h">Was dieser Workflow macht</h2>
+  <p id="t-what-p">Er lädt ein Video, schiebt es durch <strong>FILM VFI</strong> und erzeugt zwischen je zwei Frames neue Bilder – <code>multiplier 2</code> verdoppelt die Framerate (z.B. 24 → 48 fps), <code>multiplier 4</code> vervierfacht sie. Danach wird alles wieder als Video gespeichert. FILM ist besonders gut bei großen Bewegungen (weniger Ghosting als RIFE).</p>
+
+  <div class="box note">
+    <p style="margin:0" id="t-diff">
+      <strong>Klassisch vs. KI – der Kern.</strong> Klassische Verfahren blenden zwei benachbarte Frames über (Frame-Blending) oder rechnen per Bewegungsvektoren um (Optical Flow) – aus dem, was schon da ist. FILM macht etwas anderes: Es <strong>erzeugt ein neues Zwischenbild</strong> aus einem gelernten Bewegungsverständnis. Deshalb wirkt Bewegung flüssig statt nur weich – dafür kann es bei Verdeckungen oder sehr schnellen Szenen auch mal Artefakte erfinden. Anderes Verfahren, anderes Ergebnis: vergleich beide und entscheide für dein Material.
+    </p>
+  </div>
+
+  <h2 id="t-need-h">Was du brauchst</h2>
+  <p id="t-need-p">Zwei Custom Nodes – sonst nichts. Das FILM-Modell <code>film_net_fp32.pt</code> lädt beim ersten Start automatisch herunter. <strong>Alle Links und Speicherorte stehen direkt im Workflow</strong>, in den Notiz-Feldern („README“ und „Model Links“).</p>
+
+  <h2 id="t-how-h">So gehst du vor</h2>
+  <ol class="steps">
+    <li id="t-s1">Workflow herunterladen und per Drag & Drop in ComfyUI ziehen (oder <code>Workflow → Open</code>).</li>
+    <li id="t-s2">Die zwei Custom Nodes aus dem Notiz-Feld installieren, dein Video in <code>ComfyUI/input/</code> legen.</li>
+    <li id="t-s3">Im <code>VHS_VideoCombine</code>-Node die Ziel-<code>frame_rate</code> eintragen (z.B. 48 bei 2x), dann <strong>Run</strong>.</li>
+  </ol>
+
+  <a class="dl" id="t-dl" href="frame_interpolation_film_laserstudios.json" download>↓ Workflow herunterladen (.json)</a>
+
+  <div class="divider"></div>
+
+  <a class="next" id="t-next" href="FixIt-Postpro-01-Upscale.html">
+    <span><small id="t-next-s">Postproduction · 01</small><strong id="t-next-t">Video-Upscale mit RTX VSR</strong></span>
+    <span class="arrow">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · Fix it in Prompt · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-back":  {de:"← Fix it in Prompt", en:"← Fix it in Prompt"},
+  "t-kicker":{de:"Fix it in Prompt · Postproduction", en:"Fix it in Prompt · Post-Production"},
+  "t-h1":    {de:"Framerate erhöhen mit FILM", en:"Boost Framerate with FILM"},
+  "t-lead":  {de:"Ein fertiger Workflow, der zusätzliche Zwischenbilder berechnet – für flüssigere Bewegung. Läuft komplett lokal, kostenlos und kommerziell nutzbar.",
+              en:"A ready-made workflow that computes extra in-between frames – for smoother motion. Runs entirely local, free and commercially usable."},
+  "t-chip1": {de:"FILM VFI", en:"FILM VFI"},
+  "t-chip2": {de:"100 % lokal", en:"100 % local"},
+  "t-chip3": {de:"kostenlos & kommerziell", en:"free & commercial"},
+  "t-what-h":{de:"Was dieser Workflow macht", en:"What this workflow does"},
+  "t-what-p":{de:"Er lädt ein Video, schiebt es durch <strong>FILM VFI</strong> und erzeugt zwischen je zwei Frames neue Bilder – <code>multiplier 2</code> verdoppelt die Framerate (z.B. 24 → 48 fps), <code>multiplier 4</code> vervierfacht sie. Danach wird alles wieder als Video gespeichert. FILM ist besonders gut bei großen Bewegungen (weniger Ghosting als RIFE).",
+              en:"It loads a video, runs it through <strong>FILM VFI</strong> and creates new images between every two frames – <code>multiplier 2</code> doubles the framerate (e.g. 24 → 48 fps), <code>multiplier 4</code> quadruples it. Then everything is saved back to video. FILM is especially good with large motion (less ghosting than RIFE)."},
+  "t-diff":  {de:"<strong>Klassisch vs. KI – der Kern.</strong> Klassische Verfahren blenden zwei benachbarte Frames über (Frame-Blending) oder rechnen per Bewegungsvektoren um (Optical Flow) – aus dem, was schon da ist. FILM macht etwas anderes: Es <strong>erzeugt ein neues Zwischenbild</strong> aus einem gelernten Bewegungsverständnis. Deshalb wirkt Bewegung flüssig statt nur weich – dafür kann es bei Verdeckungen oder sehr schnellen Szenen auch mal Artefakte erfinden. Anderes Verfahren, anderes Ergebnis: vergleich beide und entscheide für dein Material.",
+              en:"<strong>Classic vs. AI – the core.</strong> Classic methods blend two neighbouring frames (frame blending) or remap via motion vectors (optical flow) – from what's already there. FILM does something different: it <strong>generates a new in-between frame</strong> from a learned understanding of motion. That's why motion looks fluid rather than just soft – but on occlusions or very fast scenes it can also invent artefacts. Different method, different result: compare both and decide for your footage."},
+  "t-need-h":{de:"Was du brauchst", en:"What you need"},
+  "t-need-p":{de:"Zwei Custom Nodes – sonst nichts. Das FILM-Modell <code>film_net_fp32.pt</code> lädt beim ersten Start automatisch herunter. <strong>Alle Links und Speicherorte stehen direkt im Workflow</strong>, in den Notiz-Feldern („README“ und „Model Links“).",
+              en:"Two custom nodes – nothing else. The FILM model <code>film_net_fp32.pt</code> downloads automatically on first run. <strong>All links and file locations are inside the workflow</strong>, in the note fields (“README” and “Model Links”)."},
+  "t-how-h": {de:"So gehst du vor", en:"How to proceed"},
+  "t-s1":    {de:"Workflow herunterladen und per Drag & Drop in ComfyUI ziehen (oder <code>Workflow → Open</code>).",
+              en:"Download the workflow and drag & drop it into ComfyUI (or <code>Workflow → Open</code>)."},
+  "t-s2":    {de:"Die zwei Custom Nodes aus dem Notiz-Feld installieren, dein Video in <code>ComfyUI/input/</code> legen.",
+              en:"Install the two custom nodes from the note field, then put your video into <code>ComfyUI/input/</code>."},
+  "t-s3":    {de:"Im <code>VHS_VideoCombine</code>-Node die Ziel-<code>frame_rate</code> eintragen (z.B. 48 bei 2x), dann <strong>Run</strong>.",
+              en:"Set the target <code>frame_rate</code> in the <code>VHS_VideoCombine</code> node (e.g. 48 for 2x), then hit <strong>Run</strong>."},
+  "t-dl":    {de:"↓ Workflow herunterladen (.json)", en:"↓ Download workflow (.json)"},
+  "t-next-s":{de:"Postproduction · 01", en:"Post-Production · 01"},
+  "t-next-t":{de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+</body>
+</html>

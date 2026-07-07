@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fix it in Prompt – Tutorials | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:820px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:44px;line-height:1.1;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 40px;max-width:620px}
+  .sec{margin:38px 0 14px}
+  .sec:first-of-type{margin-top:0}
+  .sec h2{margin:0 0 6px;font-size:24px;font-weight:800;letter-spacing:-.01em}
+  .sec p{margin:0;color:var(--muted);font-size:15px;max-width:620px}
+  .grid{display:grid;gap:16px}
+  a.card,div.card{display:flex;gap:18px;align-items:flex-start;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
+    transition:border-color .15s ease,transform .15s ease}
+  a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card.soon{opacity:.65;cursor:default}
+  .card.soon:hover{border-color:var(--line);transform:none}
+  .no{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
+    color:var(--accent);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .card h3{margin:2px 0 5px;font-size:19px;font-weight:700}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .soon-tag{margin-left:auto;align-self:center;font-size:11px;font-weight:700;letter-spacing:.08em;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;text-transform:uppercase;white-space:nowrap}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" id="t-back" href="index.html">← Übersicht</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker" id="t-kicker">Tutorials</span>
+  <h1 id="t-h1">Fix it in Prompt</h1>
+  <p class="lead" id="t-lead">Tools und Workflows, die in bestehende Produktions-Pipelines passen – sortiert nach Einsatzgebiet: Postproduction, 3D und Smart Utilities.</p>
+
+  <div class="sec">
+    <h2 id="t-s1-h">Postproduction</h2>
+    <p id="t-s1-p">KI-Werkzeuge für die klassische Postpro-Pipeline – etwa Upscaling und Frame-Interpolation.</p>
+  </div>
+  <div class="grid">
+    <a class="card" href="FixIt-Postpro-01-Upscale.html">
+      <span class="no">01</span>
+      <div><h3 id="t-s1c-h">Video-Upscale mit RTX VSR</h3><p id="t-s1c-p">Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.</p></div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="FixIt-Postpro-02-Interpolation.html">
+      <span class="no">02</span>
+      <div><h3 id="t-s1d-h">Framerate erhöhen mit FILM</h3><p id="t-s1d-p">Neue Zwischenbilder berechnen für flüssigere Bewegung.</p></div>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="sec">
+    <h2 id="t-s2-h">3D</h2>
+    <p id="t-s2-p">3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.</p>
+  </div>
+  <div class="grid">
+    <div class="card soon">
+      <span class="no">3D</span>
+      <div><h3 id="t-s2c-h">Tutorials in Arbeit</h3><p id="t-s2c-p">Die ersten Workflows für diesen Bereich entstehen gerade.</p></div>
+      <span class="soon-tag" id="t-soon2">Bald</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 id="t-s3-h">Smart Utilities</h2>
+    <p id="t-s3-p">Kleine Helfer mit großem Effekt – Workflows, die wiederkehrende Aufgaben abnehmen.</p>
+  </div>
+  <div class="grid">
+    <div class="card soon">
+      <span class="no">SU</span>
+      <div><h3 id="t-s3c-h">Tutorials in Arbeit</h3><p id="t-s3c-p">Die ersten Workflows für diesen Bereich entstehen gerade.</p></div>
+      <span class="soon-tag" id="t-soon3">Bald</span>
+    </div>
+  </div>
+
+  <p class="footer">Laser Studios · Fix it in Prompt · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-back":  {de:"← Übersicht", en:"← Overview"},
+  "t-kicker":{de:"Tutorials", en:"Tutorials"},
+  "t-h1":    {de:"Fix it in Prompt", en:"Fix it in Prompt"},
+  "t-lead":  {de:"Tools und Workflows, die in bestehende Produktions-Pipelines passen – sortiert nach Einsatzgebiet: Postproduction, 3D und Smart Utilities.",
+              en:"Tools and workflows that fit into existing production pipelines – organised by field of use: post-production, 3D and smart utilities."},
+  "t-s1-h":  {de:"Postproduction", en:"Post-Production"},
+  "t-s1-p":  {de:"KI-Werkzeuge für die klassische Postpro-Pipeline – etwa Upscaling und Frame-Interpolation.",
+              en:"AI tools for the classic post-production pipeline – such as upscaling and frame interpolation."},
+  "t-s1c-h": {de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"},
+  "t-s1c-p": {de:"Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.",
+              en:"Upscale with real AI detail instead of plain enlargement."},
+  "t-s1d-h": {de:"Framerate erhöhen mit FILM", en:"Boost Framerate with FILM"},
+  "t-s1d-p": {de:"Neue Zwischenbilder berechnen für flüssigere Bewegung.",
+              en:"Compute new in-between frames for smoother motion."},
+  "t-s2-h":  {de:"3D", en:"3D"},
+  "t-s2-p":  {de:"3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.",
+              en:"Generate 3D assets directly from images – for VFX, games and visualisation."},
+  "t-s2c-h": {de:"Tutorials in Arbeit", en:"Tutorials in progress"},
+  "t-s2c-p": {de:"Die ersten Workflows für diesen Bereich entstehen gerade.",
+              en:"The first workflows for this section are in the works."},
+  "t-soon2": {de:"Bald", en:"Soon"},
+  "t-s3-h":  {de:"Smart Utilities", en:"Smart Utilities"},
+  "t-s3-p":  {de:"Kleine Helfer mit großem Effekt – Workflows, die wiederkehrende Aufgaben abnehmen.",
+              en:"Small helpers with a big impact – workflows that take recurring tasks off your hands."},
+  "t-s3c-h": {de:"Tutorials in Arbeit", en:"Tutorials in progress"},
+  "t-s3c-p": {de:"Die ersten Workflows für diesen Bereich entstehen gerade.",
+              en:"The first workflows for this section are in the works."},
+  "t-soon3": {de:"Bald", en:"Soon"}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+</body>
+</html>
