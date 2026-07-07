@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0043)file:///C:/Users/David/Downloads/index.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laser Studios – AI Workshop</title>
 <style>
@@ -38,17 +38,20 @@
   .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
   .soon-tag{margin-left:auto;align-self:center;font-size:11px;font-weight:700;letter-spacing:.08em;
     color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;text-transform:uppercase;white-space:nowrap}
-  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .contact{color:var(--muted);font-size:14px;margin-top:48px;text-align:center}
+  .contact a{color:var(--accent);text-decoration:none}
+  .contact a:hover{text-decoration:underline}
+  .footer{color:var(--muted);font-size:13px;margin-top:14px;text-align:center}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="langbar">
-    <a class="back" href="https://laser-studios.de" target="_top">← Laser Studios</a>
+    <a class="back" href="https://laser-studios.de/" target="_top">← Laser Studios</a>
     <div class="switch" role="group" aria-label="Language">
-      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
-      <button id="btn-en" onclick="setLang('en')">EN</button>
+      <button id="btn-de" class="active" onclick="setLang(&#39;de&#39;)">DE</button>
+      <button id="btn-en" onclick="setLang(&#39;en&#39;)">EN</button>
     </div>
   </div>
 
@@ -58,19 +61,21 @@
 
   <div class="grid">
 
-    <a class="card" href="basics.html">
+    <a class="card" href="file:///C:/Users/David/Downloads/basics.html">
       <span class="no">01</span>
       <div><h2 id="t-c1-h">ComfyUI Basics</h2><p id="t-c1-p">Von der Installation bis zum ersten generierten Video – Schritt für Schritt, ohne Vorwissen.</p></div>
       <span class="arrow">→</span>
     </a>
 
-    <div class="card soon">
+    <a class="card" href="file:///C:/Users/David/Downloads/fix-it-in-prompt.html">
       <span class="no">02</span>
-      <div><h2 id="t-c2-h">Fix it in prompt</h2><p id="t-c2-p">Tools und Workflows für Postproduction.</p></div>
-      <span class="soon-tag" id="t-soon">Bald</span>
-    </div>
+      <div><h2 id="t-c2-h">Fix it in Prompt</h2><p id="t-c2-p">Tools und Workflows für Postproduction, 3D und Smart Utilities.</p></div>
+      <span class="arrow">→</span>
+    </a>
 
   </div>
+
+  <p class="contact" id="t-contact">Bei Anfragen für Vorträge oder Workshops wenden Sie sich bitte an <a href="mailto:info@laser-studios.de">info@laser-studios.de</a>.</p>
 
   <p class="footer">Laser Studios · ComfyUI · laser-studios.de</p>
 
@@ -85,10 +90,11 @@ const STR = {
   "t-c1-h":  {de:"ComfyUI Basics", en:"ComfyUI Basics"},
   "t-c1-p":  {de:"Von der Installation bis zum ersten generierten Video – Schritt für Schritt, ohne Vorwissen.",
               en:"From installation to your first generated video – step by step, no prior knowledge needed."},
-  "t-c2-h":  {de:"Fix it in prompt", en:"Fix it in prompt"},
-  "t-c2-p":  {de:"Tools und Workflows für Postproduction.",
-              en:"Tools and workflows for post-production."},
-  "t-soon":  {de:"Bald", en:"Soon"}
+  "t-c2-h":  {de:"Fix it in Prompt", en:"Fix it in Prompt"},
+  "t-c2-p":  {de:"Tools und Workflows für Postproduction, 3D und Smart Utilities.",
+              en:"Tools and workflows for post-production, 3D and smart utilities."},
+  "t-contact":{de:"Bei Anfragen für Vorträge oder Workshops wenden Sie sich bitte an <a href=\"mailto:info@laser-studios.de\">info@laser-studios.de</a>.",
+              en:"For talk or workshop enquiries, please get in touch at <a href=\"mailto:info@laser-studios.de\">info@laser-studios.de</a>."}
 };
 function setLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
@@ -97,5 +103,6 @@ function setLang(lang){
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
