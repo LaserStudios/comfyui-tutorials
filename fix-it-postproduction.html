@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fix it in Prompt – Tutorials | Laser Studios</title>
+<title>Postproduction – Fix it in Prompt | Laser Studios</title>
 <style>
   :root{
     --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
@@ -29,8 +29,8 @@
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
     transition:border-color .15s ease,transform .15s ease}
   a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
-  .ico{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
-    color:var(--accent);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .no{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
+    color:var(--accent);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
   .card h2{margin:2px 0 5px;font-size:19px;font-weight:700}
   .card p{margin:0;color:var(--muted);font-size:15px}
   .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
@@ -41,34 +41,28 @@
 <div class="wrap">
 
   <div class="langbar">
-    <a class="back" id="t-back" href="index.html">← Übersicht</a>
+    <a class="back" id="t-back" href="fix-it-in-prompt.html">← Fix it in Prompt</a>
     <div class="switch" role="group" aria-label="Language">
       <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
       <button id="btn-en" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
-  <span class="kicker" id="t-kicker">Tutorials</span>
-  <h1 id="t-h1">Fix it in Prompt</h1>
-  <p class="lead" id="t-lead">Tools und Workflows, die in bestehende Produktions-Pipelines passen. Wähl ein Einsatzgebiet – die passenden Tutorials findest du dahinter.</p>
+  <span class="kicker" id="t-kicker">Fix it in Prompt</span>
+  <h1 id="t-h1">Postproduction</h1>
+  <p class="lead" id="t-lead">KI-Werkzeuge für die klassische Postpro-Pipeline. Jeder Workflow ist fertig zum Download – mit Links und Speicherorten direkt im Graphen.</p>
 
   <div class="grid">
 
-    <a class="card" href="fix-it-postproduction.html">
-      <span class="ico">PP</span>
-      <div><h2 id="t-c1-h">Postproduction</h2><p id="t-c1-p">KI-Werkzeuge für die Postpro-Pipeline – Upscaling, Frame-Interpolation & mehr.</p></div>
+    <a class="card" href="FixIt-Postpro-01-Upscale.html">
+      <span class="no">01</span>
+      <div><h2 id="t-c1-h">Video-Upscale mit RTX VSR</h2><p id="t-c1-p">Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.</p></div>
       <span class="arrow">→</span>
     </a>
 
-    <a class="card" href="fix-it-3d.html">
-      <span class="ico">3D</span>
-      <div><h2 id="t-c2-h">3D</h2><p id="t-c2-p">3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.</p></div>
-      <span class="arrow">→</span>
-    </a>
-
-    <a class="card" href="fix-it-smart-utilities.html">
-      <span class="ico">SU</span>
-      <div><h2 id="t-c3-h">Smart Utilities</h2><p id="t-c3-p">Kleine Helfer mit großem Effekt – Workflows, die wiederkehrende Aufgaben abnehmen.</p></div>
+    <a class="card" href="FixIt-Postpro-02-Interpolation.html">
+      <span class="no">02</span>
+      <div><h2 id="t-c2-h">Framerate erhöhen mit FILM</h2><p id="t-c2-p">Neue Zwischenbilder berechnen für flüssigere Bewegung.</p></div>
       <span class="arrow">→</span>
     </a>
 
@@ -80,20 +74,17 @@
 
 <script>
 const STR = {
-  "t-back":  {de:"← Übersicht", en:"← Overview"},
-  "t-kicker":{de:"Tutorials", en:"Tutorials"},
-  "t-h1":    {de:"Fix it in Prompt", en:"Fix it in Prompt"},
-  "t-lead":  {de:"Tools und Workflows, die in bestehende Produktions-Pipelines passen. Wähl ein Einsatzgebiet – die passenden Tutorials findest du dahinter.",
-              en:"Tools and workflows that fit into existing production pipelines. Pick a field of use – the matching tutorials are behind it."},
-  "t-c1-h":  {de:"Postproduction", en:"Post-Production"},
-  "t-c1-p":  {de:"KI-Werkzeuge für die Postpro-Pipeline – Upscaling, Frame-Interpolation & mehr.",
-              en:"AI tools for the post-production pipeline – upscaling, frame interpolation & more."},
-  "t-c2-h":  {de:"3D", en:"3D"},
-  "t-c2-p":  {de:"3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.",
-              en:"Generate 3D assets directly from images – for VFX, games and visualisation."},
-  "t-c3-h":  {de:"Smart Utilities", en:"Smart Utilities"},
-  "t-c3-p":  {de:"Kleine Helfer mit großem Effekt – Workflows, die wiederkehrende Aufgaben abnehmen.",
-              en:"Small helpers with a big impact – workflows that take recurring tasks off your hands."}
+  "t-back":  {de:"← Fix it in Prompt", en:"← Fix it in Prompt"},
+  "t-kicker":{de:"Fix it in Prompt", en:"Fix it in Prompt"},
+  "t-h1":    {de:"Postproduction", en:"Post-Production"},
+  "t-lead":  {de:"KI-Werkzeuge für die klassische Postpro-Pipeline. Jeder Workflow ist fertig zum Download – mit Links und Speicherorten direkt im Graphen.",
+              en:"AI tools for the classic post-production pipeline. Every workflow is ready to download – with links and file locations right inside the graph."},
+  "t-c1-h":  {de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"},
+  "t-c1-p":  {de:"Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.",
+              en:"Upscale with real AI detail instead of plain enlargement."},
+  "t-c2-h":  {de:"Framerate erhöhen mit FILM", en:"Boost Framerate with FILM"},
+  "t-c2-p":  {de:"Neue Zwischenbilder berechnen für flüssigere Bewegung.",
+              en:"Compute new in-between frames for smoother motion."}
 };
 function setLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
