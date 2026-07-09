@@ -86,26 +86,30 @@
 
   <ol class="steps">
     <li>
-      <h3 id="t-s1-h">Ein schwarzes Eingabefenster öffnen</h3>
-      <p id="t-s1-p">Damit ist die <strong>Konsole</strong> gemeint – ein Fenster, in das man Befehle tippt, statt zu klicken. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>. Klicke dann ganz oben in die <strong>Adresszeile</strong> (die Leiste, in der der Ordnerpfad steht), tippe dort <code>cmd</code> und drücke <strong>Enter</strong>. Es öffnet sich ein schwarzes Fenster – das gehört automatisch schon zu genau diesem Ordner, du musst also nichts weiter einstellen.</p>
+      <h3 id="t-s1-h">Die Konsole öffnen</h3>
+      <p id="t-s1-p">Die <strong>Konsole</strong> ist das Fenster, in dem Befehle per Text laufen. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>, klicke oben in die <strong>Adresszeile</strong>, tippe <code>cmd</code> und drücke <strong>Enter</strong>. Die Konsole öffnet sich direkt in diesem Ordner – nichts weiter einzustellen.</p>
     </li>
     <li>
       <h3 id="t-s2-h">Einen Befehl hineinkopieren</h3>
-      <p id="t-s2-p">Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), klicke ins schwarze Fenster, füge sie mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht – tippen musst du nichts selbst:</p>
+      <p id="t-s2-p">Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), füge sie in der Konsole mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht:</p>
       <pre id="t-s2-code">.\python_embeded\python.exe -m pip install -r ComfyUI\manager_requirements.txt</pre>
       <p id="t-s2-p3">Kurz warten, bis das Fenster fertig durchgelaufen ist (es zeigt am Ende wieder eine Eingabezeile an). Dann kannst du es schließen.</p>
       <p id="t-s2-p2"><em>Nur falls deine Version den Manager noch nicht eingebaut hat:</em> Lade dir aus dem offiziellen Repo die Datei <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und starte sie per Doppelklick. Das erledigt dasselbe ganz ohne Befehle.</p>
     </li>
     <li>
       <h3 id="t-s3-h">Den Manager beim Start mit einschalten</h3>
-      <p id="t-s3-p">ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager</code> dahinter. Die Zeile sieht dann so aus:</p>
-      <pre id="t-s3-code">.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --enable-manager</pre>
+      <p id="t-s3-p">ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager --enable-manager-legacy-ui</code> dahinter. Die Zeile sieht dann so aus:</p>
+      <pre id="t-s3-code">.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --enable-manager --enable-manager-legacy-ui</pre>
       <p id="t-s3-p2">Speichern (Strg+S), Editor schließen, und ComfyUI wie gewohnt per Doppelklick auf die <code>.bat</code> starten. Nach dem Start erscheint oben der <strong>Manager</strong>-Button. Fertig – das machst du nur dieses eine Mal.</p>
     </li>
   </ol>
 
   <div class="box note">
-    <p id="t-cmd2" style="margin:0"><strong>Was ist diese „Adresszeile"-mit-<code>cmd</code>-Sache?</strong> Das ist nur ein Trick, um das schwarze Eingabefenster direkt im richtigen Ordner zu öffnen – dann findet der Befehl die passenden Dateien von allein. Alternativ kannst du die Konsole auch über das Startmenü öffnen (nach <em>Eingabeaufforderung</em> suchen); der Adresszeilen-Weg ist nur bequemer.</p>
+    <p id="t-cmd2" style="margin:0"><strong>Warum über die Adresszeile?</strong> So öffnet sich die Konsole direkt im richtigen Ordner und der Befehl findet die passenden Dateien von allein. Alternativ geht es über das Startmenü (<em>Eingabeaufforderung</em>).</p>
+  </div>
+
+  <div class="box note">
+    <p id="t-legacy" style="margin:0"><strong>Warum zwei Schalter?</strong> ComfyUI bringt seit Ende 2025 eine neue Manager-Oberfläche mit. Beide Varianten stecken in derselben Installation – nur die Ansicht unterscheidet sich. Wir verwenden in diesem Tutorial die klassische Oberfläche (<code>--enable-manager-legacy-ui</code>), weil sie alle Funktionen an einem Ort bündelt – inklusive Model Manager und Update All, die in der neuen Ansicht (noch) fehlen. Wenn du lieber die neue Oberfläche ausprobieren möchtest, lass den zweiten Schalter einfach weg: Du findest den Manager dann über das Plugin-Symbol oder über <em>Menü → Manage Extensions</em>.</p>
   </div>
 
   <h2 id="t-use-h">Der Manager im Überblick</h2>
@@ -163,12 +167,12 @@ const STR = {
   "t-inst-h": {de:"Den Manager in der Portable-Version aktivieren", en:"Enable the Manager in the portable version"},
   "t-inst-1": {de:"In den aktuellen Portable-Versionen ist der Manager bereits <strong>Teil von ComfyUI</strong> – er ist nur standardmäßig noch nicht eingeschaltet. So aktivierst du ihn:",
                en:"In current portable versions the Manager is already <strong>part of ComfyUI</strong> – it's just not switched on by default. Here's how to enable it:"},
-  "t-s1-h":   {de:"Ein schwarzes Eingabefenster öffnen", en:"Open a black input window"},
-  "t-s1-p":   {de:"Damit ist die <strong>Konsole</strong> gemeint – ein Fenster, in das man Befehle tippt, statt zu klicken. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>. Klicke dann ganz oben in die <strong>Adresszeile</strong> (die Leiste, in der der Ordnerpfad steht), tippe dort <code>cmd</code> und drücke <strong>Enter</strong>. Es öffnet sich ein schwarzes Fenster – das gehört automatisch schon zu genau diesem Ordner, du musst also nichts weiter einstellen.",
-               en:"That means the <strong>console</strong> – a window where you type commands instead of clicking. In Windows Explorer, open your <code>ComfyUI_windows_portable</code> folder. Then click into the <strong>address bar</strong> at the very top (the strip showing the folder path), type <code>cmd</code> there and press <strong>Enter</strong>. A black window opens – it's automatically tied to exactly this folder, so there's nothing else to set up."},
+  "t-s1-h":   {de:"Die Konsole öffnen", en:"Open the console"},
+  "t-s1-p":   {de:"Die <strong>Konsole</strong> ist das Fenster, in dem Befehle per Text laufen. Öffne im Windows-Explorer deinen Ordner <code>ComfyUI_windows_portable</code>, klicke oben in die <strong>Adresszeile</strong>, tippe <code>cmd</code> und drücke <strong>Enter</strong>. Die Konsole öffnet sich direkt in diesem Ordner – nichts weiter einzustellen.",
+               en:"The <strong>console</strong> is the window where commands run as text. In Windows Explorer, open your <code>ComfyUI_windows_portable</code> folder, click into the <strong>address bar</strong> at the top, type <code>cmd</code> and press <strong>Enter</strong>. The console opens directly in this folder – nothing else to set up."},
   "t-s2-h":   {de:"Einen Befehl hineinkopieren", en:"Paste in one command"},
-  "t-s2-p":   {de:"Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), klicke ins schwarze Fenster, füge sie mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht – tippen musst du nichts selbst:",
-               en:"Copy the following line <strong>in full</strong> (Ctrl+C), click into the black window, paste it with a <strong>right-click</strong> and press <strong>Enter</strong>. This makes ComfyUI download the building blocks the Manager needs, one time only – you don't have to type anything yourself:"},
+  "t-s2-p":   {de:"Kopiere die folgende Zeile <strong>komplett</strong> (Strg+C), füge sie in der Konsole mit <strong>Rechtsklick</strong> ein und drücke <strong>Enter</strong>. Damit lädt ComfyUI einmalig die Bausteine nach, die der Manager braucht:",
+               en:"Copy the following line <strong>in full</strong> (Ctrl+C), paste it into the console with a <strong>right-click</strong> and press <strong>Enter</strong>. This downloads the components the Manager needs, one time only:"},
   "t-s2-code":{de:".\\python_embeded\\python.exe -m pip install -r ComfyUI\\manager_requirements.txt",
                en:".\\python_embeded\\python.exe -m pip install -r ComfyUI\\manager_requirements.txt"},
   "t-s2-p3":  {de:"Kurz warten, bis das Fenster fertig durchgelaufen ist (es zeigt am Ende wieder eine Eingabezeile an). Dann kannst du es schließen.",
@@ -176,14 +180,16 @@ const STR = {
   "t-s2-p2":  {de:"<em>Nur falls deine Version den Manager noch nicht eingebaut hat:</em> Lade dir aus dem offiziellen Repo die Datei <code>install-manager-for-portable-version.bat</code> in deinen <code>ComfyUI_windows_portable</code>-Ordner und starte sie per Doppelklick. Das erledigt dasselbe ganz ohne Befehle.",
                en:"<em>Only if your version doesn't have the Manager built in yet:</em> from the official repo, download the file <code>install-manager-for-portable-version.bat</code> into your <code>ComfyUI_windows_portable</code> folder and run it with a double-click. That does the same thing entirely without commands."},
   "t-s3-h":   {de:"Den Manager beim Start mit einschalten", en:"Switch the Manager on at startup"},
-  "t-s3-p":   {de:"ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager</code> dahinter. Die Zeile sieht dann so aus:",
-               en:"You normally start ComfyUI via the file <code>run_nvidia_gpu.bat</code>. For the Manager to load with it, you add a small bit of text to that file. <strong>Right-click</strong> it → <em>Edit</em> (opens in a text editor). At the very end of the line that begins with <code>.\\python_embeded</code>, add – after a space – <code>--enable-manager</code>. The line then looks like this:"},
-  "t-s3-code":{de:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager",
-               en:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager"},
+  "t-s3-p":   {de:"ComfyUI startest du normalerweise über die Datei <code>run_nvidia_gpu.bat</code>. Damit der Manager mitgeladen wird, musst du dieser Datei ein kleines Stück Text anhängen. Mach einen <strong>Rechtsklick</strong> darauf → <em>Bearbeiten</em> (öffnet sich im Editor). Ganz am Ende der Zeile, die mit <code>.\\python_embeded</code> beginnt, schreibst du – nach einem Leerzeichen – <code>--enable-manager --enable-manager-legacy-ui</code> dahinter. Die Zeile sieht dann so aus:",
+               en:"You normally start ComfyUI via the file <code>run_nvidia_gpu.bat</code>. For the Manager to load with it, you add a small bit of text to that file. <strong>Right-click</strong> it → <em>Edit</em> (opens in a text editor). At the very end of the line that begins with <code>.\\python_embeded</code>, add – after a space – <code>--enable-manager --enable-manager-legacy-ui</code>. The line then looks like this:"},
+  "t-s3-code":{de:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager --enable-manager-legacy-ui",
+               en:".\\python_embeded\\python.exe -s ComfyUI\\main.py --windows-standalone-build --enable-manager --enable-manager-legacy-ui"},
   "t-s3-p2":  {de:"Speichern (Strg+S), Editor schließen, und ComfyUI wie gewohnt per Doppelklick auf die <code>.bat</code> starten. Nach dem Start erscheint oben der <strong>Manager</strong>-Button. Fertig – das machst du nur dieses eine Mal.",
                en:"Save (Ctrl+S), close the editor, and start ComfyUI as usual by double-clicking the <code>.bat</code>. After it starts, the <strong>Manager</strong> button appears at the top. Done – you only do this once."},
-  "t-cmd2":   {de:'<strong>Was ist diese „Adresszeile"-mit-<code>cmd</code>-Sache?</strong> Das ist nur ein Trick, um das schwarze Eingabefenster direkt im richtigen Ordner zu öffnen – dann findet der Befehl die passenden Dateien von allein. Alternativ kannst du die Konsole auch über das Startmenü öffnen (nach <em>Eingabeaufforderung</em> suchen); der Adresszeilen-Weg ist nur bequemer.',
-               en:'<strong>What\'s this "address bar" + <code>cmd</code> thing?</strong> It\'s just a trick to open the black input window directly in the right folder – then the command finds the matching files on its own. Alternatively you can open the console from the Start menu (search for <em>Command Prompt</em>); the address-bar route is simply more convenient.'},
+  "t-cmd2":   {de:'<strong>Warum über die Adresszeile?</strong> So öffnet sich die Konsole direkt im richtigen Ordner und der Befehl findet die passenden Dateien von allein. Alternativ geht es über das Startmenü (<em>Eingabeaufforderung</em>).',
+               en:'<strong>Why the address bar?</strong> This way the console opens directly in the right folder and the command finds the matching files on its own. Alternatively, use the Start menu (<em>Command Prompt</em>).'},
+  "t-legacy": {de:"<strong>Warum zwei Schalter?</strong> ComfyUI bringt seit Ende 2025 eine neue Manager-Oberfläche mit. Beide Varianten stecken in derselben Installation – nur die Ansicht unterscheidet sich. Wir verwenden in diesem Tutorial die klassische Oberfläche (<code>--enable-manager-legacy-ui</code>), weil sie alle Funktionen an einem Ort bündelt – inklusive Model Manager und Update All, die in der neuen Ansicht (noch) fehlen. Wenn du lieber die neue Oberfläche ausprobieren möchtest, lass den zweiten Schalter einfach weg: Du findest den Manager dann über das Plugin-Symbol oder über <em>Menü → Manage Extensions</em>.",
+               en:"<strong>Why two switches?</strong> Since late 2025 ComfyUI ships with a new Manager interface. Both variants live in the same installation – only the view differs. In this tutorial we use the classic interface (<code>--enable-manager-legacy-ui</code>) because it bundles all functions in one place – including Model Manager and Update All, which the new view doesn't offer (yet). If you'd rather try the new interface, simply leave out the second switch: you'll then find the Manager via the plugin icon or via <em>Menu → Manage Extensions</em>."},
   "t-use-h":  {de:"Der Manager im Überblick", en:"The Manager at a glance"},
   "t-use-1":  {de:"Ein Klick auf den Button öffnet das Manager-Fenster. Die wichtigsten Funktionen:",
                en:"A click on the button opens the Manager window. The most important functions:"},
