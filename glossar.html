@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spickzettel – Laser Studios AI Workshop</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:820px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:44px;line-height:1.1;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px;max-width:640px}
+  .searchbox{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 16px}
+  .searchbox input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:999px;
+    color:var(--text);font-size:16px;padding:13px 20px;outline:none;transition:border-color .15s ease}
+  .searchbox input:focus{border-color:var(--accent)}
+  .searchbox input::placeholder{color:var(--muted)}
+  .count{color:var(--muted);font-size:13px;margin:2px 4px 14px}
+  .letter{font-size:15px;font-weight:800;color:var(--accent);letter-spacing:.1em;
+    margin:26px 4px 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .entry{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 20px;margin-bottom:10px}
+  .entry h2{margin:0 0 5px;font-size:17px;font-weight:700}
+  .entry p{margin:0;color:var(--muted);font-size:15px}
+  .empty{display:none;color:var(--muted);text-align:center;padding:40px 0;font-size:15px}
+  .contact{color:var(--muted);font-size:14px;margin-top:48px;text-align:center}
+  .contact a{color:var(--accent);text-decoration:none}
+  .contact a:hover{text-decoration:underline}
+  .footer{color:var(--muted);font-size:13px;margin-top:14px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" id="t-back" href="index.html">← Übersicht</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker" id="t-kicker">Glossar</span>
+  <h1 id="t-h1">Spickzettel</h1>
+  <p class="lead" id="t-lead">Alle wichtigen Begriffe aus den Tutorials – kurz erklärt, alphabetisch sortiert. Einfach lostippen und suchen.</p>
+
+  <div class="searchbox">
+    <input type="search" id="search" placeholder="Begriff suchen …" oninput="render()" autocomplete="off">
+  </div>
+  <p class="count" id="count"></p>
+
+  <div id="list"></div>
+  <p class="empty" id="t-empty">Kein Treffer. Anderen Begriff probieren – oder eine Mail schreiben, dann nehmen wir ihn auf.</p>
+
+  <p class="contact" id="t-contact">Ein Begriff fehlt? Kurze Mail an <a href="mailto:info@laser-studios.de">info@laser-studios.de</a> genügt.</p>
+
+  <p class="footer">Laser Studios · ComfyUI · laser-studios.de</p>
+
+</div>
+
+<script>
+const STR = {
+  "t-back":  {de:"← Übersicht", en:"← Overview"},
+  "t-kicker":{de:"Glossar", en:"Glossary"},
+  "t-h1":    {de:"Spickzettel", en:"Cheat Sheet"},
+  "t-lead":  {de:"Alle wichtigen Begriffe aus den Tutorials – kurz erklärt, alphabetisch sortiert. Einfach lostippen und suchen.",
+              en:"All the key terms from the tutorials – briefly explained, sorted alphabetically. Just start typing to search."},
+  "t-empty": {de:"Kein Treffer. Anderen Begriff probieren – oder eine Mail schreiben, dann nehmen wir ihn auf.",
+              en:"No match. Try another term – or send us a mail and we'll add it."},
+  "t-contact":{de:"Ein Begriff fehlt? Kurze Mail an <a href=\"mailto:info@laser-studios.de\">info@laser-studios.de</a> genügt.",
+              en:"Missing a term? A short mail to <a href=\"mailto:info@laser-studios.de\">info@laser-studios.de</a> is all it takes."}
+};
+const PLACEHOLDER = {de:"Begriff suchen …", en:"Search terms …"};
+const COUNT = {de:["Begriff","Begriffe"], en:["term","terms"]};
+
+const GLOSSARY = [
+  {t:"Batch (Size)",
+   de:"Anzahl der Bilder, die in einem Durchlauf gleichzeitig erzeugt werden. Höhere Werte brauchen mehr VRAM.",
+   en:"Number of images generated at once in a single run. Higher values need more VRAM."},
+  {t:"CFG (Classifier-Free Guidance)",
+   de:"Regelt, wie streng sich das Modell an den Prompt hält. Niedrig = kreativer, hoch = wörtlicher (aber oft übersättigt). Typisch: 3–8.",
+   en:"Controls how strictly the model follows the prompt. Low = more creative, high = more literal (but often oversaturated). Typical: 3–8."},
+  {t:"Checkpoint",
+   de:"Eine komplette, fertig trainierte Modell-Datei – oft inklusive VAE und Text Encoder. Wird im Ordner 📂 models/checkpoints abgelegt.",
+   en:"A complete, fully trained model file – often including VAE and text encoder. Goes into the 📂 models/checkpoints folder."},
+  {t:"CivitAI",
+   de:"Community-Plattform für Modelle, LoRAs und Workflows. Vor der Nutzung immer die Lizenz des jeweiligen Modells prüfen.",
+   en:"Community platform for models, LoRAs and workflows. Always check the license of each model before use."},
+  {t:"CLIP",
+   de:"Ein weit verbreiteter Text Encoder (ursprünglich von OpenAI). Übersetzt Prompts in Zahlen, mit denen Bildmodelle arbeiten können.",
+   en:"A widely used text encoder (originally by OpenAI). Translates prompts into numbers image models can work with."},
+  {t:"CMD / Konsole",
+   de:"Das schwarze Textfenster in Windows, in das man Befehle eintippt (oder besser: hineinkopiert). In den Tutorials sind alle Befehle zum Copy-Pasten vorbereitet.",
+   en:"The black text window in Windows where you type (or better: paste) commands. All commands in the tutorials are ready to copy-paste."},
+  {t:"ComfyUI Manager",
+   de:"Erweiterung für ComfyUI, die Custom Nodes installiert und aktualisiert. Erkennt fehlende Nodes in geladenen Workflows und schlägt die Installation vor.",
+   en:"Extension for ComfyUI that installs and updates custom nodes. Detects missing nodes in loaded workflows and offers to install them."},
+  {t:"ComfyUI Portable",
+   de:"Die Windows-Version von ComfyUI zum Entpacken und Direktstarten. Bringt ihr eigenes Python mit – nichts muss separat installiert werden.",
+   en:"The unzip-and-run Windows version of ComfyUI. Ships with its own Python – nothing needs to be installed separately."},
+  {t:"ControlNet",
+   de:"Zusatzmodell, das die Bildgenerierung gezielt steuert – z. B. über Posen, Kanten oder Tiefenkarten. Das Ergebnis folgt dann der Vorlage statt nur dem Prompt.",
+   en:"Add-on model that steers image generation – e.g. via poses, edges or depth maps. The result then follows the reference instead of just the prompt."},
+  {t:"CUDA",
+   de:"NVIDIA-Schnittstelle, über die PyTorch die Grafikkarte nutzt. Ohne CUDA läuft alles auf der CPU – und damit um ein Vielfaches langsamer.",
+   en:"NVIDIA interface that lets PyTorch use the graphics card. Without CUDA everything runs on the CPU – many times slower."},
+  {t:"Custom Node",
+   de:"Von der Community entwickelte Zusatz-Nodes, die ComfyUI um neue Funktionen erweitern. Installation am einfachsten über den ComfyUI Manager.",
+   en:"Community-built extra nodes that add new features to ComfyUI. Easiest to install via the ComfyUI Manager."},
+  {t:"Denoise",
+   de:"Bestimmt bei img2img, wie stark das Ausgangsbild verändert wird (0–1). 0,3 = leichte Anpassung, 1,0 = komplett neues Bild.",
+   en:"In img2img, controls how much the input image is changed (0–1). 0.3 = subtle adjustment, 1.0 = completely new image."},
+  {t:"Depth Map",
+   de:"Graustufenbild, das Entfernungen kodiert: hell = nah, dunkel = fern. Wird für ControlNet und 3D-Anwendungen genutzt.",
+   en:"Grayscale image encoding distance: bright = near, dark = far. Used for ControlNet and 3D applications."},
+  {t:"Diffusionsmodell",
+   de:"Der Modelltyp hinter fast allen Bild- und Videogeneratoren. Startet mit reinem Rauschen und entfernt es Schritt für Schritt, bis ein Bild entsteht.",
+   en:"The model type behind almost all image and video generators. Starts from pure noise and removes it step by step until an image emerges."},
+  {t:"Flux",
+   de:"Bildmodell-Familie von Black Forest Labs. Achtung bei der Lizenz: Flux.1 schnell ist Apache 2.0 (frei nutzbar), Flux.1 dev hat eine eingeschränkte Lizenz.",
+   en:"Image model family by Black Forest Labs. Mind the license: Flux.1 schnell is Apache 2.0 (free to use), Flux.1 dev has a restricted license."},
+  {t:"fp16 / fp8 / bf16",
+   de:"Zahlengenauigkeit, mit der Modellgewichte gespeichert werden. Weniger Bits = kleinere Datei und weniger VRAM-Bedarf, minimal geringere Qualität.",
+   en:"Numeric precision used to store model weights. Fewer bits = smaller file and less VRAM needed, with minimally lower quality."},
+  {t:"Frame Interpolation",
+   de:"Berechnet Zwischenbilder zwischen bestehenden Frames und erhöht so die Framerate – z. B. von 16 auf 32 fps mit FILM VFI.",
+   en:"Computes in-between frames from existing ones to raise the framerate – e.g. from 16 to 32 fps with FILM VFI."},
+  {t:"GGUF",
+   de:"Komprimiertes Dateiformat für quantisierte Modelle. Ermöglicht große Modelle auch auf Grafikkarten mit wenig VRAM.",
+   en:"Compressed file format for quantized models. Makes large models usable on graphics cards with limited VRAM."},
+  {t:"Git",
+   de:"Werkzeug zur Versionsverwaltung von Code. Wird gebraucht, um Repositories (z. B. Custom Nodes) von GitHub herunterzuladen („klonen“).",
+   en:"Version control tool for code. Needed to download (“clone”) repositories such as custom nodes from GitHub."},
+  {t:"GitHub",
+   de:"Plattform, auf der Code veröffentlicht wird – auch ComfyUI selbst und die meisten Custom Nodes liegen dort.",
+   en:"Platform where code is published – ComfyUI itself and most custom nodes live there."},
+  {t:"GPU / CPU",
+   de:"Grafikprozessor / Hauptprozessor. Diffusionsmodelle laufen praktisch komplett auf der GPU – sie ist das wichtigste Bauteil für lokale KI.",
+   en:"Graphics processor / main processor. Diffusion models run almost entirely on the GPU – it's the most important component for local AI."},
+  {t:"Hugging Face",
+   de:"Die zentrale Plattform zum Herunterladen von KI-Modellen. In den Tutorials verlinken wir dort direkt auf die benötigten Modell-Dateien.",
+   en:"The central platform for downloading AI models. The tutorials link directly to the required model files there."},
+  {t:"i2v / t2v",
+   de:"Image-to-Video / Text-to-Video: Ein Video entsteht entweder aus einem Startbild (i2v) oder direkt aus einer Textbeschreibung (t2v).",
+   en:"Image-to-video / text-to-video: a video is generated either from a start image (i2v) or directly from a text description (t2v)."},
+  {t:"img2img / txt2img",
+   de:"Die zwei Grundmodi der Bildgenerierung: Ein neues Bild aus einem vorhandenen Bild (img2img) oder rein aus einer Textbeschreibung (txt2img).",
+   en:"The two basic image generation modes: a new image from an existing image (img2img) or purely from a text description (txt2img)."},
+  {t:"Inpainting",
+   de:"Nur einen markierten Bildbereich neu generieren, der Rest bleibt unverändert – z. B. um Objekte zu entfernen oder auszutauschen.",
+   en:"Regenerating only a masked area of an image while the rest stays untouched – e.g. to remove or replace objects."},
+  {t:"Latent Space",
+   de:"Die komprimierte interne Darstellung, in der Diffusionsmodelle rechnen – deutlich kleiner als das fertige Bild. Der VAE übersetzt am Ende zurück in Pixel.",
+   en:"The compressed internal representation diffusion models work in – much smaller than the final image. The VAE translates back into pixels at the end."},
+  {t:"LoRA",
+   de:"Kleine Zusatz-Datei, die einem Modell einen bestimmten Stil, Charakter oder eine Fähigkeit beibringt – ohne das ganze Modell neu zu trainieren.",
+   en:"Small add-on file that teaches a model a specific style, character or capability – without retraining the whole model."},
+  {t:"Node",
+   de:"Der Grundbaustein in ComfyUI. Jeder Node erledigt genau eine Aufgabe – Bild laden, Modell anwenden, Ergebnis speichern – und wird per Linien mit anderen Nodes verbunden.",
+   en:"The basic building block in ComfyUI. Each node does exactly one job – load an image, apply a model, save the result – and connects to other nodes via wires."},
+  {t:"Normal Map",
+   de:"Textur, die Oberflächendetails als Farbwerte kodiert. 3D-Software nutzt sie, um Licht realistisch auf einer Oberfläche zu berechnen.",
+   en:"Texture encoding surface detail as color values. 3D software uses it to compute realistic lighting on a surface."},
+  {t:"Parameter (14B, 1.3B)",
+   de:"Die Größe eines Modells, angegeben in Milliarden (B = billions) Parametern. Mehr Parameter = bessere Ergebnisse, aber auch mehr VRAM-Bedarf. Wan 2.1 gibt es z. B. als 1.3B- und 14B-Variante.",
+   en:"The size of a model, given in billions (B) of parameters. More parameters = better results, but also higher VRAM needs. Wan 2.1, for example, comes in 1.3B and 14B variants."},
+  {t:"PBR (Physically Based Rendering)",
+   de:"Standard für realistische Materialien in 3D. Ein PBR-Material besteht aus mehreren Maps (z. B. Albedo, Normal, Roughness), die zusammen das Oberflächenverhalten beschreiben.",
+   en:"Standard for realistic materials in 3D. A PBR material consists of several maps (e.g. albedo, normal, roughness) that together describe how a surface behaves."},
+  {t:"pip",
+   de:"Der Paket-Installer von Python. Lädt Zusatzbibliotheken per Konsolenbefehl herunter – z. B. „pip install …“.",
+   en:"Python's package installer. Downloads additional libraries via console command – e.g. “pip install …”."},
+  {t:"Pixel Space / Image Space",
+   de:"Das eigentliche, sichtbare Bild aus Pixeln – im Gegensatz zum Latent Space, in dem das Modell intern rechnet.",
+   en:"The actual, visible image made of pixels – as opposed to latent space, where the model does its internal work."},
+  {t:"Prompt / Negative Prompt",
+   de:"Die Textbeschreibung dessen, was im Bild erscheinen soll (Prompt) – und dessen, was vermieden werden soll (Negative Prompt).",
+   en:"The text description of what should appear in the image (prompt) – and what should be avoided (negative prompt)."},
+  {t:"Python",
+   de:"Die Programmiersprache, in der ComfyUI geschrieben ist. Bei ComfyUI Portable ist sie bereits enthalten – nichts muss extra installiert werden.",
+   en:"The programming language ComfyUI is written in. ComfyUI Portable includes it – no separate installation needed."},
+  {t:"PyTorch",
+   de:"Das Machine-Learning-Framework, auf dem ComfyUI und die Modelle laufen. Ist bei ComfyUI Portable bereits enthalten.",
+   en:"The machine learning framework ComfyUI and its models run on. Included with ComfyUI Portable."},
+  {t:"Quantisierung",
+   de:"Modellgewichte werden mit geringerer Genauigkeit gespeichert (z. B. fp8 statt fp16). Das spart deutlich VRAM bei nur leicht sichtbarem Qualitätsverlust.",
+   en:"Storing model weights at lower precision (e.g. fp8 instead of fp16). Saves significant VRAM with only a slightly visible quality trade-off."},
+  {t:"Qwen",
+   de:"Offene Modellfamilie von Alibaba – von Sprachmodellen bis zum Bildmodell Qwen-Image.",
+   en:"Open model family by Alibaba – from language models to the Qwen-Image image model."},
+  {t:"Safetensors",
+   de:"Das übliche, sichere Dateiformat für Modellgewichte (.safetensors). Kann – anders als ältere Formate – keinen ausführbaren Code enthalten.",
+   en:"The common, safe file format for model weights (.safetensors). Unlike older formats, it cannot contain executable code."},
+  {t:"Sage Attention",
+   de:"Optimierte Attention-Implementierung, die die Generierung beschleunigt und VRAM spart. Optionale Installation – ComfyUI läuft auch ohne.",
+   en:"Optimized attention implementation that speeds up generation and saves VRAM. Optional install – ComfyUI runs fine without it."},
+  {t:"Sampler",
+   de:"Der Algorithmus, der das Rauschen Schritt für Schritt entfernt (z. B. euler, dpm++). Verschiedene Sampler liefern leicht unterschiedliche Ergebnisse und Geschwindigkeiten.",
+   en:"The algorithm that removes noise step by step (e.g. euler, dpm++). Different samplers produce slightly different results and speeds."},
+  {t:"Scheduler",
+   de:"Bestimmt, wie viel Rauschen pro Schritt entfernt wird (z. B. normal, karras). Arbeitet immer zusammen mit dem Sampler.",
+   en:"Determines how much noise is removed per step (e.g. normal, karras). Always works together with the sampler."},
+  {t:"SDXL / Stable Diffusion",
+   de:"Die klassischen offenen Bildmodelle von Stability AI. SDXL ist auch heute noch Basis vieler Workflows – z. B. für Texturen.",
+   en:"The classic open image models by Stability AI. SDXL is still the basis of many workflows today – e.g. for textures."},
+  {t:"Seamless / Tileable",
+   de:"Eine Textur, die sich ohne sichtbare Kanten wiederholen lässt. Wichtig: Das funktioniert nur während der Generierung – ein fertiges Bild lässt sich nachträglich nicht verlustfrei kachelbar machen.",
+   en:"A texture that repeats without visible seams. Important: this only works during generation – a finished image cannot be made tileable afterwards without loss."},
+  {t:"Seed",
+   de:"Die Startzahl für das Ausgangsrauschen. Gleicher Seed + gleiche Einstellungen = exakt dasselbe Bild. Praktisch, um Ergebnisse zu reproduzieren.",
+   en:"The starting number for the initial noise. Same seed + same settings = exactly the same image. Handy for reproducing results."},
+  {t:"Steps",
+   de:"Anzahl der Entrauschungs-Schritte. Mehr Steps = mehr Detail, aber längere Rechenzeit. Ab einem gewissen Punkt bringt mehr kaum noch etwas.",
+   en:"Number of denoising steps. More steps = more detail, but longer render time. Beyond a certain point, more barely helps."},
+  {t:"Text Encoder",
+   de:"Übersetzt den Prompt in Zahlen, die das Diffusionsmodell versteht. Gängige Varianten: CLIP, T5, UMT5 (bei Wan).",
+   en:"Translates the prompt into numbers the diffusion model understands. Common variants: CLIP, T5, UMT5 (used by Wan)."},
+  {t:"Upscaling",
+   de:"Erhöht die Auflösung eines Bildes oder Videos nachträglich – z. B. mit ESRGAN oder NVIDIA RTX VSR.",
+   en:"Increases the resolution of an image or video after the fact – e.g. with ESRGAN or NVIDIA RTX VSR."},
+  {t:"VAE",
+   de:"Der Übersetzer zwischen Latent Space und Pixeln: komprimiert Bilder für das Modell und dekodiert das Ergebnis am Ende zurück ins sichtbare Bild.",
+   en:"The translator between latent space and pixels: compresses images for the model and decodes the result back into a visible image at the end."},
+  {t:"VRAM",
+   de:"Der Speicher der Grafikkarte. Entscheidet, welche Modelle (und in welcher Quantisierung) überhaupt laufen – die wichtigste Kennzahl beim GPU-Kauf für lokale KI.",
+   en:"The graphics card's memory. Determines which models (and at what quantization) can run at all – the key spec when buying a GPU for local AI."},
+  {t:"Wan 2.1",
+   de:"Offenes Videomodell von Alibaba, verfügbar als 1.3B- und 14B-Variante. Apache-2.0-Lizenz – also auch kommerziell frei nutzbar. Basis der Video-Tutorials auf dieser Seite.",
+   en:"Open video model by Alibaba, available in 1.3B and 14B variants. Apache 2.0 license – free for commercial use. The basis of the video tutorials on this site."},
+  {t:"Workflow",
+   de:"Die Anordnung verbundener Nodes in ComfyUI – quasi das „Rezept“ einer Generierung. Lässt sich als JSON-Datei speichern und ist auch in jedem generierten PNG eingebettet.",
+   en:"The arrangement of connected nodes in ComfyUI – essentially the “recipe” of a generation. Can be saved as a JSON file and is also embedded in every generated PNG."}
+];
+
+let currentLang = "de";
+
+function render(){
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const list = document.getElementById("list");
+  const filtered = GLOSSARY.filter(e =>
+    !q || e.t.toLowerCase().includes(q) || e.de.toLowerCase().includes(q) || e.en.toLowerCase().includes(q)
+  ).sort((a,b)=>a.t.localeCompare(b.t,"de"));
+
+  let html = "", lastLetter = "";
+  for(const e of filtered){
+    const letter = e.t[0].toUpperCase();
+    if(letter !== lastLetter){
+      html += '<div class="letter">'+letter+'</div>';
+      lastLetter = letter;
+    }
+    html += '<div class="entry"><h2>'+e.t+'</h2><p>'+(currentLang==="de"?e.de:e.en)+'</p></div>';
+  }
+  list.innerHTML = html;
+  document.getElementById("t-empty").style.display = filtered.length ? "none" : "block";
+  const c = COUNT[currentLang];
+  document.getElementById("count").textContent = filtered.length + " " + (filtered.length===1 ? c[0] : c[1]);
+}
+
+function setLang(lang){
+  currentLang = lang;
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.getElementById("search").placeholder = PLACEHOLDER[lang];
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
