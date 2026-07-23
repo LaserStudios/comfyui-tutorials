@@ -61,6 +61,7 @@
   .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
   .next strong{display:block;font-size:18px;margin-top:2px}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .laser{border-left:3px solid var(--accent);background:var(--accent-soft)}
   .laser .btn{margin:12px 0 6px}
   .small{font-size:13px;color:var(--muted);margin:6px 0 0}
@@ -80,13 +81,14 @@
 
   <span class="kicker">Basics · 04</span>
   <h1 id="t-h1">Der erste Workflow</h1>
-  <p class="lead" id="t-lead">Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.1 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.</p>
+  <p class="lead" id="t-lead">Von der Vorlage bis zur fertigen Datei: was Workflows und Nodes sind, wie Wan 2.1 aufgebaut ist, und wie du die Generierung startest und dein Video findest.</p>
 
   <div class="meta">
     <span class="chip" id="t-chip1">Basics</span>
     <span class="chip" id="t-chip2">Videogenerierung</span>
     <span class="chip" id="t-chip3">Text-to-Video</span>
     <span class="chip" id="t-chip4">Wan 2.1</span>
+    <span class="chip" id="t-chip5">Run &amp; Output</span>
   </div>
 
   <h2 id="t-wf-h">Was ist ein Workflow?</h2>
@@ -249,14 +251,52 @@
         <li><code>wan_2.1_vae.safetensors</code> → <code>ComfyUI/models/vae/</code></li>
       </ul>
     </li>
-        <li><code>umt5_xxl_fp8_e4m3fn_scaled.safetensors</code> → <code>ComfyUI/models/text_encoders/</code></li>
-        <li><code>wan_2.1_vae.safetensors</code> → <code>ComfyUI/models/vae/</code></li>
-      </ul>
-    </li>
     <li id="t-u3">Für <strong>bessere Ergebnisse</strong> wählst du im Node <strong>Load Diffusion Model</strong> die <code>14B</code>-Datei (einmalig herunterladen) – optional, sonst bleibt es bei 1.3B.</li>
     <li id="t-u4">Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).</li>
-    <li id="t-u5">Klick oben auf <strong>Run</strong> (früher „Queue Prompt“) – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.</li>
+    <li id="t-u5">Damit ist alles bereit. Wie du die Generierung auslöst und was dabei im Graphen passiert, steht im nächsten Abschnitt.</li>
   </ol>
+
+  <h2 id="t-run-h">Generierung starten</h2>
+  <p id="t-run-1">Ganz oben in der Menüleiste sitzt der blaue <strong>Run</strong>-Button (in älteren Versionen hieß er „Queue Prompt"). Ein Klick darauf startet die Generierung. Schneller geht es mit dem Tastenkürzel <code>Strg</code>+<code>Enter</code> (Mac: <code>Cmd</code>+<code>Enter</code>).</p>
+
+  <figure>
+    <svg class="shot" viewBox="0 0 700 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Die obere Steuerleiste mit Run-Button, Anzahl und Abbrechen">
+      <rect x="0" y="0" width="700" height="96" fill="#16161c"/>
+      <rect x="24" y="28" width="120" height="40" rx="9" fill="#1d1d25" stroke="#26262f"/>
+      <text x="52" y="53" font-family="ui-monospace,Menlo,monospace" font-size="18" fill="#e8e8ee">1</text>
+      <path d="M120 40 l10 8 l-10 8 z" fill="#9a9aa6"/>
+      <path d="M120 40 l10 8 l-10 8 z" transform="translate(0,-16)" fill="#9a9aa6"/>
+      <rect x="160" y="26" width="150" height="44" rx="10" fill="#2f6bff"/>
+      <path d="M188 40 l0 16 l14 -8 z" fill="#fff"/>
+      <text x="212" y="53" font-family="-apple-system,Segoe UI,Roboto,sans-serif" font-weight="700" font-size="17" fill="#fff">Run</text>
+      <rect x="326" y="26" width="46" height="44" rx="10" fill="#3a1f24" stroke="#ff3b3b"/>
+      <path d="M341 41 l16 16 M357 41 l-16 16" stroke="#ff3b3b" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="392" y="28" width="120" height="40" rx="9" fill="#1d1d25" stroke="#26262f"/>
+      <text x="412" y="53" font-family="-apple-system,Segoe UI,Roboto,sans-serif" font-size="15" fill="#9a9aa6">0 active</text>
+    </svg>
+    <figcaption id="t-cap-run">Die Steuerleiste: Anzahl · Run (Start) · Abbrechen · Anzeige laufender Jobs.</figcaption>
+  </figure>
+
+  <p id="t-run-2">Das kleine Zahlenfeld <strong>links neben Run</strong> ist die <strong>Anzahl der Durchläufe</strong>. Steht dort <code>1</code>, wird ein Video erzeugt. Stellst du <code>3</code> ein und klickst Run, hängt ComfyUI drei Durchläufe hintereinander in die Warteschlange – praktisch, um mehrere Varianten am Stück zu erzeugen.</p>
+
+  <h2 id="t-queue-h">Die Queue – Warteschlange &amp; Fortschritt</h2>
+  <p id="t-queue-1">„Queue" heißt <strong>Warteschlange</strong>. Jeder Klick auf Run legt einen Auftrag hinein, und ComfyUI arbeitet sie <strong>nacheinander</strong> ab. Während ein Auftrag läuft, siehst du den Fortschritt direkt im Graphen:</p>
+  <ol class="steps">
+    <li id="t-q1">Der Node, der gerade rechnet, wird <strong>hervorgehoben</strong>, und an ihm läuft ein <strong>Fortschrittsbalken</strong>. So wanderst du sichtbar durch den Graphen – vom Laden über den KSampler bis zum Speichern.</li>
+    <li id="t-q2">Oben zeigt die Leiste, wie viele Aufträge noch <strong>anstehen bzw. aktiv</strong> sind. Du kannst in Ruhe weiterarbeiten, während im Hintergrund gerechnet wird.</li>
+    <li id="t-q3">Mit dem roten <strong>✕</strong> brichst du den laufenden Auftrag ab. Die Warteschlange lässt sich auch leeren, falls du dich vertan hast.</li>
+  </ol>
+  <div class="box note">
+    <p style="margin:0" id="t-queue-note"><strong>Der erste Durchlauf dauert länger.</strong> Beim ersten Run lädt ComfyUI die Modelle erst in den Grafikspeicher (VRAM) – das kann ein paar Minuten dauern. Jeder weitere Durchlauf mit demselben Modell geht dann deutlich schneller, weil es bereits geladen ist.</p>
+  </div>
+
+  <h2 id="t-out-h">Dein Video finden – der Output</h2>
+  <p id="t-out-1">Ist der letzte Node durchgelaufen, erscheint im <strong>Save-Video-Node</strong> (bzw. der Video-Vorschau) direkt eine <strong>abspielbare Vorschau</strong> deines Ergebnisses. Damit siehst du sofort, was herausgekommen ist.</p>
+  <p id="t-out-2">Gespeichert wird die Datei zusätzlich automatisch auf der Festplatte – im Ordner:</p>
+  <div class="box" id="t-out-path">
+    <p style="margin:0"><code>ComfyUI/output/</code></p>
+  </div>
+  <p id="t-out-3">Den Anfang des Dateinamens legt das Feld <code>filename_prefix</code> im Save-Video-Node fest (Standard <code>video/ComfyUI</code>). ComfyUI nummeriert automatisch hoch, sodass frühere Videos nicht überschrieben werden.</p>
 
   <div class="box note">
     <p style="margin:0" id="t-vram-1"><strong>Hardware-Check:</strong> Die <strong>1.3B</strong>-Variante läuft schon ab ca. <strong>8 GB VRAM</strong>. Die <strong>14B</strong>-Variante liefert bessere Ergebnisse, braucht aber deutlich mehr VRAM (16 GB+ empfohlen, für 720p mehr). Wenn eine Generierung sehr lange dauert oder abbricht, reduziere zuerst Auflösung und Länge im Latent-Node – oder bleib bei 1.3B.</p>
@@ -267,33 +307,49 @@
   </div>
 
   <div class="box note">
-    <p style="margin:0" id="t-folders-1"><strong>Diese Ordner brauchst du immer wieder.</strong> ComfyUI sortiert Modelle nach Typ in feste Unterordner von <code>ComfyUI/models/</code> – egal, welches Modell du später lädst, es kommt in einen davon: <code>diffusion_models/</code> (bzw. <code>checkpoints/</code>) für das Hauptmodell, <code>text_encoders/</code> für Text-Encoder, <code>vae/</code> für VAEs, dazu z. B. <code>loras/</code>, <code>clip_vision/</code>, <code>controlnet/</code> und <code>upscale_models/</code>. Wenn du dir diese Struktur einmal merkst, weißt du bei jedem neuen Modell sofort, wohin die Datei gehört – und die Modell-Note im Workflow zeigt dir den passenden Pfad immer direkt mit an.</p>
+    <p style="margin:0" id="t-res-note"><strong>Auflösung &amp; Framerate ändern.</strong> Diese Werte gehören <strong>nicht</strong> in den Save-Video-Node – der speichert nur. Sie stehen weiter vorne im Workflow: <strong>Auflösung und Länge (Frames)</strong> stellst du im Node <strong>Empty&nbsp;Hunyuan&nbsp;Latent&nbsp;Video</strong> ein (<code>width</code>, <code>height</code>, <code>length</code>) – das ist trotz des Namens nur ein leerer Video-Platzhalter, kein Modell. Die <strong>Framerate (fps)</strong> setzt du im Node <strong>Create&nbsp;Video</strong>. Beispiel: 33 Frames bei 16 fps ergeben rund 2 Sekunden Video.</p>
+  </div>
+
+  <div class="box note">
+    <p style="margin:0" id="t-upscale-note"><strong>Tipp – klein rendern, später vergrößern.</strong> Oft lohnt es sich, bewusst in <strong>geringerer Auflösung und mit weniger Frames</strong> zu generieren. Das spart enorm <strong>Rechenzeit und VRAM</strong>: Du siehst viel schneller, ob Bewegung und Bildinhalt stimmen, und musst nicht minutenlang auf einen Versuch warten. Sitzt das Ergebnis, kannst du es anschließend <strong>hochskalieren (Upscaling)</strong> und mit <strong>Frame-Interpolation</strong> zusätzliche Zwischenbilder berechnen lassen – für höhere Auflösung und flüssigere Bewegung, ohne alles neu zu würfeln. Die passenden Workflows dafür findest du im Tutorial-Bereich <strong>„Fix it in Prompt"</strong>.</p>
+  </div>
+
+  <div class="box note">
+    <p style="margin:0" id="t-copy-note"><strong>Kurz zum Copyright.</strong> In vielen Rechtsordnungen – etwa nach der aktuellen Einschätzung des US Copyright Office (2025) – sind <strong>rein KI-erzeugte Videos ohne ausreichenden menschlichen kreativen Beitrag nicht urheberrechtlich geschützt</strong>. Ein bloßer Prompt genügt dafür nicht, selbst wenn er lang ist oder oft überarbeitet wurde. Sobald aber <strong>eigene menschliche Gestaltung</strong> dazukommt – etwa Auswahl, Anordnung, Schnitt oder eigenes Ausgangsmaterial – kann der menschlich gestaltete Anteil schützbar sein (Einzelfallprüfung, je nach Land unterschiedlich). Wie du solchen Beitrag gezielt einbringst, zeigen wir an anderer Stelle in den Tutorials. <em>(Keine Rechtsberatung.)</em></p>
+  </div>
+
+  <div class="box note">
+    <p style="margin:0" id="t-folders-1"><strong>Die Ordner kennst du schon.</strong> Welche Datei in welchen Unterordner von <code>ComfyUI/models/</code> gehört, steht in <a href="Basics-03-Grundwissen.html">Teil 03</a> – die Modell-Note in unserem Workflow zeigt dir den passenden Pfad ohnehin direkt mit an.</p>
   </div>
 
   <div class="divider"></div>
 
-  <h2 id="t-next-h">Nächster Schritt</h2>
+  <h2 id="t-done-h">Geschafft – die Basics sind durch</h2>
+  <p id="t-done-0"><strong>Und Glückwunsch – du hast dein erstes eigenes Video generiert! 🎉</strong></p>
+  <p id="t-done-1">Du hast ComfyUI installiert, den Manager aktiviert, dich im Graphen zurechtgefunden, deinen ersten Workflow geladen und daraus ein Video generiert. Das ist das komplette Fundament – ab hier geht es an eigene Prompts, bessere Modelle und fortgeschrittene Workflows.</p>
+
   <div class="next">
     <div>
-      <small id="t-next-s">Basics · 05 · in Arbeit</small>
-      <strong id="t-next-t">Den Prompt steuern &amp; Modelle verstehen</strong>
+      <small id="t-next-s">Basics · abgeschlossen</small>
+      <strong id="t-next-t">Zurück zur Übersicht</strong>
     </div>
-    <span style="color:var(--muted);font-size:24px">→</span>
+    <a href="basics.html" style="color:var(--accent);font-size:24px;text-decoration:none">→</a>
   </div>
 
-  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI Basics · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
 <script>
 const STR = {
   "t-h1":     {de:"Der erste Workflow", en:"Your First Workflow"},
-  "t-lead":   {de:"Was Workflows und Nodes sind, wie ein modernes Modell wie Wan 2.1 aufgebaut ist – und wie du mit der eingebauten Vorlage dein erstes eigenes Video generierst.",
-               en:"What workflows and nodes are, how a modern model like Wan 2.1 is structured – and how to generate your first video using the built-in template."},
+  "t-lead":   {de:"Von der Vorlage bis zur fertigen Datei: was Workflows und Nodes sind, wie Wan 2.1 aufgebaut ist, und wie du die Generierung startest und dein Video findest.",
+               en:"From template to finished file: what workflows and nodes are, how Wan 2.1 is structured, and how to start the generation and find your video."},
   "t-chip1":  {de:"Basics", en:"Basics"},
   "t-chip2":  {de:"Videogenerierung", en:"Video generation"},
   "t-chip3":  {de:"Text-to-Video", en:"Text-to-Video"},
   "t-chip4":  {de:"Wan 2.1", en:"Wan 2.1"},
+  "t-chip5":  {de:"Run &amp; Output", en:"Run &amp; output"},
   "t-wf-h":   {de:"Was ist ein Workflow?", en:"What is a workflow?"},
   "t-wf-1":   {de:"Ein <strong>Workflow</strong> ist der komplette Graph in ComfyUI: alle Bausteine plus ihre Verbindungen, die zusammen ein Ergebnis erzeugen. Du kannst ihn als <code>.json</code>-Datei speichern, teilen und jederzeit wieder laden. Für den Einstieg nutzen wir eine <strong>fertige Vorlage, die in ComfyUI bereits eingebaut ist</strong> – du musst also nichts selbst verdrahten.",
                en:"A <strong>workflow</strong> is the complete graph in ComfyUI: all the building blocks plus their connections that together produce a result. You can save it as a <code>.json</code> file, share it and reload it anytime. To get started we use a <strong>ready-made template that ships with ComfyUI</strong> – so there's nothing to wire up yourself."},
@@ -356,8 +412,8 @@ const STR = {
   "t-ls-btn": {de:"→ Workflow herunterladen (.json)", en:"→ Download workflow (.json)"},
   "t-cap4":   {de:"Unser Workflow: die Notiz \u201eLaser Studios – Modelle\u201c listet alle Links und den Pfadbaum direkt neben den Modell-Nodes.",
                en:"Our workflow: the \u201cLaser Studios – Models\u201d note lists all links and the folder tree right next to the model nodes."},
-  "t-folders-1":{de:"<strong>Diese Ordner brauchst du immer wieder.</strong> ComfyUI sortiert Modelle nach Typ in feste Unterordner von <code>ComfyUI/models/</code> – egal, welches Modell du später lädst, es kommt in einen davon: <code>diffusion_models/</code> (bzw. <code>checkpoints/</code>) für das Hauptmodell, <code>text_encoders/</code> für Text-Encoder, <code>vae/</code> für VAEs, dazu z. B. <code>loras/</code>, <code>clip_vision/</code>, <code>controlnet/</code> und <code>upscale_models/</code>. Wenn du dir diese Struktur einmal merkst, weißt du bei jedem neuen Modell sofort, wohin die Datei gehört – und die Modell-Note im Workflow zeigt dir den passenden Pfad immer direkt mit an.",
-                 en:"<strong>You will need these folders again and again.</strong> ComfyUI sorts models by type into fixed subfolders of <code>ComfyUI/models/</code> – whatever model you load later, it goes into one of them: <code>diffusion_models/</code> (or <code>checkpoints/</code>) for the main model, <code>text_encoders/</code> for text encoders, <code>vae/</code> for VAEs, plus e.g. <code>loras/</code>, <code>clip_vision/</code>, <code>controlnet/</code> and <code>upscale_models/</code>. Once you remember this structure, you instantly know where each new model belongs – and the model note in the workflow always shows you the right path too."},
+  "t-folders-1":{de:"<strong>Die Ordner kennst du schon.</strong> Welche Datei in welchen Unterordner von <code>ComfyUI/models/</code> gehört, steht in <a href=\"Basics-03-Grundwissen.html\">Teil 03</a> – die Modell-Note in unserem Workflow zeigt dir den passenden Pfad ohnehin direkt mit an.",
+                 en:"<strong>You already know the folders.</strong> Which file belongs in which subfolder of <code>ComfyUI/models/</code> is covered in <a href=\"Basics-03-Grundwissen.html\">part 03</a> – the model note in our workflow shows you the matching path anyway."},
   "t-ls-2":   {de:"In ComfyUI einfach per Drag &amp; Drop ins Fenster ziehen – oder <code>Workflow → Open</code>.",
                en:"In ComfyUI just drag &amp; drop it into the window – or use <code>Workflow → Open</code>."},
   "t-ls-3":   {de:'Dieser Workflow <strong>basiert auf der offiziellen Vorlage „Wan 2.1 Text to Video"</strong> und wurde von uns nur leicht ergänzt – vor allem um die <strong>Modell-Note</strong>. Ziel ist, dass du hier die <strong>Grundlagen von Ordnerstruktur und Modellen</strong> verstehst; die Original-Vorlage findest du in ComfyUI jederzeit unter <code>Workflow → Browse Templates</code>.',
@@ -372,22 +428,69 @@ const STR = {
                en:"For <strong>better results</strong>, load the <code>14B</code> file in the <strong>Load Diffusion Model</strong> node (one-time download) – optional, otherwise you stay on 1.3B."},
   "t-u4":     {de:"Beschreibe im <strong>positiven</strong> Prompt-Node in ganzen Sätzen, was passieren soll (der negative bleibt erstmal wie er ist).",
                en:"In the <strong>positive</strong> prompt node, describe in full sentences what should happen (leave the negative one as it is for now)."},
-  "t-u5":     {de:"Klick oben auf <strong>Run</strong> (früher „Queue Prompt“) – die erste Generierung dauert ein paar Minuten (die Modelle werden erst geladen), danach geht es schneller. Dein Video erscheint im Save-Video-Node.",
-               en:"Click <strong>Run</strong> at the top (formerly “Queue Prompt”) – the first generation takes a few minutes (the models load first), after that it gets faster. Your video appears in the Save Video node."},
+  "t-u5":     {de:"Damit ist alles bereit. Wie du die Generierung auslöst und was dabei im Graphen passiert, steht im nächsten Abschnitt.",
+               en:"That's everything in place. How to trigger the generation and what happens in the graph is covered in the next section."},
   "t-vram-1": {de:"<strong>Hardware-Check:</strong> Die <strong>1.3B</strong>-Variante läuft schon ab ca. <strong>8 GB VRAM</strong>. Die <strong>14B</strong>-Variante liefert bessere Ergebnisse, braucht aber deutlich mehr VRAM (16 GB+ empfohlen, für 720p mehr). Wenn eine Generierung sehr lange dauert oder abbricht, reduziere zuerst Auflösung und Länge im Latent-Node – oder bleib bei 1.3B.",
                en:"<strong>Hardware check:</strong> the <strong>1.3B</strong> version runs from about <strong>8 GB VRAM</strong>. The <strong>14B</strong> version gives better results but needs considerably more VRAM (16 GB+ recommended, more for 720p). If a generation takes very long or fails, reduce resolution and length in the latent node first – or stick with 1.3B."},
   "t-img-1":  {de:"<strong>Tipp – nur ein Bild statt Video?</strong> Stell im Latent-Node die Länge auf <strong>1 Frame</strong>. Damit wird Wan zum Bildgenerator – perfekt zum schnellen Testen von Prompts.",
                en:"<strong>Tip – just an image instead of a video?</strong> Set the length in the latent node to <strong>1 frame</strong>. That turns Wan into an image generator – perfect for quickly testing prompts."},
-  "t-next-h": {de:"Nächster Schritt", en:"Next step"},
-  "t-next-s": {de:"Basics · 05 · in Arbeit", en:"Basics · 05 · coming soon"},
-  "t-next-t": {de:"Den Prompt steuern &amp; Modelle verstehen", en:"Steering the prompt &amp; understanding models"}
+  "t-run-h":  {de:"Generierung starten", en:"Start the generation"},
+  "t-run-1":  {de:"Ganz oben in der Menüleiste sitzt der blaue <strong>Run</strong>-Button (in älteren Versionen hieß er „Queue Prompt\"). Ein Klick darauf startet die Generierung. Schneller geht es mit dem Tastenkürzel <code>Strg</code>+<code>Enter</code> (Mac: <code>Cmd</code>+<code>Enter</code>).",
+               en:"At the very top of the menu bar sits the blue <strong>Run</strong> button (older versions called it \"Queue Prompt\"). One click starts the generation. Faster: the shortcut <code>Ctrl</code>+<code>Enter</code> (Mac: <code>Cmd</code>+<code>Enter</code>)."},
+  "t-cap-run":   {de:"Die Steuerleiste: Anzahl · Run (Start) · Abbrechen · Anzeige laufender Jobs.",
+               en:"The control bar: count · Run (start) · cancel · running-jobs indicator."},
+  "t-run-2":  {de:"Das kleine Zahlenfeld <strong>links neben Run</strong> ist die <strong>Anzahl der Durchläufe</strong>. Steht dort <code>1</code>, wird ein Video erzeugt. Stellst du <code>3</code> ein und klickst Run, hängt ComfyUI drei Durchläufe hintereinander in die Warteschlange – praktisch, um mehrere Varianten am Stück zu erzeugen.",
+               en:"The little number field <strong>left of Run</strong> is the <strong>number of runs</strong>. If it shows <code>1</code>, one video is created. Set it to <code>3</code> and click Run, and ComfyUI queues three runs back to back – handy for producing several variations in one go."},
+  "t-queue-h":{de:"Die Queue – Warteschlange &amp; Fortschritt", en:"The queue – waiting line &amp; progress"},
+  "t-queue-1":{de:"„Queue\" heißt <strong>Warteschlange</strong>. Jeder Klick auf Run legt einen Auftrag hinein, und ComfyUI arbeitet sie <strong>nacheinander</strong> ab. Während ein Auftrag läuft, siehst du den Fortschritt direkt im Graphen:",
+               en:"\"Queue\" is the <strong>waiting line</strong>. Every click on Run adds a job to it, and ComfyUI works through them <strong>one after another</strong>. While a job runs, you see the progress right in the graph:"},
+  "t-q1":     {de:"Der Node, der gerade rechnet, wird <strong>hervorgehoben</strong>, und an ihm läuft ein <strong>Fortschrittsbalken</strong>. So wanderst du sichtbar durch den Graphen – vom Laden über den KSampler bis zum Speichern.",
+               en:"The node currently computing is <strong>highlighted</strong>, with a <strong>progress bar</strong> running on it. That way you visibly move through the graph – from loading via the KSampler to saving."},
+  "t-q2":     {de:"Oben zeigt die Leiste, wie viele Aufträge noch <strong>anstehen bzw. aktiv</strong> sind. Du kannst in Ruhe weiterarbeiten, während im Hintergrund gerechnet wird.",
+               en:"The top bar shows how many jobs are still <strong>pending or active</strong>. You can keep working while it computes in the background."},
+  "t-q3":     {de:"Mit dem roten <strong>✕</strong> brichst du den laufenden Auftrag ab. Die Warteschlange lässt sich auch leeren, falls du dich vertan hast.",
+               en:"The red <strong>✕</strong> cancels the running job. You can also clear the queue if you made a mistake."},
+  "t-queue-note":{de:"<strong>Der erste Durchlauf dauert länger.</strong> Beim ersten Run lädt ComfyUI die Modelle erst in den Grafikspeicher (VRAM) – das kann ein paar Minuten dauern. Jeder weitere Durchlauf mit demselben Modell geht dann deutlich schneller, weil es bereits geladen ist.",
+                  en:"<strong>The first run takes longer.</strong> On the first run ComfyUI first loads the models into graphics memory (VRAM) – that can take a few minutes. Every further run with the same model is then noticeably faster, because it's already loaded."},
+  "t-out-h":  {de:"Dein Video finden – der Output", en:"Find your video – the output"},
+  "t-out-1":  {de:"Ist der letzte Node durchgelaufen, erscheint im <strong>Save-Video-Node</strong> (bzw. der Video-Vorschau) direkt eine <strong>abspielbare Vorschau</strong> deines Ergebnisses. Damit siehst du sofort, was herausgekommen ist.",
+               en:"Once the last node has finished, a <strong>playable preview</strong> of your result appears right in the <strong>Save Video node</strong> (or the video preview). So you instantly see what came out."},
+  "t-out-2":  {de:"Gespeichert wird die Datei zusätzlich automatisch auf der Festplatte – im Ordner:",
+               en:"The file is also saved automatically to disk – in the folder:"},
+  "t-out-3":  {de:"Den Anfang des Dateinamens legt das Feld <code>filename_prefix</code> im Save-Video-Node fest (Standard <code>video/ComfyUI</code>). ComfyUI nummeriert automatisch hoch, sodass frühere Videos nicht überschrieben werden.",
+               en:"The start of the filename is set by the <code>filename_prefix</code> field in the Save Video node (default <code>video/ComfyUI</code>). ComfyUI auto-increments the number so earlier videos aren't overwritten."},
+  "t-res-note":{de:"<strong>Auflösung &amp; Framerate ändern.</strong> Diese Werte gehören <strong>nicht</strong> in den Save-Video-Node – der speichert nur. Sie stehen weiter vorne im Workflow: <strong>Auflösung und Länge (Frames)</strong> stellst du im Node <strong>Empty&nbsp;Hunyuan&nbsp;Latent&nbsp;Video</strong> ein (<code>width</code>, <code>height</code>, <code>length</code>) – das ist trotz des Namens nur ein leerer Video-Platzhalter, kein Modell. Die <strong>Framerate (fps)</strong> setzt du im Node <strong>Create&nbsp;Video</strong>. Beispiel: 33 Frames bei 16 fps ergeben rund 2 Sekunden Video.",
+                en:"<strong>Change resolution &amp; frame rate.</strong> These values do <strong>not</strong> belong in the Save Video node – that only saves. They live earlier in the workflow: set <strong>resolution and length (frames)</strong> in the <strong>Empty&nbsp;Hunyuan&nbsp;Latent&nbsp;Video</strong> node (<code>width</code>, <code>height</code>, <code>length</code>) – despite the name that's just an empty video placeholder, not a model. Set the <strong>frame rate (fps)</strong> in the <strong>Create&nbsp;Video</strong> node. Example: 33 frames at 16 fps make about 2 seconds of video."},
+  "t-upscale-note":{de:"<strong>Tipp – klein rendern, später vergrößern.</strong> Oft lohnt es sich, bewusst in <strong>geringerer Auflösung und mit weniger Frames</strong> zu generieren. Das spart enorm <strong>Rechenzeit und VRAM</strong>: Du siehst viel schneller, ob Bewegung und Bildinhalt stimmen, und musst nicht minutenlang auf einen Versuch warten. Sitzt das Ergebnis, kannst du es anschließend <strong>hochskalieren (Upscaling)</strong> und mit <strong>Frame-Interpolation</strong> zusätzliche Zwischenbilder berechnen lassen – für höhere Auflösung und flüssigere Bewegung, ohne alles neu zu würfeln. Die passenden Workflows dafür findest du im Tutorial-Bereich <strong>„Fix it in Prompt\"</strong>.",
+                    en:"<strong>Tip – render small, enlarge later.</strong> It's often worth deliberately generating at <strong>lower resolution and with fewer frames</strong>. That saves a lot of <strong>compute time and VRAM</strong>: you see much faster whether the motion and content work, without waiting minutes for a single try. Once the result is right, you can then <strong>upscale</strong> it and use <strong>frame interpolation</strong> to compute additional in-between frames – for higher resolution and smoother motion, without re-rolling everything. You'll find the matching workflows in the <strong>\"Fix it in Prompt\"</strong> tutorial section."},
+  "t-copy-note":{de:"<strong>Kurz zum Copyright.</strong> In vielen Rechtsordnungen – etwa nach der aktuellen Einschätzung des US Copyright Office (2025) – sind <strong>rein KI-erzeugte Videos ohne ausreichenden menschlichen kreativen Beitrag nicht urheberrechtlich geschützt</strong>. Ein bloßer Prompt genügt dafür nicht, selbst wenn er lang ist oder oft überarbeitet wurde. Sobald aber <strong>eigene menschliche Gestaltung</strong> dazukommt – etwa Auswahl, Anordnung, Schnitt oder eigenes Ausgangsmaterial – kann der menschlich gestaltete Anteil schützbar sein (Einzelfallprüfung, je nach Land unterschiedlich). Wie du solchen Beitrag gezielt einbringst, zeigen wir an anderer Stelle in den Tutorials. <em>(Keine Rechtsberatung.)</em>",
+                 en:"<strong>A quick word on copyright.</strong> In many jurisdictions – for example under the current view of the U.S. Copyright Office (2025) – <strong>purely AI-generated videos without sufficient human creative contribution are not protected by copyright</strong>. A mere prompt isn't enough, even if it's long or revised many times. But as soon as <strong>your own human authorship</strong> is added – such as selection, arrangement, editing or your own source material – the human-created portion may be protectable (case-by-case, and it varies by country). How to deliberately add such contribution is shown elsewhere in the tutorials. <em>(Not legal advice.)</em>"},
+  "t-done-h": {de:"Geschafft – die Basics sind durch", en:"Done – the basics are complete"},
+  "t-done-0": {de:"<strong>Und Glückwunsch – du hast dein erstes eigenes Video generiert! 🎉</strong>",
+               en:"<strong>And congratulations – you've generated your very first video! 🎉</strong>"},
+  "t-done-1": {de:"Du hast ComfyUI installiert, den Manager aktiviert, dich im Graphen zurechtgefunden, deinen ersten Workflow geladen und daraus ein Video generiert. Das ist das komplette Fundament – ab hier geht es an eigene Prompts, bessere Modelle und fortgeschrittene Workflows.",
+               en:"You've installed ComfyUI, enabled the Manager, found your way around the graph, loaded your first workflow and generated a video from it. That's the complete foundation – from here it's on to your own prompts, better models and advanced workflows."},
+  "t-next-s": {de:"Basics · abgeschlossen", en:"Basics · complete"},
+  "t-next-t": {de:"Zurück zur Übersicht", en:"Back to overview"}
 };
-function setLang(lang){
+function applyLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
   document.documentElement.lang=lang;
   document.getElementById('btn-de').classList.toggle('active',lang==='de');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
+
+function setLang(lang){
+  applyLang(lang);
+  try{ localStorage.setItem('lsLang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lsLang'); }catch(e){}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'de';
+  applyLang(saved || (/^en/i.test(nav) ? 'en' : 'de'));
+})();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>

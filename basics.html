@@ -35,6 +35,7 @@
   .card p{margin:0;color:var(--muted);font-size:15px}
   .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>
@@ -56,7 +57,7 @@
 
     <a class="card" href="Basics-01-ComfyUI.html">
       <span class="no">01</span>
-      <div><h2 id="t-c1-h">Erste Schritte</h2><p id="t-c1-p">Was ComfyUI ist, welche Hardware du brauchst, installieren &amp; im Browser starten.</p></div>
+      <div><h2 id="t-c1-h">Erste Schritte – ComfyUI installieren</h2><p id="t-c1-p">Was ComfyUI ist, welche Hardware du brauchst, installieren &amp; im Browser starten.</p></div>
       <span class="arrow">→</span>
     </a>
 
@@ -66,21 +67,21 @@
       <span class="arrow">→</span>
     </a>
 
-    <a class="card" href="Basics-03-Navigation.html">
+    <a class="card" href="Basics-03-Grundwissen.html">
       <span class="no">03</span>
-      <div><h2 id="t-c3-h">Die wichtigsten Punkte der Oberfläche</h2><p id="t-c3-p">Menü, Manager, Canvas, Seitenleiste und Queue Prompt – ein kurzer Rundgang.</p></div>
+      <div><h2 id="t-c3-h">Grundwissen: Modelle, Ordner, Oberfläche</h2><p id="t-c3-p">Wo ComfyUI seine Modelle sucht, warum jeder Workflow andere braucht – und ein kurzer Rundgang durch die Oberfläche.</p></div>
       <span class="arrow">→</span>
     </a>
 
     <a class="card" href="Basics-04-Erster-Workflow.html">
       <span class="no">04</span>
-      <div><h2 id="t-c4-h">Der erste Workflow</h2><p id="t-c4-p">Was Workflows und Nodes sind – und dein erstes eigenes Video mit Wan 2.2.</p></div>
+      <div><h2 id="t-c4-h">Der erste Workflow</h2><p id="t-c4-p">Workflow laden, Modelle ergänzen, Prompt schreiben – und dein erstes eigenes Video mit Wan 2.1.</p></div>
       <span class="arrow">→</span>
     </a>
 
   </div>
 
-  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI Basics · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
@@ -91,25 +92,37 @@ const STR = {
   "t-h1":    {de:"ComfyUI Basics", en:"ComfyUI Basics"},
   "t-lead":  {de:"Von der Installation bis zum ersten generierten Video – Schritt für Schritt, für Technikbegeisterte ohne Vorwissen. Die passenden Workflows gibt es zum Download.",
               en:"From installation to your first generated video – step by step, for tech enthusiasts with no prior knowledge. The matching workflows are available for download."},
-  "t-c1-h":  {de:"Erste Schritte", en:"Getting Started"},
+  "t-c1-h":  {de:"Erste Schritte – ComfyUI installieren", en:"Getting Started – Installing ComfyUI"},
   "t-c1-p":  {de:"Was ComfyUI ist, welche Hardware du brauchst, installieren &amp; im Browser starten.",
               en:"What ComfyUI is, what hardware you need, installing &amp; starting it in the browser."},
   "t-c2-h":  {de:"Den ComfyUI Manager installieren", en:"Installing the ComfyUI Manager"},
   "t-c2-p":  {de:"Das wichtigste Add-on: Custom Nodes und Modelle per Klick installieren.",
               en:"The most important add-on: install custom nodes and models with a click."},
-  "t-c3-h":  {de:"Die wichtigsten Punkte der Oberfläche", en:"The Key Points of the Interface"},
-  "t-c3-p":  {de:"Menü, Manager, Canvas, Seitenleiste und Queue Prompt – ein kurzer Rundgang.",
-              en:"Menu, Manager, canvas, sidebar and Queue Prompt – a quick tour."},
+  "t-c3-h":  {de:"Grundwissen: Modelle, Ordner, Oberfläche", en:"Fundamentals: Models, Folders, Interface"},
+  "t-c3-p":  {de:"Wo ComfyUI seine Modelle sucht, warum jeder Workflow andere braucht – und ein kurzer Rundgang durch die Oberfläche.",
+              en:"Where ComfyUI looks for its models, why every workflow needs different ones – plus a quick tour of the interface."},
   "t-c4-h":  {de:"Der erste Workflow", en:"Your First Workflow"},
-  "t-c4-p":  {de:"Was Workflows und Nodes sind – und dein erstes eigenes Video mit Wan 2.2.",
-              en:"What workflows and nodes are – and your first video with Wan 2.2."}
+  "t-c4-p":  {de:"Workflow laden, Modelle ergänzen, Prompt schreiben – und dein erstes eigenes Video mit Wan 2.1.",
+              en:"Load the workflow, add the models, write a prompt – and your first video with Wan 2.1."}
 };
-function setLang(lang){
+function applyLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
   document.documentElement.lang=lang;
   document.getElementById('btn-de').classList.toggle('active',lang==='de');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
+
+function setLang(lang){
+  applyLang(lang);
+  try{ localStorage.setItem('lsLang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lsLang'); }catch(e){}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'de';
+  applyLang(saved || (/^en/i.test(nav) ? 'en' : 'de'));
+})();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>

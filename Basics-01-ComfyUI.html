@@ -57,6 +57,7 @@
   .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
   .next strong{display:block;font-size:18px;margin-top:2px}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .vpick{border-left:3px solid var(--accent);background:var(--accent-soft)}
   .vpick h3{margin:0 0 6px}
   table.vt{width:100%;border-collapse:collapse;margin:12px 0 4px;font-size:14.5px}
@@ -302,7 +303,7 @@
   </div>
 
   <div class="box note">
-    <span id="t-tip"><strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.</span>
+    <span id="t-tip"><strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Wie ComfyUI Modelle verwaltet und wo sie liegen, klärt Teil 03 – den ersten Workflow bauen wir in Teil 04.</span>
   </div>
 
   <div class="box note">
@@ -322,7 +323,7 @@
     <span style="color:var(--accent);font-size:24px">→</span>
   </a>
 
-  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI Basics · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
@@ -383,8 +384,8 @@ const STR = {
                en:"<strong>Updating?</strong> The <code>update</code> folder contains <code>update_comfyui.bat</code> – double-click it and your installation gets updated. Since everything lives in the folder, this only affects that one installation."},
   "t-english":{de:"<strong>Hinweis zur Sprache:</strong> ComfyUI kann seine Oberfläche in mehrere Sprachen übersetzen (unter <code>Comfy → Locale</code>). In diesen Tutorials arbeiten wir mit der <strong>englischen Originaloberfläche</strong> – so sind die Node-Namen identisch zu praktisch jeder Anleitung und jedem Video da draußen, was das Weiterlernen deutlich einfacher macht.",
                en:"<strong>A note on language:</strong> ComfyUI can translate its interface into several languages (under <code>Comfy → Locale</code>). In these tutorials we use the <strong>original English interface</strong> – that way the node names match practically every guide and video out there, which makes it much easier to keep learning."},
-  "t-tip":    {de:"<strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Im nächsten Teil laden wir ein Modell und bauen den ersten minimalen Workflow für deinen ersten Prompt.",
-               en:"<strong>No models yet?</strong> Completely normal after unpacking. In the next part we load a model and build the first minimal workflow for your first prompt."},
+  "t-tip":    {de:"<strong>Noch keine Modelle?</strong> Völlig normal nach dem Entpacken. Wie ComfyUI Modelle verwaltet und wo sie liegen, klärt Teil 03 – den ersten Workflow bauen wir in Teil 04.",
+               en:"<strong>No models yet?</strong> Completely normal after unpacking. How ComfyUI manages models and where they live is covered in part 03 – we build the first workflow in part 04."},
   "t-go":     {de:'<strong>Du willst sofort loslegen?</strong> In ComfyUI findest du unter <code>Workflow → Browse Templates</code> die eingebaute Vorlage <strong>„Wan 2.2 5B video generation“</strong> – fehlende Modelle bietet ComfyUI automatisch zum Download an. Wie das alles funktioniert, erklären wir Schritt für Schritt in Teil 04.',
                en:'<strong>Want to jump right in?</strong> In ComfyUI, go to <code>Workflow → Browse Templates</code> and pick the built-in <strong>“Wan 2.2 5B video generation”</strong> template – ComfyUI offers to download any missing models automatically. We explain how it all works step by step in part 04.'},
   "t-btn":    {de:"→ ComfyUI Portable herunterladen", en:"→ Download ComfyUI Portable"},
@@ -392,12 +393,24 @@ const STR = {
   "t-next-s": {de:"Basics · 02", en:"Basics · 02"},
   "t-next-t": {de:"Den ComfyUI Manager installieren", en:"Install the ComfyUI Manager"}
 };
-function setLang(lang){
+function applyLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
   document.documentElement.lang=lang;
   document.getElementById('btn-de').classList.toggle('active',lang==='de');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
+
+function setLang(lang){
+  applyLang(lang);
+  try{ localStorage.setItem('lsLang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lsLang'); }catch(e){}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'de';
+  applyLang(saved || (/^en/i.test(nav) ? 'en' : 'de'));
+})();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>

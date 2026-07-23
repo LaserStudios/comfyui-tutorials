@@ -54,6 +54,7 @@
   .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
   .next strong{display:block;font-size:18px;margin-top:2px}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>
@@ -139,15 +140,15 @@
 
   <div class="divider"></div>
 
-  <a class="next" href="Basics-03-Navigation.html">
+  <a class="next" href="Basics-03-Grundwissen.html">
     <div>
       <small id="t-next-s">Basics · 03</small>
-      <strong id="t-next-t">Die wichtigsten Punkte der Oberfläche</strong>
+      <strong id="t-next-t">Grundwissen: Modelle, Ordner, Oberfläche</strong>
     </div>
     <span style="color:var(--accent);font-size:24px">→</span>
   </a>
 
-  <p class="footer">Laser Studios · ComfyUI Basics · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI Basics · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
@@ -199,14 +200,26 @@ const STR = {
   "t-tip":    {de:"<strong>Abhängigkeiten?</strong> Übernimmt der Manager. Installierst du eine Erweiterung, zieht er die benötigten Pakete automatisch mit – du musst nur neu starten.",
                en:"<strong>Dependencies?</strong> The Manager handles them. Install an extension and it pulls the required packages automatically – you just restart."},
   "t-next-s": {de:"Basics · 03", en:"Basics · 03"},
-  "t-next-t": {de:"Die wichtigsten Punkte der Oberfläche", en:"The key points of the interface"}
+  "t-next-t": {de:"Grundwissen: Modelle, Ordner, Oberfläche", en:"Fundamentals: models, folders, interface"}
 };
-function setLang(lang){
+function applyLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
   document.documentElement.lang=lang;
   document.getElementById('btn-de').classList.toggle('active',lang==='de');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
+
+function setLang(lang){
+  applyLang(lang);
+  try{ localStorage.setItem('lsLang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lsLang'); }catch(e){}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'de';
+  applyLang(saved || (/^en/i.test(nav) ? 'en' : 'de'));
+})();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>

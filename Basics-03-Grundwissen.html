@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basics 03 – Grundwissen | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  h3{font-size:18px;margin:28px 0 8px;font-weight:700}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  figure{margin:24px 0 0}
+  .shot{width:100%;border:1px solid var(--line);border-radius:var(--radius);display:block}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:center}
+  .folders{list-style:none;padding:0;margin:24px 0}
+  .folders>li{background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:13px 18px;margin-bottom:8px}
+  .folders code{font-size:14px;color:#ffb3b3;background:#231a1a;border-color:#3a2626}
+  .folders p{margin:5px 0 0;color:var(--muted);font-size:15px}
+  .points{list-style:none;padding:0;margin:24px 0}
+  .points>li{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 18px;margin-bottom:12px}
+  .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+    font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .points h3{margin:0 0 4px;font-size:16px;font-weight:700}
+  .points p{margin:0;color:var(--muted);font-size:15px}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" href="https://laser-studios.de" target="_top">← Laser Studios</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker">Basics · 03</span>
+  <h1 id="t-h1">Grundwissen: Modelle, Ordner, Oberfläche</h1>
+  <p class="lead" id="t-lead">Zwei Dinge, bevor du den ersten Workflow lädst: wo ComfyUI seine Modelle sucht – und wie du dich auf der Arbeitsfläche bewegst.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">Basics</span>
+    <span class="chip" id="t-chip2">Modelle</span>
+    <span class="chip" id="t-chip3">Oberfläche</span>
+  </div>
+
+  <p id="t-intro">Nach dem Entpacken hast du ein leeres Werkzeugregal: ComfyUI kann Graphen ausführen, liefert aber weder Modelle noch die meisten Spezial-Nodes mit. Beides kommt erst dazu, wenn ein Workflow es verlangt. Wenn ComfyUI beim Öffnen eines fremden Workflows also etwas anmahnt, ist das der Normalfall – kein kaputter Download.</p>
+
+  <h2 id="t-two-h">Zwei Dinge, die nachgeladen werden</h2>
+
+  <div class="box" id="t-k1">
+    <h3 style="margin-top:0">🧩 Custom Nodes – die Werkzeuge</h3>
+    <p style="margin:0;color:var(--muted)">Programmcode, der ComfyUI neue Node-Typen hinzufügt. Ordner: <code>ComfyUI/custom_nodes/</code> · Installation: über den Manager aus Teil 02.</p>
+  </div>
+  <div class="box" id="t-k2">
+    <h3 style="margin-top:0">📦 Modelle – die trainierten Dateien</h3>
+    <p style="margin:0;color:var(--muted)">Die Gewichte, mit denen gerechnet wird – meist <code>.safetensors</code>, von wenigen hundert MB bis über 30 GB. Ordner: ein Unterordner von <code>ComfyUI/models/</code>.</p>
+  </div>
+
+  <h2 id="t-tree-h">Der models-Ordner</h2>
+  <p id="t-tree-1">ComfyUI sortiert Modelle nicht nach Projekt, sondern nach Typ. Jeder Loader-Node liest genau einen Unterordner: <code>Load VAE</code> zeigt dir ausschließlich, was in <code>models/vae/</code> liegt. Mehr Mechanik steckt nicht dahinter – der Node bestimmt den Ordner.</p>
+
+  <figure>
+    <svg class="shot" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="400" fill="#0f0f14"/>
+      <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+        <path d="M30 0H0V30" fill="none" stroke="#17171f" stroke-width="1"/>
+      </pattern>
+      <rect width="800" height="400" fill="url(#grid)"/>
+      <text x="40" y="44" fill="#e8e8ee" font-family="ui-monospace,monospace" font-size="15" font-weight="700">📁 ComfyUI_windows_portable</text>
+      <path d="M56 56 V 92" stroke="#3a3a46" stroke-width="1.5" fill="none"/>
+      <path d="M56 86 H 76" stroke="#3a3a46" stroke-width="1.5" fill="none"/>
+      <text x="84" y="91" fill="#c5c5cf" font-family="ui-monospace,monospace" font-size="14">📁 ComfyUI</text>
+      <path d="M100 100 V 372" stroke="#3a3a46" stroke-width="1.5" fill="none"/>
+
+      <path d="M100 132 H 120" stroke="#3a3a46" stroke-width="1.5" fill="none"/>
+      <text x="128" y="137" fill="#ff8a8a" font-family="ui-monospace,monospace" font-size="14" font-weight="700">📁 models</text>
+      <path d="M144 144 V 338" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+
+      <path d="M144 168 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="173" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">checkpoints/</text>
+      <text x="340" y="173" fill="#6f6f7c" font-family="sans-serif" font-size="12">Alles-in-einem-Modelle</text>
+
+      <path d="M144 194 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="199" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">diffusion_models/</text>
+      <text x="340" y="199" fill="#6f6f7c" font-family="sans-serif" font-size="12">Hauptmodell (Wan, Flux)</text>
+
+      <path d="M144 220 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="225" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">text_encoders/</text>
+      <text x="340" y="225" fill="#6f6f7c" font-family="sans-serif" font-size="12">Sprachverständnis</text>
+
+      <path d="M144 246 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="251" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">vae/</text>
+      <text x="340" y="251" fill="#6f6f7c" font-family="sans-serif" font-size="12">Bild-Dekoder</text>
+
+      <path d="M144 272 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="277" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">loras/</text>
+      <text x="340" y="277" fill="#6f6f7c" font-family="sans-serif" font-size="12">Stil- und Motiv-Aufsätze</text>
+
+      <path d="M144 298 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="303" fill="#e0e0e8" font-family="ui-monospace,monospace" font-size="13">upscale_models/</text>
+      <text x="340" y="303" fill="#6f6f7c" font-family="sans-serif" font-size="12">Hochskalierer</text>
+
+      <path d="M144 334 H 164" stroke="#4a3232" stroke-width="1.5" fill="none"/>
+      <text x="172" y="339" fill="#6f6f7c" font-family="ui-monospace,monospace" font-size="13">…</text>
+
+      <path d="M100 368 H 120" stroke="#3a3a46" stroke-width="1.5" fill="none"/>
+      <text x="128" y="373" fill="#8ab4ff" font-family="ui-monospace,monospace" font-size="14" font-weight="700">📁 custom_nodes</text>
+      <text x="340" y="373" fill="#6f6f7c" font-family="sans-serif" font-size="12">Erweiterungen vom Manager</text>
+    </svg>
+    <figcaption id="t-fig-c">Die beiden Ordner, in denen alles Nachgeladene landet</figcaption>
+  </figure>
+
+  <ul class="folders">
+    <li><code>models/checkpoints/</code>
+      <p id="t-f1">Komplettmodelle, die alles in einer Datei bündeln – typisch für SD 1.5 und SDXL. Node: <strong>Load Checkpoint</strong>.</p></li>
+    <li><code>models/diffusion_models/</code>
+      <p id="t-f2">Das Hauptmodell moderner, getrennt ausgelieferter Modelle wie Wan oder Flux. Node: <strong>Load Diffusion Model</strong>. Ältere Anleitungen nennen den Ordner <code>unet/</code>.</p></li>
+    <li><code>models/text_encoders/</code>
+      <p id="t-f3">Das Sprachverständnis: UMT5, T5, CLIP-L. Node: <strong>Load CLIP</strong>. Früher <code>clip/</code>.</p></li>
+    <li><code>models/vae/</code>
+      <p id="t-f4">Der Dekoder, der das latente Ergebnis in sichtbare Pixel zurückrechnet. Node: <strong>Load VAE</strong>.</p></li>
+    <li><code>models/loras/</code>
+      <p id="t-f5">Aufsätze, die ein Hauptmodell auf Stil, Motiv oder Bewegung nachjustieren. Node: <strong>Load LoRA</strong>.</p></li>
+    <li><code>models/upscale_models/</code>, <code>controlnet/</code>, <code>clip_vision/</code>
+      <p id="t-f6">Hochskalierer, Steuermodelle für Bildvorgaben (Pose, Kanten, Tiefe) und Bildverständnis für Referenzbilder. Kommen später dazu, wenn ein Workflow sie braucht.</p></li>
+  </ul>
+
+  <div class="box note">
+    <p style="margin:0" id="t-rule"><strong>Tipp:</strong> Nicht raten, sondern am Node ablesen. Was im Dropdown des Loaders steht, hat ComfyUI im zugehörigen Ordner gefunden. Bleibt die Liste leer, liegt die Datei im falschen Ordner – oder ComfyUI hat sie noch nicht eingelesen, dann hilft ein <code>R</code> im Browser.</p>
+  </div>
+
+  <h2 id="t-why-h">Warum jede Aufgabe eigene Dateien braucht</h2>
+  <p id="t-why-1">Ein Modell kann genau das, wofür es trainiert wurde. Ein Videomodell erzeugt keine Tiefenkarten, ein Upscaler versteht keine Prompts, ein Segmentierungsmodell malt keine Bilder. Ein Workflow ist deshalb eine Kette von Spezialisten – und jeder Spezialist ist eine eigene Datei plus meist ein eigener Node.</p>
+  <p id="t-why-2">Daraus folgt der Punkt, der am Anfang am meisten überrascht: <strong>Wechselst du das Thema, wechselt der Modellbedarf fast vollständig.</strong> Ein Video-Workflow braucht andere Dateien als ein Upscaling-Workflow, und der wieder andere als einer für 3D oder PBR-Texturen. Dein <code>models</code>-Ordner wächst mit jedem neuen Thema – nicht mit jedem neuen Bild. Genauso bei den Nodes: Wer einen Workflow veröffentlicht, baut ihn aus dem, was auf seinem Rechner installiert ist. Bei dir fehlt das zunächst.</p>
+
+  <h2 id="t-miss-h">Wenn etwas fehlt</h2>
+  <ul class="points">
+    <li><span class="num">1</span><div>
+      <h3 id="t-m1-h">Fehlende Nodes</h3>
+      <p id="t-m1-p">Beim Laden erscheint <strong>„Missing Node Types“</strong>, die betroffenen Nodes bleiben rot. Weg: <strong>Manager → Install Missing Custom Nodes</strong>, installieren, ComfyUI neu starten. Findet der Manager nichts, steht die Quelle in der Workflow-Beschreibung – dann <strong>Install via Git URL</strong>.</p></div></li>
+    <li><span class="num">2</span><div>
+      <h3 id="t-m2-h">Fehlende Modelle</h3>
+      <p id="t-m2-p">Oben meldet ComfyUI etwa <strong>„3 required models are missing“</strong>. Über <strong>Show missing models</strong> lädst du sie direkt an die richtige Stelle. Alternativ: <strong>Model Manager</strong> oder manueller Download in den passenden Unterordner.</p></div></li>
+  </ul>
+
+  <div class="box note">
+    <p style="margin:0" id="t-restart"><strong>Neu starten oder nur aktualisieren?</strong> Nach der Installation von Custom Nodes muss ComfyUI komplett neu starten. Für neu hinzugefügte Modelldateien reicht ein <code>R</code> im Browser. Und plane Speicherplatz ein: Betreibst du mehrere Portable-Installationen, lass sie über <code>extra_model_paths.yaml</code> auf denselben <code>models</code>-Ordner zeigen, statt die Dateien zu duplizieren.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 id="t-ui-h">Die Oberfläche in fünf Punkten</h2>
+  <p id="t-ui-1">Der zweite Teil ist schnell erzählt: ComfyUI hat nur eine Handvoll Bereiche, die du wirklich kennen musst.</p>
+
+  <figure>
+    <svg class="shot" viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="800" height="470" fill="#0f0f14"/>
+      <pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse">
+        <path d="M30 0H0V30" fill="none" stroke="#17171f" stroke-width="1"/>
+      </pattern>
+      <rect width="800" height="470" fill="url(#grid2)"/>
+      <rect x="0" y="0" width="800" height="38" fill="#16161c"/>
+      <text x="16" y="24" fill="#c5c5cf" font-family="sans-serif" font-size="12" font-weight="700">Workflow</text>
+      <text x="92" y="24" fill="#9a9aa6" font-family="sans-serif" font-size="12">Edit</text>
+      <text x="140" y="24" fill="#9a9aa6" font-family="sans-serif" font-size="12">View</text>
+      <rect x="660" y="7" width="86" height="24" rx="6" fill="#ff3b3b"/>
+      <text x="703" y="24" fill="#fff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">Manager</text>
+      <rect x="0" y="38" width="46" height="432" fill="#13131a"/>
+      <rect x="11" y="56" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <rect x="11" y="90" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <rect x="11" y="124" width="24" height="24" rx="5" fill="#2a2a34"/>
+      <rect x="120" y="150" width="130" height="90" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="120" y="150" width="130" height="22" rx="8" fill="#2a2a34"/>
+      <text x="130" y="166" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">Load Diffusion Model</text>
+      <circle cx="250" cy="200" r="4" fill="#b06fff"/>
+      <rect x="330" y="170" width="130" height="80" rx="8" fill="#1b1b22" stroke="#3a3a46"/>
+      <rect x="330" y="170" width="130" height="22" rx="8" fill="#2a2a34"/>
+      <text x="340" y="186" fill="#c5c5cf" font-family="sans-serif" font-size="10" font-weight="700">KSampler</text>
+      <circle cx="330" cy="216" r="4" fill="#b06fff"/>
+      <path d="M250 200 C 290 200 290 216 330 216" fill="none" stroke="#b06fff" stroke-width="2"/>
+      <rect x="610" y="410" width="160" height="44" rx="10" fill="#ff3b3b"/>
+      <text x="690" y="437" fill="#fff" font-family="sans-serif" font-size="14" font-weight="700" text-anchor="middle">Run</text>
+      <circle cx="60" cy="19" r="13" fill="#fff"/><text x="60" y="24" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">1</text>
+      <circle cx="703" cy="19" r="13" fill="#fff"/><text x="703" y="24" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">2</text>
+      <circle cx="400" cy="320" r="13" fill="#fff"/><text x="400" y="325" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">3</text>
+      <circle cx="23" cy="68" r="13" fill="#fff"/><text x="23" y="73" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">4</text>
+      <circle cx="690" cy="432" r="13" fill="#fff"/><text x="690" y="437" fill="#0d0d10" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">5</text>
+    </svg>
+    <figcaption id="t-fig-ui">Die fünf Bereiche, die du kennen solltest</figcaption>
+  </figure>
+
+  <ul class="points">
+    <li><span class="num">1</span><div>
+      <h3 id="t-p1-h">Menüleiste</h3>
+      <p id="t-p1-p">Unter <code>Workflow</code> öffnest, speicherst und exportierst du Workflows als <code>.json</code>. Hier liegen auch die Einstellungen.</p></div></li>
+    <li><span class="num">2</span><div>
+      <h3 id="t-p2-h">Manager-Button</h3>
+      <p id="t-p2-p">Öffnet den Manager aus Teil 02 – inklusive „Install Missing Custom Nodes“ und Model Manager.</p></div></li>
+    <li><span class="num">3</span><div>
+      <h3 id="t-p3-h">Canvas – die Arbeitsfläche</h3>
+      <p id="t-p3-p"><strong>Verschieben:</strong> mit gedrückter Maustaste auf leere Fläche ziehen. <strong>Zoomen:</strong> Mausrad. <strong>Node hinzufügen:</strong> Doppelklick öffnet die Suche.</p></div></li>
+    <li><span class="num">4</span><div>
+      <h3 id="t-p4-h">Seitenleiste</h3>
+      <p id="t-p4-p">Queue und Verlauf, Modelle und deine gespeicherten Workflows. Hier siehst du laufende und fertige Generierungen.</p></div></li>
+    <li><span class="num">5</span><div>
+      <h3 id="t-p5-h">Run</h3>
+      <p id="t-p5-p">Stellt den Workflow in die Warteschlange und startet die Generierung. In älteren Versionen heißt der Button „Queue Prompt“.</p></div></li>
+  </ul>
+
+  <div class="box note">
+    <p style="margin:0" id="t-tip"><strong>Tipp:</strong> Zwei Gesten decken fast alles ab – Mausrad zum Zoomen, Doppelklick für die Node-Suche.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <a class="next" href="Basics-04-Erster-Workflow.html">
+    <div>
+      <small id="t-next-s">Basics · 04</small>
+      <strong id="t-next-t">Der erste Workflow – vom Laden bis zum fertigen Video</strong>
+    </div>
+    <span style="color:var(--accent);font-size:24px">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · ComfyUI Basics · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
+
+</div>
+
+<script>
+const STR = {
+  "t-h1":     {de:"Grundwissen: Modelle, Ordner, Oberfläche", en:"Fundamentals: Models, Folders, Interface"},
+  "t-lead":   {de:"Zwei Dinge, bevor du den ersten Workflow lädst: wo ComfyUI seine Modelle sucht – und wie du dich auf der Arbeitsfläche bewegst.",
+               en:"Two things before you load your first workflow: where ComfyUI looks for its models – and how to move around the canvas."},
+  "t-chip1":  {de:"Basics", en:"Basics"},
+  "t-chip2":  {de:"Modelle", en:"Models"},
+  "t-chip3":  {de:"Oberfläche", en:"Interface"},
+  "t-intro":  {de:"Nach dem Entpacken hast du ein leeres Werkzeugregal: ComfyUI kann Graphen ausführen, liefert aber weder Modelle noch die meisten Spezial-Nodes mit. Beides kommt erst dazu, wenn ein Workflow es verlangt. Wenn ComfyUI beim Öffnen eines fremden Workflows also etwas anmahnt, ist das der Normalfall – kein kaputter Download.",
+               en:"After unpacking you have an empty tool rack: ComfyUI can execute graphs, but it ships with neither models nor most specialised nodes. Both arrive only when a workflow calls for them. So when ComfyUI flags something while opening someone else's workflow, that's the normal case – not a broken download."},
+  "t-two-h":  {de:"Zwei Dinge, die nachgeladen werden", en:"Two things that get added later"},
+  "t-k1":     {de:'<h3 style="margin-top:0">🧩 Custom Nodes – die Werkzeuge</h3><p style="margin:0;color:var(--muted)">Programmcode, der ComfyUI neue Node-Typen hinzufügt. Ordner: <code>ComfyUI/custom_nodes/</code> · Installation: über den Manager aus Teil 02.</p>',
+               en:'<h3 style="margin-top:0">🧩 Custom nodes – the tools</h3><p style="margin:0;color:var(--muted)">Program code that adds new node types to ComfyUI. Folder: <code>ComfyUI/custom_nodes/</code> · installation: via the Manager from part 02.</p>'},
+  "t-k2":     {de:'<h3 style="margin-top:0">📦 Modelle – die trainierten Dateien</h3><p style="margin:0;color:var(--muted)">Die Gewichte, mit denen gerechnet wird – meist <code>.safetensors</code>, von wenigen hundert MB bis über 30 GB. Ordner: ein Unterordner von <code>ComfyUI/models/</code>.</p>',
+               en:'<h3 style="margin-top:0">📦 Models – the trained files</h3><p style="margin:0;color:var(--muted)">The weights everything is computed with – usually <code>.safetensors</code>, from a few hundred MB to well over 30 GB. Folder: a subfolder of <code>ComfyUI/models/</code>.</p>'},
+  "t-tree-h": {de:"Der models-Ordner", en:"The models folder"},
+  "t-tree-1": {de:"ComfyUI sortiert Modelle nicht nach Projekt, sondern nach Typ. Jeder Loader-Node liest genau einen Unterordner: <code>Load VAE</code> zeigt dir ausschließlich, was in <code>models/vae/</code> liegt. Mehr Mechanik steckt nicht dahinter – der Node bestimmt den Ordner.",
+               en:"ComfyUI sorts models by type, not by project. Each loader node reads exactly one subfolder: <code>Load VAE</code> shows you only what sits in <code>models/vae/</code>. There is no more mechanism than that – the node determines the folder."},
+  "t-fig-c":  {de:"Die beiden Ordner, in denen alles Nachgeladene landet",
+               en:"The two folders everything added later ends up in"},
+  "t-f1":     {de:"Komplettmodelle, die alles in einer Datei bündeln – typisch für SD 1.5 und SDXL. Node: <strong>Load Checkpoint</strong>.",
+               en:"All-in-one models bundling everything in a single file – typical for SD 1.5 and SDXL. Node: <strong>Load Checkpoint</strong>."},
+  "t-f2":     {de:"Das Hauptmodell moderner, getrennt ausgelieferter Modelle wie Wan oder Flux. Node: <strong>Load Diffusion Model</strong>. Ältere Anleitungen nennen den Ordner <code>unet/</code>.",
+               en:"The main model of modern, separately shipped models such as Wan or Flux. Node: <strong>Load Diffusion Model</strong>. Older guides call the folder <code>unet/</code>."},
+  "t-f3":     {de:"Das Sprachverständnis: UMT5, T5, CLIP-L. Node: <strong>Load CLIP</strong>. Früher <code>clip/</code>.",
+               en:"The language understanding: UMT5, T5, CLIP-L. Node: <strong>Load CLIP</strong>. Formerly <code>clip/</code>."},
+  "t-f4":     {de:"Der Dekoder, der das latente Ergebnis in sichtbare Pixel zurückrechnet. Node: <strong>Load VAE</strong>.",
+               en:"The decoder that turns the latent result back into visible pixels. Node: <strong>Load VAE</strong>."},
+  "t-f5":     {de:"Aufsätze, die ein Hauptmodell auf Stil, Motiv oder Bewegung nachjustieren. Node: <strong>Load LoRA</strong>.",
+               en:"Add-ons that tune a main model towards style, subject or motion. Node: <strong>Load LoRA</strong>."},
+  "t-f6":     {de:"Hochskalierer, Steuermodelle für Bildvorgaben (Pose, Kanten, Tiefe) und Bildverständnis für Referenzbilder. Kommen später dazu, wenn ein Workflow sie braucht.",
+               en:"Upscalers, control models for visual references (pose, edges, depth) and image understanding for reference images. They show up later, when a workflow needs them."},
+  "t-rule":   {de:"<strong>Tipp:</strong> Nicht raten, sondern am Node ablesen. Was im Dropdown des Loaders steht, hat ComfyUI im zugehörigen Ordner gefunden. Bleibt die Liste leer, liegt die Datei im falschen Ordner – oder ComfyUI hat sie noch nicht eingelesen, dann hilft ein <code>R</code> im Browser.",
+               en:"<strong>Tip:</strong> don't guess, read it off the node. Whatever the loader's dropdown lists is what ComfyUI found in the matching folder. If it stays empty, the file is in the wrong folder – or ComfyUI hasn't picked it up yet, in which case pressing <code>R</code> in the browser helps."},
+  "t-why-h":  {de:"Warum jede Aufgabe eigene Dateien braucht", en:"Why every task needs its own files"},
+  "t-why-1":  {de:"Ein Modell kann genau das, wofür es trainiert wurde. Ein Videomodell erzeugt keine Tiefenkarten, ein Upscaler versteht keine Prompts, ein Segmentierungsmodell malt keine Bilder. Ein Workflow ist deshalb eine Kette von Spezialisten – und jeder Spezialist ist eine eigene Datei plus meist ein eigener Node.",
+               en:"A model does exactly what it was trained for. A video model doesn't produce depth maps, an upscaler doesn't understand prompts, a segmentation model doesn't paint images. A workflow is therefore a chain of specialists – and each specialist is its own file plus, usually, its own node."},
+  "t-why-2":  {de:"Daraus folgt der Punkt, der am Anfang am meisten überrascht: <strong>Wechselst du das Thema, wechselt der Modellbedarf fast vollständig.</strong> Ein Video-Workflow braucht andere Dateien als ein Upscaling-Workflow, und der wieder andere als einer für 3D oder PBR-Texturen. Dein <code>models</code>-Ordner wächst mit jedem neuen Thema – nicht mit jedem neuen Bild. Genauso bei den Nodes: Wer einen Workflow veröffentlicht, baut ihn aus dem, was auf seinem Rechner installiert ist. Bei dir fehlt das zunächst.",
+               en:"Which leads to the point that surprises people most at the start: <strong>change the task and the model requirements change almost completely.</strong> A video workflow needs different files than an upscaling workflow, which again needs different ones than a 3D or PBR texture workflow. Your <code>models</code> folder grows with every new topic – not with every new image. The same goes for nodes: whoever publishes a workflow builds it from what's installed on their machine. On yours, that's missing at first."},
+  "t-miss-h": {de:"Wenn etwas fehlt", en:"When something is missing"},
+  "t-m1-h":   {de:"Fehlende Nodes", en:"Missing nodes"},
+  "t-m1-p":   {de:"Beim Laden erscheint <strong>„Missing Node Types“</strong>, die betroffenen Nodes bleiben rot. Weg: <strong>Manager → Install Missing Custom Nodes</strong>, installieren, ComfyUI neu starten. Findet der Manager nichts, steht die Quelle in der Workflow-Beschreibung – dann <strong>Install via Git URL</strong>.",
+               en:"On load you get <strong>“Missing Node Types”</strong> and the affected nodes stay red. Path: <strong>Manager → Install Missing Custom Nodes</strong>, install, restart ComfyUI. If the Manager finds nothing, the source is named in the workflow description – then use <strong>Install via Git URL</strong>."},
+  "t-m2-h":   {de:"Fehlende Modelle", en:"Missing models"},
+  "t-m2-p":   {de:"Oben meldet ComfyUI etwa <strong>„3 required models are missing“</strong>. Über <strong>Show missing models</strong> lädst du sie direkt an die richtige Stelle. Alternativ: <strong>Model Manager</strong> oder manueller Download in den passenden Unterordner.",
+               en:"At the top ComfyUI reports something like <strong>“3 required models are missing”</strong>. <strong>Show missing models</strong> downloads them straight into the right place. Alternatives: the <strong>Model Manager</strong> or a manual download into the matching subfolder."},
+  "t-restart":{de:"<strong>Neu starten oder nur aktualisieren?</strong> Nach der Installation von Custom Nodes muss ComfyUI komplett neu starten. Für neu hinzugefügte Modelldateien reicht ein <code>R</code> im Browser. Und plane Speicherplatz ein: Betreibst du mehrere Portable-Installationen, lass sie über <code>extra_model_paths.yaml</code> auf denselben <code>models</code>-Ordner zeigen, statt die Dateien zu duplizieren.",
+               en:"<strong>Restart or just refresh?</strong> After installing custom nodes ComfyUI has to restart completely. For newly added model files an <code>R</code> in the browser is enough. And plan for disk space: if you run several portable installations, point them at the same <code>models</code> folder via <code>extra_model_paths.yaml</code> instead of duplicating the files."},
+  "t-ui-h":   {de:"Die Oberfläche in fünf Punkten", en:"The interface in five points"},
+  "t-ui-1":   {de:"Der zweite Teil ist schnell erzählt: ComfyUI hat nur eine Handvoll Bereiche, die du wirklich kennen musst.",
+               en:"The second part is quickly told: ComfyUI has only a handful of areas you really need to know."},
+  "t-fig-ui": {de:"Die fünf Bereiche, die du kennen solltest", en:"The five areas you should know"},
+  "t-p1-h":   {de:"Menüleiste", en:"Menu bar"},
+  "t-p1-p":   {de:"Unter <code>Workflow</code> öffnest, speicherst und exportierst du Workflows als <code>.json</code>. Hier liegen auch die Einstellungen.",
+               en:"Under <code>Workflow</code> you open, save and export workflows as <code>.json</code>. Settings live here too."},
+  "t-p2-h":   {de:"Manager-Button", en:"Manager button"},
+  "t-p2-p":   {de:"Öffnet den Manager aus Teil 02 – inklusive „Install Missing Custom Nodes“ und Model Manager.",
+               en:"Opens the Manager from part 02 – including “Install Missing Custom Nodes” and the Model Manager."},
+  "t-p3-h":   {de:"Canvas – die Arbeitsfläche", en:"Canvas – the workspace"},
+  "t-p3-p":   {de:"<strong>Verschieben:</strong> mit gedrückter Maustaste auf leere Fläche ziehen. <strong>Zoomen:</strong> Mausrad. <strong>Node hinzufügen:</strong> Doppelklick öffnet die Suche.",
+               en:"<strong>Pan:</strong> drag with the mouse button held on empty space. <strong>Zoom:</strong> mouse wheel. <strong>Add a node:</strong> double-click opens the search."},
+  "t-p4-h":   {de:"Seitenleiste", en:"Sidebar"},
+  "t-p4-p":   {de:"Queue und Verlauf, Modelle und deine gespeicherten Workflows. Hier siehst du laufende und fertige Generierungen.",
+               en:"Queue and history, models and your saved workflows. This is where you see running and finished generations."},
+  "t-p5-h":   {de:"Run", en:"Run"},
+  "t-p5-p":   {de:"Stellt den Workflow in die Warteschlange und startet die Generierung. In älteren Versionen heißt der Button „Queue Prompt“.",
+               en:"Queues the workflow and starts the generation. In older versions the button is called “Queue Prompt”."},
+  "t-tip":    {de:"<strong>Tipp:</strong> Zwei Gesten decken fast alles ab – Mausrad zum Zoomen, Doppelklick für die Node-Suche.",
+               en:"<strong>Tip:</strong> two gestures cover almost everything – mouse wheel to zoom, double-click for the node search."},
+  "t-next-s": {de:"Basics · 04", en:"Basics · 04"},
+  "t-next-t": {de:"Der erste Workflow – vom Laden bis zum fertigen Video", en:"Your first workflow – from loading to the finished video"}
+};
+function applyLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+
+function setLang(lang){
+  applyLang(lang);
+  try{ localStorage.setItem('lsLang', lang); }catch(e){}
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('lsLang'); }catch(e){}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'de';
+  applyLang(saved || (/^en/i.test(nav) ? 'en' : 'de'));
+})();
+</script>
+<script src="lang.js"></script>
+</body>
+</html>

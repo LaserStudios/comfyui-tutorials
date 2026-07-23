@@ -42,6 +42,7 @@
   .contact a{color:var(--accent);text-decoration:none}
   .contact a:hover{text-decoration:underline}
   .footer{color:var(--muted);font-size:13px;margin-top:14px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>
@@ -83,7 +84,7 @@
 
   <p class="contact" id="t-contact">Bei Anfragen für Vorträge oder Workshops wenden Sie sich bitte an <a href="mailto:info@laser-studios.de">info@laser-studios.de</a>.</p>
 
-  <p class="footer">Laser Studios · ComfyUI · laser-studios.de</p>
+  <p class="footer">Laser Studios · ComfyUI · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
@@ -112,5 +113,6 @@ function setLang(lang){
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
 </script>
+<script src="lang.js"></script>
 </body>
 </html>

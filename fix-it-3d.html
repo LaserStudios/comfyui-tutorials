@@ -34,6 +34,7 @@
   .soon-tag{margin-left:auto;align-self:center;font-size:11px;font-weight:700;letter-spacing:.08em;
     color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;text-transform:uppercase;white-space:nowrap}
   .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>
@@ -59,7 +60,7 @@
     </div>
   </div>
 
-  <p class="footer">Laser Studios · Fix it in Prompt · laser-studios.de</p>
+  <p class="footer">Laser Studios · Fix it in Prompt · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
 
 </div>
 
@@ -82,5 +83,6 @@ function setLang(lang){
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
 }
 </script>
+<script src="lang.js"></script>
 </body>
 </html>
