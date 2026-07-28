@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Objekte freistellen mit SAM 3.1 – Fix it in Prompt | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .chip{font-size:13px;background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:6px 12px;border-radius:999px}
+  h2{font-size:24px;margin:48px 0 14px;font-weight:700;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#1d1d25;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;color:#e0e0e8}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft)}
+  .note strong{color:var(--text)}
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:24px 0}
+  ol.steps>li{position:relative;padding:2px 0 8px 56px;margin:0 0 22px;min-height:40px}
+  ol.steps>li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;
+    width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;
+    font-size:18px;display:flex;align-items:center;justify-content:center}
+  .dl{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-weight:700;
+    text-decoration:none;padding:14px 22px;border-radius:var(--radius);margin:6px 0 4px}
+  .dl:hover{text-decoration:none;filter:brightness(1.08)}
+  .divider{height:1px;background:var(--line);margin:48px 0}
+  .next{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;flex-wrap:wrap;text-decoration:none;color:inherit}
+  .next:hover{border-color:var(--accent);text-decoration:none}
+  .next small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .next strong{display:block;font-size:18px;margin-top:2px}
+  .next .arrow{color:var(--accent);font-size:22px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" id="t-back" href="fix-it-postproduction.html">← Postproduction</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker" id="t-kicker">Fix it in Prompt · Postproduction</span>
+  <h1 id="t-h1">Objekte freistellen mit SAM 3.1</h1>
+  <p class="lead" id="t-lead">Ein fertiger Workflow, der einzelne Objekte oder Personen aus einem Video freistellt – mit stabiler ID pro Objekt über alle Frames und sauberer Matte-Kante.</p>
+
+  <div class="meta">
+    <span class="chip" id="t-chip1">SAM 3.1</span>
+    <span class="chip" id="t-chip2">100 % lokal</span>
+    <span class="chip" id="t-chip3">kostenlos & kommerziell</span>
+  </div>
+
+  <h2 id="t-what-h">Was dieser Workflow macht</h2>
+  <p id="t-what-p">Er trackt mit <strong>SAM 3.1</strong> jedes Objekt in deinem Video und vergibt ihm eine <strong>stabile ID</strong>, die über alle Frames gleich bleibt. Du gibst per Text-Prompt vor, wonach gesucht wird (z. B. <code>person:4, dog:1</code>), wählst danach die gewünschte(n) ID(s) und bekommst pro Objekt eine saubere Maske plus ein freigestelltes RGBA-Video. Die Kanten veredelt ein <strong>ViTMatte-Pass</strong> (MaskEdgeUltraDetail) – bis hin zu feinen Haaren und Konturen.</p>
+
+  <div class="box note">
+    <p style="margin:0" id="t-diff">
+      <strong>Das ID-System ist der Kern.</strong> SAM 3.1 nummeriert jedes erkannte Objekt (0, 1, 2, …) und hält diese Nummer über das gesamte Video stabil. Deshalb läuft der Workflow in <strong>zwei Durchgängen</strong>: einmal, um die IDs zu vergeben und in der Vorschau farbig einzublenden – und ein zweites Mal, nachdem du die gewünschten IDs eingetragen hast. Kein Rotoskopieren Frame für Frame; du entscheidest per Nummer, wer freigestellt wird.
+    </p>
+  </div>
+
+  <h2 id="t-need-h">Was du brauchst</h2>
+  <p id="t-need-p">Einen SAM-3.1-Checkpoint (<code>sam3.1_multiplex_fp16.safetensors</code>, ComfyUI ab 0.27.0) sowie die Custom Nodes ComfyUI_LayerStyle, rgthree-comfy und VideoHelperSuite. <strong>Alle Download-Links und die genauen Speicherorte stehen direkt im Workflow</strong> – in den Notiz-Feldern, sobald du ihn in ComfyUI öffnest. Das ViTMatte-Modell lädt beim ersten Lauf automatisch.</p>
+
+  <div class="box note">
+    <p style="margin:0" id="t-tip">
+      <strong>Kleiner Stolperstein.</strong> Die ID- und Objekt-Schalter (rgthree) brauchen <strong>VueNodes AUS</strong> – unter <code>Settings → Vue Nodes</code> deaktivieren, sonst wird nur ein einzelner Schalter gezeichnet.
+    </p>
+  </div>
+
+  <h2 id="t-how-h">So gehst du vor</h2>
+  <ol class="steps">
+    <li id="t-s1">Workflow herunterladen und per Drag & Drop in ComfyUI ziehen (oder <code>Workflow → Open</code>). Die Links aus den Notiz-Feldern abarbeiten, dann ComfyUI neu starten.</li>
+    <li id="t-s2">Im <code>LoadVideo</code>-Node dein Video wählen und den Prompt setzen (z. B. <code>person:4, dog:1</code>). Zuerst nur die <strong>Vorschau</strong> starten – SAM vergibt die IDs und blendet sie farbig ins Bild ein.</li>
+    <li id="t-s3">Die gewünschte(n) ID(s) im Node <strong>① IDs eingeben</strong> eintragen (<code>2</code> oder <code>0,2,3</code>), dann komplett laufen lassen. Matte und freigestelltes RGBA landen in <code>ComfyUI/output/</code>.</li>
+  </ol>
+
+  <a class="dl" id="t-dl" href="sam3_freistellen_de_laserstudios.json" download>↓ Workflow herunterladen (.json)</a>
+
+  <div class="divider"></div>
+
+  <a class="next" id="t-next" href="FixIt-Postpro-01-Upscale.html">
+    <span><small id="t-next-s">Postproduction · 01</small><strong id="t-next-t">Video-Upscale mit RTX VSR</strong></span>
+    <span class="arrow">→</span>
+  </a>
+
+  <p class="footer">Laser Studios · Fix it in Prompt · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
+
+</div>
+
+<script>
+const STR = {
+  "t-back":  {de:"← Postproduction", en:"← Post-Production"},
+  "t-kicker":{de:"Fix it in Prompt · Postproduction", en:"Fix it in Prompt · Post-Production"},
+  "t-h1":    {de:"Objekte freistellen mit SAM 3.1", en:"Cut Out Objects with SAM 3.1"},
+  "t-lead":  {de:"Ein fertiger Workflow, der einzelne Objekte oder Personen aus einem Video freistellt – mit stabiler ID pro Objekt über alle Frames und sauberer Matte-Kante.",
+              en:"A ready-made workflow that cuts out individual objects or people from a video – with a stable per-object ID across all frames and a clean matte edge."},
+  "t-chip1": {de:"SAM 3.1", en:"SAM 3.1"},
+  "t-chip2": {de:"100 % lokal", en:"100 % local"},
+  "t-chip3": {de:"kostenlos & kommerziell", en:"free & commercial"},
+  "t-what-h":{de:"Was dieser Workflow macht", en:"What this workflow does"},
+  "t-what-p":{de:"Er trackt mit <strong>SAM 3.1</strong> jedes Objekt in deinem Video und vergibt ihm eine <strong>stabile ID</strong>, die über alle Frames gleich bleibt. Du gibst per Text-Prompt vor, wonach gesucht wird (z. B. <code>person:4, dog:1</code>), wählst danach die gewünschte(n) ID(s) und bekommst pro Objekt eine saubere Maske plus ein freigestelltes RGBA-Video. Die Kanten veredelt ein <strong>ViTMatte-Pass</strong> (MaskEdgeUltraDetail) – bis hin zu feinen Haaren und Konturen.",
+              en:"It uses <strong>SAM 3.1</strong> to track every object in your video and assigns it a <strong>stable ID</strong> that stays the same across all frames. You define what to look for via text prompt (e.g. <code>person:4, dog:1</code>), then pick the ID(s) you want and get a clean mask per object plus a cut-out RGBA video. Edges are refined by a <strong>ViTMatte pass</strong> (MaskEdgeUltraDetail) – down to fine hair and contours."},
+  "t-diff":  {de:"<strong>Das ID-System ist der Kern.</strong> SAM 3.1 nummeriert jedes erkannte Objekt (0, 1, 2, …) und hält diese Nummer über das gesamte Video stabil. Deshalb läuft der Workflow in <strong>zwei Durchgängen</strong>: einmal, um die IDs zu vergeben und in der Vorschau farbig einzublenden – und ein zweites Mal, nachdem du die gewünschten IDs eingetragen hast. Kein Rotoskopieren Frame für Frame; du entscheidest per Nummer, wer freigestellt wird.",
+              en:"<strong>The ID system is the core.</strong> SAM 3.1 numbers every detected object (0, 1, 2, …) and keeps that number stable across the entire video. That's why the workflow runs in <strong>two passes</strong>: once to assign the IDs and overlay them in colour in the preview – and a second time after you've entered the IDs you want. No frame-by-frame rotoscoping; you decide by number who gets cut out."},
+  "t-need-h":{de:"Was du brauchst", en:"What you need"},
+  "t-need-p":{de:"Einen SAM-3.1-Checkpoint (<code>sam3.1_multiplex_fp16.safetensors</code>, ComfyUI ab 0.27.0) sowie die Custom Nodes ComfyUI_LayerStyle, rgthree-comfy und VideoHelperSuite. <strong>Alle Download-Links und die genauen Speicherorte stehen direkt im Workflow</strong> – in den Notiz-Feldern, sobald du ihn in ComfyUI öffnest. Das ViTMatte-Modell lädt beim ersten Lauf automatisch.",
+              en:"A SAM 3.1 checkpoint (<code>sam3.1_multiplex_fp16.safetensors</code>, ComfyUI 0.27.0+) plus the custom nodes ComfyUI_LayerStyle, rgthree-comfy and VideoHelperSuite. <strong>All download links and exact file locations are inside the workflow</strong> – in the note fields once you open it in ComfyUI. The ViTMatte model downloads automatically on first run."},
+  "t-tip":   {de:"<strong>Kleiner Stolperstein.</strong> Die ID- und Objekt-Schalter (rgthree) brauchen <strong>VueNodes AUS</strong> – unter <code>Settings → Vue Nodes</code> deaktivieren, sonst wird nur ein einzelner Schalter gezeichnet.",
+              en:"<strong>One small trap.</strong> The ID and object toggles (rgthree) need <strong>VueNodes OFF</strong> – disable it under <code>Settings → Vue Nodes</code>, otherwise only a single switch gets drawn."},
+  "t-how-h": {de:"So gehst du vor", en:"How to proceed"},
+  "t-s1":    {de:"Workflow herunterladen und per Drag & Drop in ComfyUI ziehen (oder <code>Workflow → Open</code>). Die Links aus den Notiz-Feldern abarbeiten, dann ComfyUI neu starten.",
+              en:"Download the workflow and drag & drop it into ComfyUI (or <code>Workflow → Open</code>). Work through the links in the note fields, then restart ComfyUI."},
+  "t-s2":    {de:"Im <code>LoadVideo</code>-Node dein Video wählen und den Prompt setzen (z. B. <code>person:4, dog:1</code>). Zuerst nur die <strong>Vorschau</strong> starten – SAM vergibt die IDs und blendet sie farbig ins Bild ein.",
+              en:"Pick your video in the <code>LoadVideo</code> node and set the prompt (e.g. <code>person:4, dog:1</code>). Run only the <strong>preview</strong> first – SAM assigns the IDs and overlays them in colour."},
+  "t-s3":    {de:"Die gewünschte(n) ID(s) im Node <strong>① IDs eingeben</strong> eintragen (<code>2</code> oder <code>0,2,3</code>), dann komplett laufen lassen. Matte und freigestelltes RGBA landen in <code>ComfyUI/output/</code>.",
+              en:"Enter the ID(s) you want in the <strong>① Enter IDs</strong> node (<code>2</code> or <code>0,2,3</code>), then run the whole graph. Matte and cut-out RGBA land in <code>ComfyUI/output/</code>."},
+  "t-dl":    {de:"↓ Workflow herunterladen (.json)", en:"↓ Download workflow (.json)"},
+  "t-next-s":{de:"Postproduction · 01", en:"Post-Production · 01"},
+  "t-next-t":{de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"}
+};
+// Sprachabhängiger Download: DE- bzw. EN-Version des Workflows
+const DL = {de:"sam3_freistellen_de_laserstudios.json", en:"sam3_freistellen_en_laserstudios.json"};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  const dl=document.getElementById('t-dl');
+  if(dl) dl.setAttribute('href', DL[lang] || DL.de);
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+<script src="lang.js"></script>
+</body>
+</html>
