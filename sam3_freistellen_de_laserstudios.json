@@ -1,0 +1,995 @@
+{
+  "id": "sam3-video-freistell-id-system",
+  "revision": 0,
+  "last_node_id": 31,
+  "last_link_id": 30,
+  "nodes": [
+    {
+      "id": 23,
+      "type": "MarkdownNote",
+      "pos": [
+        -560,
+        0
+      ],
+      "size": [
+        520,
+        720
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Module / Checkpoints / Links",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# SAM 3.1 Video – Freistell- & ID-System\n\n## Checkpoint (Pflicht)\n- [sam3.1_multiplex_fp16.safetensors](https://huggingface.co/Comfy-Org/sam3.1/resolve/main/checkpoints/sam3.1_multiplex_fp16.safetensors)\n\n```\n📂 ComfyUI/\n└── 📂 models/\n    └── 📂 checkpoints/\n        └── sam3.1_multiplex_fp16.safetensors\n```\n\n## Module / Nodes (Lizenz)\n- **SAM3_VideoTrack / _TrackPreview / _TrackToMask** – ComfyUI Core (native, ab 0.27.0). Meta SAM License, kommerziell OK.\n- **CheckpointLoaderSimple / CLIPTextEncode / GetVideoComponents / LoadVideo / JoinImageWithAlpha** – Core.\n- **LayerMask: MaskEdgeUltraDetail V2** – ComfyUI_LayerStyle (MIT). ViTMatte-Modell (hustvl/vitmatte-small, MIT) lädt beim ersten Lauf automatisch. Klappt das nicht, manuell nach `ComfyUI/models/vitmatte/` legen und `method` auf VITMatte(local) stellen (Details im Node \"ViTMatte-Tuning\").\n- **Fast Groups Bypasser** – rgthree-comfy (MIT).\n- **VHS_VideoCombine** – VideoHelperSuite (für ProRes/WebM).\n\n## Wichtig\n- rgthree-Toggles brauchen **VueNodes AUS** (Settings → 'Vue Nodes' deaktivieren), sonst wird nur ein Schalter gezeichnet.\n- FPS in TrackPreview & VideoCombine an Quelle anpassen.\n- ViTMatte läuft **pro Frame** – bei langen Clips rechenintensiv.\n- **Ausgabe:** Primär die **S/W-Matte** als PNG-Sequenz (`MaskToImage -> SaveImage`) – in AE/Nuke/Premiere als Luma-Matte aufs Originalvideo legen (volle Qualität). Optional zusätzlich eine freigestellte RGBA-PNG-Sequenz.\n- Kein VHS/ProRes nötig – reine PNG-Ausgabe. Empfänger braucht nur ComfyUI + Checkpoint + LayerStyle + rgthree."
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 6,
+      "type": "SAM3_TrackPreview",
+      "pos": [
+        819.1046080606917,
+        61.79597273038414
+      ],
+      "size": [
+        405.362890625,
+        322.0166259765625
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "track_data",
+          "type": "SAM3_TRACK_DATA",
+          "link": 24
+        },
+        {
+          "name": "images",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 25
+        }
+      ],
+      "outputs": [],
+      "title": "ID-VORSCHAU – hier IDs ablesen (zuerst laufen lassen)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "SAM3_TrackPreview"
+      },
+      "widgets_values": [
+        0.5,
+        24
+      ],
+      "color": "#a1662f",
+      "bgcolor": "#5a3a1a"
+    },
+    {
+      "id": 5,
+      "type": "SAM3_VideoTrack",
+      "pos": [
+        437.37947658402163,
+        373.39021964758246
+      ],
+      "size": [
+        300,
+        200
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 21
+        },
+        {
+          "name": "initial_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "conditioning",
+          "shape": 7,
+          "type": "CONDITIONING",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "track_data",
+          "type": "SAM3_TRACK_DATA",
+          "links": [
+            1,
+            4,
+            7,
+            10,
+            24,
+            26
+          ]
+        }
+      ],
+      "title": "SAM3 Video Track (IDs)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "SAM3_VideoTrack"
+      },
+      "widgets_values": [
+        0.5,
+        8,
+        1
+      ]
+    },
+    {
+      "id": 7,
+      "type": "SAM3_TrackToMask",
+      "pos": [
+        1290.9555785123962,
+        122.87534435261703
+      ],
+      "size": [
+        380,
+        120
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "track_data",
+          "type": "SAM3_TRACK_DATA",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "masks",
+          "type": "MASK",
+          "links": [
+            29,
+            30
+          ]
+        }
+      ],
+      "title": "① IDs eingeben (z.B. 0,2,3)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "SAM3_TrackToMask"
+      },
+      "widgets_values": [
+        "2"
+      ],
+      "color": "#2a6e3f",
+      "bgcolor": "#1c4a2a"
+    },
+    {
+      "id": 24,
+      "type": "MarkdownNote",
+      "pos": [
+        -536.5117693755201,
+        785.9552338305036
+      ],
+      "size": [
+        520,
+        420
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Objekt-Schalter – Bedienung",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Bedienung – 2 Schritte\n\n**Schritt 1 – IDs sehen:** Workflow einmal laufen lassen. `SAM3 Video Track` gibt jedem erkannten Objekt eine **stabile ID** (0,1,2,…) über alle Frames. Im Node **ID-VORSCHAU** siehst du das Video mit den farbig eingemalten Nummern – da liest du ab, wer welche ID ist.\n\n**Schritt 2 – freistellen:** Im Node **① IDs eingeben** die gewünschte(n) ID(s) eintragen:\n- `2` → nur Person 2 wird freigestellt.\n- `0,2,3` → mehrere Objekte auf einmal.\n- leer / nicht existierende ID → leere Maske (kein Fehler).\n\nDann nochmal laufen lassen → Matte + RGBA werden gespeichert.\n\n**Mehr Objekte finden?** `max_objects` im Track-Node erhöhen, Prompt anpassen (z.B. `person:6`)."
+      ],
+      "color": "#243",
+      "bgcolor": "#020"
+    },
+    {
+      "id": 26,
+      "type": "MarkdownNote",
+      "pos": [
+        7.11220923242467,
+        753.1806384313035
+      ],
+      "size": [
+        369.71841029841266,
+        250.15884296391664
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Prompt-Format",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Prompt-Format (SAM 3.1)\n\nMax **32 Tokens**. Mehrere Objekttypen mit Komma trennen, `:N` begrenzt die Anzahl pro Typ.\n\n```\nperson:4, dog:1\n```\n\nFindet bis zu 4 Personen + 1 Hund. Jede Instanz bekommt eine eigene Track-ID."
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        42.58483713892233,
+        588.2114074348369
+      ],
+      "size": [
+        320,
+        110
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "title": "Objekt-Prompt (z.B. person)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "person"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        37.46888055223601,
+        430.6957395201174
+      ],
+      "size": [
+        320,
+        110
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            21
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            23
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": []
+        }
+      ],
+      "title": "SAM 3.1 Checkpoint",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "models": [
+          {
+            "name": "sam3.1_multiplex_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/sam3.1/resolve/main/checkpoints/sam3.1_multiplex_fp16.safetensors",
+            "directory": "checkpoints"
+          }
+        ]
+      },
+      "widgets_values": [
+        "sam3.1_multiplex_fp16.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "GetVideoComponents",
+      "pos": [
+        49.4584832246813,
+        256.3321293104402
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            20,
+            25,
+            27,
+            28
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "bit_depth",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "title": "Frames + Audio + FPS",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "GetVideoComponents"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [
+        47.131263049931505,
+        -33.43276132074248
+      ],
+      "size": [
+        300,
+        242.75
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            19
+          ]
+        }
+      ],
+      "title": "Video laden",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "LoadVideo"
+      },
+      "widgets_values": [
+        "wedding-party-celebrates-outdoors-with-dancing-and-2025-12-18-01-07-29-utc.mp4",
+        "image"
+      ]
+    },
+    {
+      "id": 28,
+      "type": "MarkdownNote",
+      "pos": [
+        1326.1879055157106,
+        371.3682377669595
+      ],
+      "size": [
+        354.0505445009617,
+        236.37545456615294
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Freistellen",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "Im Node **① IDs eingeben** die gewünschte(n) ID(s) eintragen:\n- `2` → nur Person 2 wird freigestellt.\n- `0,2,3` → mehrere Objekte auf einmal.\n- leer / nicht existierende ID → leere Maske (kein Fehler).\n\nDann nochmal laufen lassen → Matte + RGBA werden gespeichert.\n\n**Mehr Objekte finden?** `max_objects` im Track-Node erhöhen, Prompt anpassen (z.B. `person:6`)."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 30,
+      "type": "MarkdownNote",
+      "pos": [
+        798.6508709986639,
+        464.55500774316005
+      ],
+      "size": [
+        443.2826363036165,
+        244.50556862578958
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Vorschau",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Erst die Vorschau starten um die ID´s zu bekommen\n\nBevor du den kompletten Workflow startest, starte ihn erst mit dem blauen Run Button dieses Nodes, damit die ID´s vergeben werden. \n\nGebe dann im nächsten Node die ID´s ein die du ck-ID."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 19,
+      "type": "JoinImageWithAlpha",
+      "pos": [
+        2127.03826738114,
+        83.20577539619929
+      ],
+      "size": [
+        250,
+        80
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 28
+        },
+        {
+          "name": "alpha",
+          "type": "MASK",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "title": "RGBA zusammenführen",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "JoinImageWithAlpha"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "MaskToImage",
+      "pos": [
+        2141.080144384905,
+        252.40433154714947
+      ],
+      "size": [
+        240,
+        60
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "title": "Maske -> S/W Bild",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 22,
+      "type": "SaveImage",
+      "pos": [
+        2622.5168611820445,
+        476.925595893746
+      ],
+      "size": [
+        320,
+        300
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "RGBA-Freistellung PNG (optional)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "freistell/sam3_rgba_seq"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "LayerMask: MaskEdgeUltraDetail V2",
+      "pos": [
+        1764.7443181818185,
+        125.39772727272714
+      ],
+      "size": [
+        320,
+        330
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 27
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            15,
+            16
+          ]
+        }
+      ],
+      "title": "ViTMatte Edge Refinement",
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "1.0.90",
+        "Node name for S&R": "LayerMask: MaskEdgeUltraDetail V2"
+      },
+      "widgets_values": [
+        "VITMatte",
+        1,
+        4,
+        0.75,
+        8,
+        12,
+        0.83,
+        0.99,
+        "cuda",
+        4
+      ]
+    },
+    {
+      "id": 21,
+      "type": "SaveImage",
+      "pos": [
+        2626.609848484849,
+        101.67613636363625
+      ],
+      "size": [
+        320,
+        300
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "S/W-Maske PNG-Sequenz",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "matte/sam3_matte_sw"
+      ]
+    },
+    {
+      "id": 31,
+      "type": "MarkdownNote",
+      "pos": [
+        413.8087513446661,
+        649.340323436373
+      ],
+      "size": [
+        340,
+        260
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Tracking-Parameter",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Tracking-Parameter (SAM3 Video Track)\n\n1. **detection_threshold** (0.0–1.0, Standard **0.5**) – das ist der **Score Threshold**. Höher = strenger, nur sichere Treffer werden getrackt. Hochdrehen, wenn im Hintergrund fälschlich ein Objekt mitgenommen wird.\n2. **max_objects** (0–64, Standard **8**) – max. gleichzeitig getrackte Objekte. `0` = interner Cap von 64.\n3. **detect_interval** (ab 1, Standard **1**) – prüft alle N Frames auf neue Objekte. `1` = jeden Frame; höher spart Rechenzeit, neue Objekte werden dann aber später erkannt.\n\n**initial_mask** / **conditioning**: mindestens eines von beiden muss kommen – hier läuft der Text-Prompt (`conditioning`) rein."
+      ],
+      "color": "#243b6e",
+      "bgcolor": "#1a2a4a"
+    },
+    {
+      "id": 25,
+      "type": "MarkdownNote",
+      "pos": [
+        1741.5563574072019,
+        570.1527782619953
+      ],
+      "size": [
+        683.3919587039913,
+        415.84553573483856
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ViTMatte-Tuning",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# ViTMatte – Feinjustierung\n\n**Node:** LayerMask: MaskEdgeUltraDetail V2 (ComfyUI_LayerStyle)\n\n**Alle Parameter im Detail:**\n- `method`: **VITMatte** (lädt Modell beim ersten Lauf automatisch von HuggingFace) / **VITMatte(local)** (nutzt das bereits heruntergeladene Modell, kein Internetzugriff mehr nötig – danach umschalten!) / PyMatting / GuidedFilter\n- `mask_grow`: erweitert die Maske vor der Detailverarbeitung (aktuell **1**)\n- `fix_gap`: schließt kleine Löcher/Lücken im Maskenrand (aktuell **4**, 4–8 sinnvoll)\n- `fix_threshold`: Schwelle für die Lochreparatur – höher = aggressiver (aktuell **0.75**)\n- `edge_erode` / `edge_dilate`: Kante nach innen/außen nachziehen – **8/12** für Haare/feine Kanten (Standard wäre 6/6)\n- `black_point`: hoch (**0.83**) → gegen Geisterschleier/Restschatten im Hintergrund\n- `white_point`: **0.99** → wie \"voll deckend\" der Vordergrund gewertet wird\n- `device`: cuda\n- `max_megapixels`: **4.0+** für hohe Auflösung (RTX 5090)\n\n**Modell-Download:** hustvl/vitmatte-small (MIT), lädt normalerweise automatisch. Klappt der Auto-Download nicht (Firewall/Proxy/kein Internet auf der Workstation), manuell laden und ablegen unter:\n```\n📂 ComfyUI/\n└── 📂 models/\n    └── 📂 vitmatte/\n        └── (alle Dateien aus hustvl/vitmatte-small)\n```\nDanach `method` auf **VITMatte(local)** stellen.\n\n⚠️ **Speicher-Warnung:** Bei Frames über 2K Auflösung frisst ViTMatte sehr viel VRAM/RAM. Falls es abstürzt/hängt: Video vorher auf 1080p o.ä. herunterskalieren oder `max_megapixels` senken."
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 17,
+      "type": "MaskPreview",
+      "pos": [
+        1334.1572227558925,
+        684.3443661548316
+      ],
+      "size": [
+        381.21212121212056,
+        320.32765151515105
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Auswahl-Maske",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.28.0",
+        "Node name for S&R": "MaskPreview"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      15,
+      18,
+      1,
+      19,
+      1,
+      "MASK"
+    ],
+    [
+      16,
+      18,
+      1,
+      20,
+      0,
+      "MASK"
+    ],
+    [
+      17,
+      20,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      19,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      1,
+      0,
+      2,
+      0,
+      "VIDEO"
+    ],
+    [
+      20,
+      2,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      3,
+      0,
+      5,
+      1,
+      "MODEL"
+    ],
+    [
+      22,
+      4,
+      0,
+      5,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      23,
+      3,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      24,
+      5,
+      0,
+      6,
+      0,
+      "SAM3_TRACK_DATA"
+    ],
+    [
+      25,
+      2,
+      0,
+      6,
+      1,
+      "IMAGE"
+    ],
+    [
+      26,
+      5,
+      0,
+      7,
+      0,
+      "SAM3_TRACK_DATA"
+    ],
+    [
+      27,
+      2,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      28,
+      2,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      7,
+      0,
+      17,
+      0,
+      "MASK"
+    ],
+    [
+      30,
+      7,
+      0,
+      18,
+      1,
+      "MASK"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1) Video + SAM 3.1 laden",
+      "bounding": [
+        7.855595526581684,
+        -116.85198345790258,
+        382.58483713892247,
+        833.5451239518886
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2) Tracking (stabile IDs)",
+      "bounding": [
+        417.37947658402163,
+        20,
+        340,
+        560
+      ],
+      "color": "#88A",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3) ID-Preview / Nummerierung",
+      "bounding": [
+        778.8171487603302,
+        -24.10239536564848,
+        473.37052634953193,
+        423.0193618150115
+      ],
+      "color": "#a1662f",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "Feinjustierung ViTMatte (sichtbar lassen)",
+      "bounding": [
+        1740,
+        0,
+        684.0909090909095,
+        484.08143939394233
+      ],
+      "color": "#8154a6",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "4) Ausgabe (S/W-Maske + RGBA, PNG)",
+      "bounding": [
+        2592.376893939394,
+        18.9772727272727,
+        431.164772727273,
+        786.9791666666665
+      ],
+      "color": "#666",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "ID-Auswahl (hier eintippen)",
+      "bounding": [
+        1270.9555785123962,
+        42.875344352617056,
+        420,
+        260
+      ],
+      "color": "#2a6e3f",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6323353293413219,
+      "offset": [
+        1430.5985758822853,
+        722.3061374616019
+      ]
+    },
+    "frontendVersion": "1.45.21",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

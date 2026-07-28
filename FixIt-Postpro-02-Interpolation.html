@@ -99,8 +99,8 @@
 
   <div class="divider"></div>
 
-  <a class="next" id="t-next" href="FixIt-Postpro-01-Upscale.html">
-    <span><small id="t-next-s">Postproduction · 01</small><strong id="t-next-t">Video-Upscale mit RTX VSR</strong></span>
+  <a class="next" id="t-next" href="FixIt-Postpro-03-Freistellen.html">
+    <span><small id="t-next-s">Postproduction · 03</small><strong id="t-next-t">Objekte freistellen mit SAM 3.1</strong></span>
     <span class="arrow">→</span>
   </a>
 
@@ -134,8 +134,8 @@ const STR = {
   "t-s3":    {de:"Im <code>VHS_VideoCombine</code>-Node die Ziel-<code>frame_rate</code> eintragen (z.B. 48 bei 2x), dann <strong>Run</strong>.",
               en:"Set the target <code>frame_rate</code> in the <code>VHS_VideoCombine</code> node (e.g. 48 for 2x), then hit <strong>Run</strong>."},
   "t-dl":    {de:"↓ Workflow herunterladen (.json)", en:"↓ Download workflow (.json)"},
-  "t-next-s":{de:"Postproduction · 01", en:"Post-Production · 01"},
-  "t-next-t":{de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"}
+  "t-next-s":{de:"Postproduction · 03", en:"Post-Production · 03"},
+  "t-next-t":{de:"Objekte freistellen mit SAM 3.1", en:"Cut Out Objects with SAM 3.1"}
 };
 function setLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
