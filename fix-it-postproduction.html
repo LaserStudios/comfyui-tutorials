@@ -73,6 +73,12 @@
       <span class="arrow">→</span>
     </a>
 
+    <a class="card" href="FixIt-Postpro-04-Depth-Control.html">
+      <span class="no">04</span>
+      <div><h2 id="t-c4-h">Bewegung übertragen mit Depth Control</h2><p id="t-c4-p">Bewegung aus einem Referenzvideo auf ein eigenes Standbild übertragen – mit WAN 2.2 Fun Control.</p></div>
+      <span class="arrow">→</span>
+    </a>
+
   </div>
 
   <p class="footer">Laser Studios · Fix it in Prompt · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
@@ -94,7 +100,10 @@ const STR = {
               en:"Compute new in-between frames for smoother motion."},
   "t-c3-h":  {de:"Objekte freistellen mit SAM 3.1", en:"Cut Out Objects with SAM 3.1"},
   "t-c3-p":  {de:"Objekte oder Personen per ID aus dem Video freistellen – mit sauberer Matte-Kante.",
-              en:"Cut objects or people out of the video by ID – with a clean matte edge."}
+              en:"Cut objects or people out of the video by ID – with a clean matte edge."},
+  "t-c4-h":  {de:"Bewegung übertragen mit Depth Control", en:"Transfer Motion with Depth Control"},
+  "t-c4-p":  {de:"Bewegung aus einem Referenzvideo auf ein eigenes Standbild übertragen – mit WAN 2.2 Fun Control.",
+              en:"Transfer motion from a reference video onto a still of your own – with WAN 2.2 Fun Control."}
 };
 function setLang(lang){
   for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}

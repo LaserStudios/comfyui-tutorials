@@ -1,0 +1,2019 @@
+{
+  "id": "wan22-fun-control-depth-en",
+  "revision": 0,
+  "last_node_id": 31,
+  "last_link_id": 28,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "WanVideoVAELoader",
+      "pos": [
+        -0.0007323254276343505,
+        -400.00032032340016
+      ],
+      "size": [
+        372,
+        197.3125
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "compile_args",
+          "shape": 7,
+          "type": "WANCOMPILEARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "vae",
+          "type": "WANVAE",
+          "slot_index": 0,
+          "links": [
+            1,
+            2,
+            3,
+            22
+          ]
+        }
+      ],
+      "title": "VAE loader (wan_2.1_vae)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoVAELoader"
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors",
+        "bf16",
+        false,
+        false
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 3,
+      "type": "WanVideoBlockSwap",
+      "pos": [
+        599.9993042578676,
+        -1399.9996741050759
+      ],
+      "size": [
+        315,
+        280
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "block_swap_args",
+          "type": "BLOCKSWAPARGS",
+          "slot_index": 0,
+          "links": [
+            6,
+            7
+          ]
+        }
+      ],
+      "title": "BlockSwap (VRAM relief)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoBlockSwap"
+      },
+      "widgets_values": [
+        0,
+        false,
+        false,
+        true,
+        0,
+        0,
+        false
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 4,
+      "type": "WanVideoModelLoader",
+      "pos": [
+        -450.00058935555353,
+        -1349.999841463813
+      ],
+      "size": [
+        673,
+        471.9375
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "compile_args",
+          "shape": 7,
+          "type": "WANCOMPILEARGS",
+          "link": null
+        },
+        {
+          "name": "block_swap_args",
+          "shape": 7,
+          "type": "BLOCKSWAPARGS",
+          "link": null
+        },
+        {
+          "name": "lora",
+          "shape": 7,
+          "type": "WANVIDLORA",
+          "link": 25
+        },
+        {
+          "name": "vram_management_args",
+          "shape": 7,
+          "type": "VRAM_MANAGEMENTARGS",
+          "link": null
+        },
+        {
+          "name": "extra_model",
+          "shape": 7,
+          "type": "VACEPATH",
+          "link": null
+        },
+        {
+          "name": "fantasytalking_model",
+          "shape": 7,
+          "type": "FANTASYTALKINGMODEL",
+          "link": null
+        },
+        {
+          "name": "multitalk_model",
+          "shape": 7,
+          "type": "MULTITALKMODEL",
+          "link": null
+        },
+        {
+          "name": "fantasyportrait_model",
+          "shape": 7,
+          "type": "FANTASYPORTRAITMODEL",
+          "link": null
+        },
+        {
+          "name": "vace_model",
+          "shape": 7,
+          "type": "VACEPATH",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "slot_index": 0,
+          "links": [
+            8
+          ]
+        }
+      ],
+      "title": "HIGH Noise Model",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoModelLoader"
+      },
+      "widgets_values": [
+        "wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
+        "bf16",
+        "fp8_e4m3fn_scaled",
+        "main_device",
+        "sdpa",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 5,
+      "type": "WanVideoSetBlockSwap",
+      "pos": [
+        299.99949045503445,
+        -1349.999841463813
+      ],
+      "size": [
+        225,
+        96
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "link": 8
+        },
+        {
+          "name": "block_swap_args",
+          "shape": 7,
+          "type": "BLOCKSWAPARGS",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "title": "SetBlockSwap HIGH",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoSetBlockSwap"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 6,
+      "type": "WanVideoModelLoader",
+      "pos": [
+        1099.998175973999,
+        -1349.999841463813
+      ],
+      "size": [
+        673,
+        471.9375
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "compile_args",
+          "shape": 7,
+          "type": "WANCOMPILEARGS",
+          "link": null
+        },
+        {
+          "name": "block_swap_args",
+          "shape": 7,
+          "type": "BLOCKSWAPARGS",
+          "link": null
+        },
+        {
+          "name": "lora",
+          "shape": 7,
+          "type": "WANVIDLORA",
+          "link": 26
+        },
+        {
+          "name": "vram_management_args",
+          "shape": 7,
+          "type": "VRAM_MANAGEMENTARGS",
+          "link": null
+        },
+        {
+          "name": "extra_model",
+          "shape": 7,
+          "type": "VACEPATH",
+          "link": null
+        },
+        {
+          "name": "fantasytalking_model",
+          "shape": 7,
+          "type": "FANTASYTALKINGMODEL",
+          "link": null
+        },
+        {
+          "name": "multitalk_model",
+          "shape": 7,
+          "type": "MULTITALKMODEL",
+          "link": null
+        },
+        {
+          "name": "fantasyportrait_model",
+          "shape": 7,
+          "type": "FANTASYPORTRAITMODEL",
+          "link": null
+        },
+        {
+          "name": "vace_model",
+          "shape": 7,
+          "type": "VACEPATH",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "slot_index": 0,
+          "links": [
+            10
+          ]
+        }
+      ],
+      "title": "LOW Noise Model",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoModelLoader"
+      },
+      "widgets_values": [
+        "wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
+        "bf16",
+        "fp8_e4m3fn_scaled",
+        "main_device",
+        "sdpa",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 7,
+      "type": "WanVideoSetBlockSwap",
+      "pos": [
+        1849.9977104810823,
+        -1349.999841463813
+      ],
+      "size": [
+        225,
+        96
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "link": 10
+        },
+        {
+          "name": "block_swap_args",
+          "shape": 7,
+          "type": "BLOCKSWAPARGS",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "title": "SetBlockSwap LOW",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoSetBlockSwap"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 10,
+      "type": "DepthAnythingV2Preprocessor",
+      "pos": [
+        -866.6115702479337,
+        915.3719008264459
+      ],
+      "size": [
+        380,
+        106
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            14
+          ]
+        }
+      ],
+      "title": "Depth Anything V2 Small (Apache-2.0)",
+      "properties": {
+        "cnr_id": "comfyui_controlnet_aux",
+        "ver": "1.0.0",
+        "Node name for S&R": "DepthAnythingV2Preprocessor"
+      },
+      "widgets_values": [
+        "depth_anything_v2_vits.pth",
+        576
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 11,
+      "type": "WanVideoEncode",
+      "pos": [
+        -26.611853917413242,
+        905.370619656589
+      ],
+      "size": [
+        315,
+        340
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "type": "WANVAE",
+          "link": 2
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 27
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            15
+          ]
+        }
+      ],
+      "title": "Encode Control",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoEncode"
+      },
+      "widgets_values": [
+        false,
+        272,
+        272,
+        144,
+        128,
+        0,
+        1
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 19,
+      "type": "WanVideoEncode",
+      "pos": [
+        -20.00028366947936,
+        149.99943203916723
+      ],
+      "size": [
+        351.2427734375,
+        340
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "type": "WANVAE",
+          "link": 22
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 23
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            24
+          ]
+        }
+      ],
+      "title": "Encode Reference Image (Background Anchor)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoEncode"
+      },
+      "widgets_values": [
+        false,
+        272,
+        272,
+        144,
+        128,
+        0,
+        1
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 12,
+      "type": "WanVideoImageToVideoEncode",
+      "pos": [
+        500.3025550722891,
+        4.544936583936192
+      ],
+      "size": [
+        353,
+        572
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "WANVAE",
+          "link": 1
+        },
+        {
+          "name": "clip_embeds",
+          "shape": 7,
+          "type": "WANVIDIMAGE_CLIPEMBEDS",
+          "link": null
+        },
+        {
+          "name": "start_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 12
+        },
+        {
+          "name": "end_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "control_embeds",
+          "shape": 7,
+          "type": "WANVIDIMAGE_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "temporal_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "extra_latents",
+          "shape": 7,
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "add_cond_latents",
+          "shape": 7,
+          "type": "ADD_COND_LATENTS",
+          "link": null
+        },
+        {
+          "name": "empty_frame_pad_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image_embeds",
+          "type": "WANVIDIMAGE_EMBEDS",
+          "slot_index": 0,
+          "links": [
+            16
+          ]
+        }
+      ],
+      "title": "Image to Video Encode (1024x576, 65 frames)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoImageToVideoEncode"
+      },
+      "widgets_values": [
+        1024,
+        576,
+        65,
+        0,
+        1,
+        1,
+        true,
+        true,
+        false,
+        0
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 13,
+      "type": "WanVideoAddControlEmbeds",
+      "pos": [
+        851.045041215873,
+        642.1020363532498
+      ],
+      "size": [
+        297,
+        184
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embeds",
+          "type": "WANVIDIMAGE_EMBEDS",
+          "link": 16
+        },
+        {
+          "name": "latents",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 15
+        },
+        {
+          "name": "fun_ref_image",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image_embeds",
+          "type": "WANVIDIMAGE_EMBEDS",
+          "slot_index": 0,
+          "links": [
+            17,
+            18
+          ]
+        }
+      ],
+      "title": "Merge control embeds",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoAddControlEmbeds"
+      },
+      "widgets_values": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 14,
+      "type": "WanVideoSampler",
+      "pos": [
+        1199.9983865600288,
+        -700.0001085651315
+      ],
+      "size": [
+        358,
+        1292
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "link": 9
+        },
+        {
+          "name": "image_embeds",
+          "type": "WANVIDIMAGE_EMBEDS",
+          "link": 17
+        },
+        {
+          "name": "text_embeds",
+          "shape": 7,
+          "type": "WANVIDEOTEXTEMBEDS",
+          "link": 4
+        },
+        {
+          "name": "samples",
+          "shape": 7,
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "feta_args",
+          "shape": 7,
+          "type": "FETAARGS",
+          "link": null
+        },
+        {
+          "name": "context_options",
+          "shape": 7,
+          "type": "WANVIDCONTEXT",
+          "link": null
+        },
+        {
+          "name": "cache_args",
+          "shape": 7,
+          "type": "CACHEARGS",
+          "link": null
+        },
+        {
+          "name": "flowedit_args",
+          "shape": 7,
+          "type": "FLOWEDITARGS",
+          "link": null
+        },
+        {
+          "name": "slg_args",
+          "shape": 7,
+          "type": "SLGARGS",
+          "link": null
+        },
+        {
+          "name": "loop_args",
+          "shape": 7,
+          "type": "LOOPARGS",
+          "link": null
+        },
+        {
+          "name": "experimental_args",
+          "shape": 7,
+          "type": "EXPERIMENTALARGS",
+          "link": null
+        },
+        {
+          "name": "sigmas",
+          "shape": 7,
+          "type": "SIGMAS",
+          "link": null
+        },
+        {
+          "name": "unianimate_poses",
+          "shape": 7,
+          "type": "UNIANIMATE_POSE",
+          "link": null
+        },
+        {
+          "name": "fantasytalking_embeds",
+          "shape": 7,
+          "type": "FANTASYTALKING_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "uni3c_embeds",
+          "shape": 7,
+          "type": "UNI3C_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "multitalk_embeds",
+          "shape": 7,
+          "type": "MULTITALK_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "freeinit_args",
+          "shape": 7,
+          "type": "FREEINITARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "denoised_samples",
+          "type": "LATENT",
+          "links": null
+        }
+      ],
+      "title": "⚡ Sampler HIGH (steps 0→4, CFG 1)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoSampler"
+      },
+      "widgets_values": [
+        8,
+        1,
+        5,
+        42,
+        "fixed",
+        true,
+        "unipc",
+        0,
+        1,
+        "",
+        "comfy",
+        0,
+        4,
+        false
+      ]
+    },
+    {
+      "id": 15,
+      "type": "WanVideoSampler",
+      "pos": [
+        1649.9983799160314,
+        -700.0001085651315
+      ],
+      "size": [
+        358,
+        1292
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "WANVIDEOMODEL",
+          "link": 11
+        },
+        {
+          "name": "image_embeds",
+          "type": "WANVIDIMAGE_EMBEDS",
+          "link": 18
+        },
+        {
+          "name": "text_embeds",
+          "shape": 7,
+          "type": "WANVIDEOTEXTEMBEDS",
+          "link": 5
+        },
+        {
+          "name": "samples",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 19
+        },
+        {
+          "name": "feta_args",
+          "shape": 7,
+          "type": "FETAARGS",
+          "link": null
+        },
+        {
+          "name": "context_options",
+          "shape": 7,
+          "type": "WANVIDCONTEXT",
+          "link": null
+        },
+        {
+          "name": "cache_args",
+          "shape": 7,
+          "type": "CACHEARGS",
+          "link": null
+        },
+        {
+          "name": "flowedit_args",
+          "shape": 7,
+          "type": "FLOWEDITARGS",
+          "link": null
+        },
+        {
+          "name": "slg_args",
+          "shape": 7,
+          "type": "SLGARGS",
+          "link": null
+        },
+        {
+          "name": "loop_args",
+          "shape": 7,
+          "type": "LOOPARGS",
+          "link": null
+        },
+        {
+          "name": "experimental_args",
+          "shape": 7,
+          "type": "EXPERIMENTALARGS",
+          "link": null
+        },
+        {
+          "name": "sigmas",
+          "shape": 7,
+          "type": "SIGMAS",
+          "link": null
+        },
+        {
+          "name": "unianimate_poses",
+          "shape": 7,
+          "type": "UNIANIMATE_POSE",
+          "link": null
+        },
+        {
+          "name": "fantasytalking_embeds",
+          "shape": 7,
+          "type": "FANTASYTALKING_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "uni3c_embeds",
+          "shape": 7,
+          "type": "UNI3C_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "multitalk_embeds",
+          "shape": 7,
+          "type": "MULTITALK_EMBEDS",
+          "link": null
+        },
+        {
+          "name": "freeinit_args",
+          "shape": 7,
+          "type": "FREEINITARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            20
+          ]
+        },
+        {
+          "name": "denoised_samples",
+          "type": "LATENT",
+          "links": null
+        }
+      ],
+      "title": "⚡ Sampler LOW (steps 4→end, CFG 1)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoSampler"
+      },
+      "widgets_values": [
+        8,
+        1,
+        5,
+        43,
+        "fixed",
+        true,
+        "unipc",
+        0,
+        1,
+        "",
+        "comfy",
+        4,
+        -1,
+        false
+      ]
+    },
+    {
+      "id": 16,
+      "type": "WanVideoDecode",
+      "pos": [
+        2099.9981006202806,
+        -700.0001085651315
+      ],
+      "size": [
+        315,
+        252
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "type": "WANVAE",
+          "link": 3
+        },
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            21
+          ]
+        }
+      ],
+      "title": "Decode (latent -> image)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoDecode"
+      },
+      "widgets_values": [
+        false,
+        272,
+        272,
+        144,
+        128,
+        "default"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 17,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        2104.661768629606,
+        -347.90762523811406
+      ],
+      "size": [
+        693.046875,
+        334
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "Write video (MP4, 24 fps)",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.7.9",
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "Depth_control",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": ""
+      }
+    },
+    {
+      "id": 21,
+      "type": "WanVideoLoraSelect",
+      "pos": [
+        -450,
+        -1620
+      ],
+      "size": [
+        673,
+        150
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prev_lora",
+          "shape": 7,
+          "type": "WANVIDLORA",
+          "link": null
+        },
+        {
+          "name": "blocks",
+          "shape": 7,
+          "type": "SELECTEDBLOCKS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lora",
+          "type": "WANVIDLORA",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "title": "⚡ Speed-LoRA HIGH (lightx2v 4step)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoLoraSelect"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+        1,
+        false,
+        true
+      ],
+      "color": "#2a2",
+      "bgcolor": "#151"
+    },
+    {
+      "id": 22,
+      "type": "WanVideoLoraSelect",
+      "pos": [
+        1099,
+        -1620
+      ],
+      "size": [
+        673,
+        150
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prev_lora",
+          "shape": 7,
+          "type": "WANVIDLORA",
+          "link": null
+        },
+        {
+          "name": "blocks",
+          "shape": 7,
+          "type": "SELECTEDBLOCKS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lora",
+          "type": "WANVIDLORA",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "title": "⚡ Speed-LoRA LOW (lightx2v 4step)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoLoraSelect"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+        1,
+        false,
+        true
+      ],
+      "color": "#2a2",
+      "bgcolor": "#151"
+    },
+    {
+      "id": 9,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        -1454.4406072836505,
+        6.703587660694311
+      ],
+      "size": [
+        433.296875,
+        556.4794921875
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            13
+          ]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null
+        }
+      ],
+      "title": "Load reference video (motion)",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.7.9",
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "",
+        "force_rate": 24,
+        "custom_width": 1024,
+        "custom_height": 576,
+        "frame_load_cap": 65,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "force_rate": 24,
+            "frame_load_cap": 65,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        -859.1941581845149,
+        155.69096920815025
+      ],
+      "size": [
+        413,
+        498
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            12,
+            23
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Load still image (look + background)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.19.0",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 2,
+      "type": "WanVideoTextEncodeCached",
+      "pos": [
+        321.843530904257,
+        -948.9648991856736
+      ],
+      "size": [
+        475,
+        422.625
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extender_args",
+          "shape": 7,
+          "type": "WANVIDEOPROMPTEXTENDER_ARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text_embeds",
+          "type": "WANVIDEOTEXTEMBEDS",
+          "slot_index": 0,
+          "links": [
+            4,
+            5
+          ]
+        },
+        {
+          "name": "negative_text_embeds",
+          "type": "WANVIDEOTEXTEMBEDS",
+          "links": null
+        },
+        {
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "Prompt (umt5 text encoder)",
+      "properties": {
+        "cnr_id": "ComfyUI-WanVideoWrapper",
+        "ver": "1.4.7",
+        "Node name for S&R": "WanVideoTextEncodeCached"
+      },
+      "widgets_values": [
+        "umt5_xxl_fp16.safetensors",
+        "bf16",
+        "man wielding a sword in a field wearing a christmas pullover",
+        "",
+        "disabled",
+        true,
+        "gpu"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 25,
+      "type": "MarkdownNote",
+      "pos": [
+        -2200,
+        -400
+      ],
+      "size": [
+        620,
+        1010
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Modules / Models / Links",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# WAN 2.2 Fun Control – Depth (video → video)\n\nStill image + reference video → new video. The **depth map** of the reference video drives motion and space; the still image supplies look and background.\n\n## Models (required)\n\n### Diffusion models → `models/diffusion_models/`\n- [wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors) – 14.3 GB\n- [wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors) – 14.3 GB\n\n### VAE → `models/vae/`\n- [wan_2.1_vae.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors) – 254 MB\n\n### Text encoder → `models/text_encoders/`\n- [umt5_xxl_fp16.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors) – 11.4 GB\n- Lighter: [umt5_xxl_fp8_e4m3fn_scaled.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors) – 6.7 GB\n\n### Speed LoRAs (lightx2v 4-step) → `models/loras/`\n- [wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors) – 1.23 GB\n- [wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors) – 1.23 GB\n\n### Depth model (downloads automatically on first run)\n- [depth_anything_v2_vits.pth](https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth) – 99 MB, Apache-2.0\n\n## Folder structure\n\n```\n📂 ComfyUI/\n└── 📂 models/\n    ├── 📂 diffusion_models/\n    │   ├── wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors\n    │   └── wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors\n    ├── 📂 vae/\n    │   └── wan_2.1_vae.safetensors\n    ├── 📂 text_encoders/\n    │   └── umt5_xxl_fp16.safetensors\n    └── 📂 loras/\n        ├── wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors\n        └── wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors\n```\n\nThe depth model does **not** go into `models/` – it lands here:\n\n```\n📂 ComfyUI/\n└── 📂 custom_nodes/\n    └── 📂 comfyui_controlnet_aux/\n        └── 📂 ckpts/\n            └── 📂 depth-anything/\n                └── 📂 Depth-Anything-V2-Small/\n                    └── depth_anything_v2_vits.pth\n```\n\n## Custom nodes (license)\n\n- **[ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper)** (Kijai, Apache-2.0) – all `WanVideo*` nodes\n- **[comfyui_controlnet_aux](https://github.com/Fannovel16/comfyui_controlnet_aux)** (Fannovel16, Apache-2.0) – `DepthAnythingV2Preprocessor`\n- **[ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite)** (Kosinkadink, GPL-3.0) – `VHS_LoadVideo`, `VHS_VideoCombine`\n- **Core:** `LoadImage`, `ImageScale`, `PreviewImage`\n\nAll three installable via **ComfyUI Manager → Custom Nodes Manager**. Restart ComfyUI afterwards.\n\n## ✅ Licenses – this workflow is fully cleared for commercial use\n\n| Component | License | Commercial |\n|---|---|---|\n| Wan 2.2 Fun Control (high/low) | Apache-2.0 | ✅ |\n| wan_2.1_vae | Apache-2.0 | ✅ |\n| umt5_xxl (text encoder) | Apache-2.0 | ✅ |\n| lightx2v 4-step LoRAs | Apache-2.0 | ✅ |\n| Depth-Anything-V2 **Small** | Apache-2.0 | ✅ |\n| WanVideoWrapper / controlnet_aux | Apache-2.0 | ✅ |\n| VideoHelperSuite | GPL-3.0 | ✅ (node code, not your output) |\n\n## ⛔ Do not use on commercial projects\n\n`depth_anything_v2_vitl.pth` (**Large**) and `depth_anything_v2_vitb.pth` (**Base**) are **CC-BY-NC-4.0** – explicitly non-commercial. Only the **Small** variant is Apache-2.0, which is why it is preset here.\n\nIf you need a different depth estimator, these are also safe:\n**MiDaS-DepthMapPreprocessor** (MIT) and **Zoe-DepthMapPreprocessor** (MIT) – both ship with `comfyui_controlnet_aux`."
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 26,
+      "type": "MarkdownNote",
+      "pos": [
+        -2200,
+        650
+      ],
+      "size": [
+        620,
+        520
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "How to use",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# How to use – 4 steps\n\n**1 – Load the still image.** Upload your start image in the **Load Image** node. It defines the look, the character and the background of the result. Pick an aspect ratio close to 1024×576, otherwise it gets squashed.\n\n**2 – Load the reference video.** In **Load Video (Upload)** pick the clip the motion comes from. It is cut to 1024×576 / 24 fps / 65 frames (`frame_load_cap`).\n\n**3 – Write the prompt.** Describe what should be visible in the **WanVideoTextEncodeCached** node – one sentence in English is enough. Leave the negative prompt **empty**: at CFG 1.0 it is ignored anyway (see the speed setup note).\n\n**4 – Check the depth pass, then render.** First run only the **Preview: Depth Control** node via its blue Run button. Once the depth map looks clean (figure clearly separated from the background), queue the full workflow.\n\nThe result is written to `ComfyUI/output/` as an MP4 with the prefix `Depth_control`.\n\n**Rough runtime:** ~8 sampler steps total – about 1–2 minutes for 65 frames on an RTX 5090."
+      ],
+      "color": "#243",
+      "bgcolor": "#020"
+    },
+    {
+      "id": 27,
+      "type": "MarkdownNote",
+      "pos": [
+        1474,
+        725
+      ],
+      "size": [
+        600,
+        470
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Speed setup",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# ⚡ Speed setup (lightx2v 4-step)\n\nThe two **⚡ Speed LoRA** nodes distill Wan 2.2 down to very few steps. Instead of ~40 steps at CFG 5 this runs **8 steps at CFG 1** – roughly **6–10× faster** at comparable quality.\n\n| Setting | Without LoRA | Here |\n|---|---|---|\n| Steps | 40 | **8** (split 4/4) |\n| CFG | 5.0 | **1.0** |\n| Scheduler | dpm++_sde | unipc |\n| BlockSwap | 10 | **0** |\n| Model passes | ~80 | **8** |\n\n## ⚠️ CFG must stay at 1.0\n\nAt CFG > 1 the compute time doubles **and** the distillation breaks → artifacts, flicker, mushy edges. The negative prompt has no effect at CFG 1, which is why it stays empty.\n\n## Fine-tuning\n\n- **Motion too weak?** Fun Control + speed LoRA dampen motion slightly. Lower `strength` on both ⚡ nodes to **0.8**, or raise steps to **10** (split 5/5).\n- **Maximum quality:** steps **12** (split 6/6), `strength` 1.0.\n- **Even faster:** steps **6** (HIGH `end_step` 3, LOW `start_step` 3).\n- **OOM?** Set `blocks_to_swap` in **WanVideoBlockSwap** to 5–10. Costs speed, saves VRAM.\n\n## Rule for the step split\n\nThe HIGH sampler's `end_step` and the LOW sampler's `start_step` must be **identical** and **lower than `steps`**. With 8 steps that means 4/4. A split of 10 with 8 steps throws an error."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 29,
+      "type": "MarkdownNote",
+      "pos": [
+        383,
+        887
+      ],
+      "size": [
+        480,
+        340
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Resolution & frames",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Resolution & frames\n\nThese three nodes **must match**, otherwise the sampler aborts with *\"Sizes of tensors must match\"*:\n\n| Node | Widget | Value |\n|---|---|---|\n| Load Video | `custom_width` / `custom_height` | 1024 / 576 |\n| Force 1024×576 | `width` / `height` | 1024 / 576 |\n| WanVideoImageToVideoEncode | `width` / `height` | 1024 / 576 |\n\nWhen changing it, touch **all three**.\n\n## Frame count\n\n`frame_load_cap` (Load Video) and `num_frames` (ImageToVideoEncode) are both set to **65**.\nWan works in blocks of 4 + 1 → valid values are 33, 49, 65, 81, 97 …\nAt 24 fps, 65 frames is roughly **2.7 seconds**.\n\n## Lighter presets\n\n- **832×480, 65 frames** – noticeably faster, good for tests\n- **1024×576, 81 frames** – ~3.4 s runtime\n- **1280×720** – only sensible with ≥ 24 GB VRAM, raise `blocks_to_swap`\n\nMatch `frame_rate` in **Video Combine** to your source (24 here)."
+      ],
+      "color": "#243b6e",
+      "bgcolor": "#1a2a4a"
+    },
+    {
+      "id": 28,
+      "type": "MarkdownNote",
+      "pos": [
+        -1450.694214876033,
+        784.4628099173553
+      ],
+      "size": [
+        430,
+        490
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Depth control chain",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# The depth control chain\n\n```\nLoad Video → DepthAnythingV2 → ImageScale → WanVideoEncode → AddControlEmbeds\n                                     ↓\n                             Preview: Depth Control\n```\n\n**DepthAnythingV2Preprocessor** turns every frame into a grayscale depth map. Near = bright, far = dark. What transfers is **space and motion**, not the appearance of the source.\n\n**ImageScale (Force 1024×576)** then locks the control size. The preprocessor outputs at its own working resolution – without this node the control frames and the latents don't line up → *\"Sizes of tensors must match\"*.\nThe `nearest-exact` method is deliberate: no interpolation, hard edges stay hard.\n\n## Model choice – mind the license\n\n- `depth_anything_v2_vits.pth` – **Small, Apache-2.0, set here.** 99 MB, fast, commercially usable.\n- `depth_anything_v2_vitb.pth` / `vitl.pth` / `vitg.pth` – **CC-BY-NC-4.0, private/research only.**\n\nThe quality gap barely matters in this workflow: Wan uses the depth map as a coarse space and motion signal, not as exact geometry. Small gives slightly softer edges on fine structures (fingers, hair, thin objects).\n\n`resolution`: **576** – matches the 1024×576 height, so nothing is rescaled. Going higher gains nothing here: the model runs at 518 px internally anyway, and ImageScale pulls the result back to 1024×576 afterwards.\n\n**Preview: Depth Control** is your sanity check. Run it on its own before the big render (blue Run button on the node). If the depth map looks flat or noisy, no prompt will save it – use a better reference clip instead (clear contrast, little motion blur)."
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 23,
+      "type": "ImageScale",
+      "pos": [
+        -414.38016528925596,
+        910.7438016528919
+      ],
+      "size": [
+        300,
+        130
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            27,
+            28
+          ]
+        }
+      ],
+      "title": "Force 1024x576 (Control-Groesse fix)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.0",
+        "Node name for S&R": "ImageScale"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        1024,
+        576,
+        "disabled"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 24,
+      "type": "PreviewImage",
+      "pos": [
+        -432.628347508126,
+        1087.3319626009977
+      ],
+      "size": [
+        340,
+        320
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Preview: Depth Control",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.0",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 31,
+      "type": "MarkdownNote",
+      "pos": [
+        -437.07180000000005,
+        190.02810000000005
+      ],
+      "size": [
+        380,
+        400
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Background anchor",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Background anchor (`fun_ref_image`)\n\nThe second **WanVideoEncode** does not encode the video – it encodes **the still image** and feeds it into the control embeds as `fun_ref_image`.\n\nThis gives the model a visual memory of the background. Without this branch Wan likes to hallucinate people, objects and drifting textures into calm areas of the frame – especially on longer clips.\n\n**When to disable it?** When the camera moves a lot, or when the background is supposed to change. Set the node to **Bypass** (Ctrl+B) – everything else keeps running.\n\n**Inputs on WanVideoAddControlEmbeds:**\n- `embeds` – required, comes from **WanVideoImageToVideoEncode**\n- `latents` – the depth latents from *Encode Control*\n- `fun_ref_image` – optional, this anchor from *Encode Reference Image*"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 30,
+      "type": "MarkdownNote",
+      "pos": [
+        2113.7846,
+        434.80960000000005
+      ],
+      "size": [
+        693,
+        900
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Settings: 30 / 40 / 50 series",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "# Settings by card generation\n\nThe file ships with the combination that runs everywhere: **bf16 / fp8_e4m3fn_scaled / sdpa**. If you want to tune it, the values for your generation are below.\n\n⚠️ All four widgets exist **twice** – in *HIGH Noise Model* and *LOW Noise Model*. Always set both the same.\n\n---\n\n## RTX 50xx – Blackwell (sm_120)\n\n*5090 32 GB · 5080 / 5070 Ti 16 GB · 5070 12 GB*\n\n| Widget | 5090 | 5080 / 5070 |\n|---|---|---|\n| `base_precision` | bf16 | bf16 |\n| `quantization` | fp8_e4m3fn_scaled | fp8_e4m3fn_scaled |\n| `attention_mode` | sdpa | sdpa |\n| `load_device` | main_device | offload_device |\n| `blocks_to_swap` | 0 | 15–25 |\n\nBlackwell needs PyTorch built with sm_120 kernels (CUDA 12.8 or newer). Older torch builds don't know the architecture and throw a kernel error on the first sampler step.\n\n`sageattn` gives 20–30 % here too, but the prebuilt wheels have only covered sm_120 fairly recently. If your build matches, switch both loaders. If not, stay on `sdpa`.\n\n`fp16_fast` is worth a try. If it runs clean, keep it; if you get grey or NaN frames, go back to bf16.\n\n---\n\n## RTX 40xx – Ada (sm_89)\n\n*4090 24 GB · 4080 16 GB · 4070 12 GB*\n\n| Widget | 4090 | 4080 / 4070 |\n|---|---|---|\n| `base_precision` | fp16_fast | fp16_fast |\n| `quantization` | fp8_e4m3fn_scaled_fast | fp8_e4m3fn_scaled |\n| `attention_mode` | sageattn | sageattn |\n| `load_device` | offload_device | offload_device |\n| `blocks_to_swap` | 0–10 | 20–30 |\n\nAda is the most forgiving generation for this workflow: from compute capability 8.9 the card runs **true fp8 matmuls**, so the `_fast` quantization modes are usable here (they are not on older cards). SageAttention is well covered for sm_89.\n\nOn 12 GB also drop the resolution to **832×480**.\n\n---\n\n## RTX 30xx – Ampere (sm_86)\n\n*3090 24 GB · 3080 10–12 GB · 3060 12 GB*\n\n| Widget | 3090 | 3080 / 3060 |\n|---|---|---|\n| `base_precision` | bf16 | bf16 |\n| `quantization` | fp8_e4m3fn_scaled | fp8_e4m3fn_scaled |\n| `attention_mode` | sdpa or sageattn | sdpa |\n| `load_device` | offload_device | offload_device |\n| `blocks_to_swap` | 10–20 | 30–40 |\n\nAmpere has **no fp8 compute units** (compute capability 8.6 < 8.9), so the `_fast` modes are out. `fp8_e4m3fn_scaled` still works: the weights sit in memory as fp8 and are upcast for the maths – that saves VRAM, but not time.\n\n`fp16_fast` brings no reliable gain here; stay on bf16.\n\nRealistic on 10–12 GB: **832×480, 49 frames**, `blocks_to_swap` 40. It runs, but noticeably slower, because blocks are constantly moving between RAM and VRAM.\n\n---\n\n# What the widgets do\n\n**`base_precision`** – compute format for the non-quantized parts of the model (`fp32`, `bf16`, `fp16`, `fp16_fast`).\n`bf16` has the same numeric range as fp32 at half the size and is insensitive to overflow, including when LoRAs are merged into the weights.\n`fp16_fast` is fp16 with fp16 accumulation (`allow_fp16_accumulation`) – faster, but it needs a recent PyTorch, otherwise the loader aborts with an error. fp16 has a far smaller numeric range; together with merged LoRAs that can get unstable depending on driver and torch version.\n\n**`quantization`** – how the weights sit in memory.\n`fp8_e4m3fn_scaled` matches the `*_fp8_scaled` files and halves the VRAM per model (14.3 instead of 28.6 GB).\nThe `_fast` variants run true fp8 matmuls and require compute capability **≥ 8.9** (RTX 4000 and up).\n`disabled` auto-selects by weight format – correct if you loaded the unquantized bf16 models.\n\n**`attention_mode`** – `sdpa` ships with PyTorch, is always available and needs no extra install.\n`sageattn`, `flash_attn_2`, `flash_attn_3` are roughly 20–30 % faster but have to be installed separately; the build must match your compute capability **and** your torch CUDA version.\n\n**`load_device`** – `main_device` loads the model straight into VRAM (fastest start, needs the room), `offload_device` keeps it in RAM and moves only the active parts onto the GPU.\n\n**`blocks_to_swap`** (in the WanVideoBlockSwap node) – how many of the 40 transformer blocks live in RAM instead of VRAM. Every offloaded block saves VRAM and costs time.\n\n## Narrowing down a problem\n\n1. `attention_mode` → `sdpa`\n2. `base_precision` → `bf16`\n3. `blocks_to_swap` (WanVideoBlockSwap) → 10, rules out VRAM\n4. Get driver and PyTorch onto matching CUDA versions"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      12,
+      0,
+      "WANVAE"
+    ],
+    [
+      2,
+      1,
+      0,
+      11,
+      0,
+      "WANVAE"
+    ],
+    [
+      3,
+      1,
+      0,
+      16,
+      0,
+      "WANVAE"
+    ],
+    [
+      4,
+      2,
+      0,
+      14,
+      2,
+      "WANVIDEOTEXTEMBEDS"
+    ],
+    [
+      5,
+      2,
+      0,
+      15,
+      2,
+      "WANVIDEOTEXTEMBEDS"
+    ],
+    [
+      6,
+      3,
+      0,
+      5,
+      1,
+      "BLOCKSWAPARGS"
+    ],
+    [
+      7,
+      3,
+      0,
+      7,
+      1,
+      "BLOCKSWAPARGS"
+    ],
+    [
+      8,
+      4,
+      0,
+      5,
+      0,
+      "WANVIDEOMODEL"
+    ],
+    [
+      9,
+      5,
+      0,
+      14,
+      0,
+      "WANVIDEOMODEL"
+    ],
+    [
+      10,
+      6,
+      0,
+      7,
+      0,
+      "WANVIDEOMODEL"
+    ],
+    [
+      11,
+      7,
+      0,
+      15,
+      0,
+      "WANVIDEOMODEL"
+    ],
+    [
+      12,
+      8,
+      0,
+      12,
+      2,
+      "IMAGE"
+    ],
+    [
+      13,
+      9,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      10,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      11,
+      0,
+      13,
+      1,
+      "LATENT"
+    ],
+    [
+      16,
+      12,
+      0,
+      13,
+      0,
+      "WANVIDIMAGE_EMBEDS"
+    ],
+    [
+      17,
+      13,
+      0,
+      14,
+      1,
+      "WANVIDIMAGE_EMBEDS"
+    ],
+    [
+      18,
+      13,
+      0,
+      15,
+      1,
+      "WANVIDIMAGE_EMBEDS"
+    ],
+    [
+      19,
+      14,
+      0,
+      15,
+      3,
+      "LATENT"
+    ],
+    [
+      20,
+      15,
+      0,
+      16,
+      1,
+      "LATENT"
+    ],
+    [
+      21,
+      16,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      22,
+      1,
+      0,
+      19,
+      0,
+      "WANVAE"
+    ],
+    [
+      23,
+      8,
+      0,
+      19,
+      1,
+      "IMAGE"
+    ],
+    [
+      24,
+      19,
+      0,
+      13,
+      2,
+      "LATENT"
+    ],
+    [
+      25,
+      21,
+      0,
+      4,
+      2,
+      "WANVIDLORA"
+    ],
+    [
+      26,
+      22,
+      0,
+      6,
+      2,
+      "WANVIDLORA"
+    ],
+    [
+      27,
+      23,
+      0,
+      11,
+      1,
+      "IMAGE"
+    ],
+    [
+      28,
+      23,
+      0,
+      24,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Models + speed LoRAs (HIGH / LOW)",
+      "bounding": [
+        -480,
+        -1700,
+        2600,
+        860
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "1) Input: still image + reference video",
+      "bounding": [
+        -1500,
+        -80,
+        1080,
+        760
+      ],
+      "color": "#88A",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "2) Prompt",
+      "bounding": [
+        310,
+        -1010,
+        500,
+        500
+      ],
+      "color": "#a1662f",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "3) Depth control (run the preview here first)",
+      "bounding": [
+        -886.6115702479337,
+        835.3719008264459,
+        1200,
+        600
+      ],
+      "color": "#2a6e3f",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "4) Encode / control embeds",
+      "bounding": [
+        -40,
+        -460,
+        900,
+        1050
+      ],
+      "color": "#8154a6",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "5) Sampler cascade HIGH -> LOW",
+      "bounding": [
+        1190,
+        -760,
+        830,
+        1370
+      ],
+      "color": "#666",
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "6) Decode + output",
+      "bounding": [
+        2090,
+        -760,
+        720,
+        780
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6830134553650705,
+      "offset": [
+        -920.4148512396706,
+        818.5537533648175
+      ]
+    },
+    "frontendVersion": "1.45.21",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
