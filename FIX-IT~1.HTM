@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Postproduction – Fix it in Prompt | Laser Studios</title>
+<style>
+  :root{
+    --bg:#0d0d10;--card:#16161c;--line:#26262f;--text:#e8e8ee;--muted:#9a9aa6;
+    --accent:#ff3b3b;--accent-soft:rgba(255,59,59,.12);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+  .wrap{max-width:820px;margin:0 auto;padding:30px 22px 96px}
+  .langbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+  .back{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600}
+  .back:hover{color:var(--accent)}
+  .switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.04em;padding:7px 16px;border-radius:999px;cursor:pointer;transition:all .15s ease}
+  .switch button.active{background:var(--accent);color:#fff}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:44px;line-height:1.1;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
+  .lead{font-size:18px;color:var(--muted);margin:0 0 40px;max-width:620px}
+  .grid{display:grid;gap:16px}
+  a.card{display:flex;gap:18px;align-items:flex-start;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
+    transition:border-color .15s ease,transform .15s ease}
+  a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .no{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
+    color:var(--accent);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
+  .card h2{margin:2px 0 5px;font-size:19px;font-weight:700}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
+  .footer{color:var(--muted);font-size:13px;margin-top:48px;text-align:center}
+  .footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar">
+    <a class="back" id="t-back" href="fix-it-in-prompt.html">← Fix it in Prompt</a>
+    <div class="switch" role="group" aria-label="Language">
+      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <span class="kicker" id="t-kicker">Fix it in Prompt</span>
+  <h1 id="t-h1">Postproduction</h1>
+  <p class="lead" id="t-lead">KI-Werkzeuge für die klassische Postpro-Pipeline. Jeder Workflow ist fertig zum Download – mit Links und Speicherorten direkt im Graphen.</p>
+
+  <div class="grid">
+
+    <a class="card" href="FixIt-Postpro-01-Upscale.html">
+      <span class="no">01</span>
+      <div><h2 id="t-c1-h">Video-Upscale mit RTX VSR</h2><p id="t-c1-p">Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.</p></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" href="FixIt-Postpro-02-Interpolation.html">
+      <span class="no">02</span>
+      <div><h2 id="t-c2-h">Framerate erhöhen mit FILM</h2><p id="t-c2-p">Neue Zwischenbilder berechnen für flüssigere Bewegung.</p></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" href="FixIt-Postpro-03-Freistellen.html">
+      <span class="no">03</span>
+      <div><h2 id="t-c3-h">Objekte freistellen mit SAM 3.1</h2><p id="t-c3-p">Objekte oder Personen per ID aus dem Video freistellen – mit sauberer Matte-Kante.</p></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" href="FixIt-Postpro-04-Depth-Control.html">
+      <span class="no">04</span>
+      <div><h2 id="t-c4-h">Bewegung übertragen mit Depth Control</h2><p id="t-c4-p">Bewegung aus einem Referenzvideo auf ein eigenes Standbild übertragen – mit WAN 2.2 Fun Control.</p></div>
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+  <p class="footer">Laser Studios · Fix it in Prompt · <a href="https://laser-studios.de/contact-form">Kontakt</a> · <a href="https://laser-studios.de/impressum">Impressum</a></p>
+
+</div>
+
+<script>
+const STR = {
+  "t-back":  {de:"← Fix it in Prompt", en:"← Fix it in Prompt"},
+  "t-kicker":{de:"Fix it in Prompt", en:"Fix it in Prompt"},
+  "t-h1":    {de:"Postproduction", en:"Post-Production"},
+  "t-lead":  {de:"KI-Werkzeuge für die klassische Postpro-Pipeline. Jeder Workflow ist fertig zum Download – mit Links und Speicherorten direkt im Graphen.",
+              en:"AI tools for the classic post-production pipeline. Every workflow is ready to download – with links and file locations right inside the graph."},
+  "t-c1-h":  {de:"Video-Upscale mit RTX VSR", en:"Video Upscaling with RTX VSR"},
+  "t-c1-p":  {de:"Hochskalieren mit echtem KI-Detail statt reiner Vergrößerung.",
+              en:"Upscale with real AI detail instead of plain enlargement."},
+  "t-c2-h":  {de:"Framerate erhöhen mit FILM", en:"Boost Framerate with FILM"},
+  "t-c2-p":  {de:"Neue Zwischenbilder berechnen für flüssigere Bewegung.",
+              en:"Compute new in-between frames for smoother motion."},
+  "t-c3-h":  {de:"Objekte freistellen mit SAM 3.1", en:"Cut Out Objects with SAM 3.1"},
+  "t-c3-p":  {de:"Objekte oder Personen per ID aus dem Video freistellen – mit sauberer Matte-Kante.",
+              en:"Cut objects or people out of the video by ID – with a clean matte edge."},
+  "t-c4-h":  {de:"Bewegung übertragen mit Depth Control", en:"Transfer Motion with Depth Control"},
+  "t-c4-p":  {de:"Bewegung aus einem Referenzvideo auf ein eigenes Standbild übertragen – mit WAN 2.2 Fun Control.",
+              en:"Transfer motion from a reference video onto a still of your own – with WAN 2.2 Fun Control."}
+};
+function setLang(lang){
+  for(const id in STR){const el=document.getElementById(id);if(el) el.innerHTML=STR[id][lang];}
+  document.documentElement.lang=lang;
+  document.getElementById('btn-de').classList.toggle('active',lang==='de');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+}
+</script>
+<script src="lang.js"></script>
+</body>
+</html>
