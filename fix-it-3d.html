@@ -25,8 +25,13 @@
   h1{font-size:44px;line-height:1.1;margin:0 0 16px;font-weight:800;letter-spacing:-.02em}
   .lead{font-size:18px;color:var(--muted);margin:0 0 40px;max-width:620px}
   .grid{display:grid;gap:16px}
+  a.card{display:flex;gap:18px;align-items:flex-start;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
+    transition:border-color .15s ease,transform .15s ease}
+  a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
   div.card{display:flex;gap:18px;align-items:flex-start;color:inherit;opacity:.65;
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+  .arrow{margin-left:auto;align-self:center;color:var(--accent);font-size:22px}
   .no{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--accent-soft);
     color:var(--accent);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
   .card h2{margin:2px 0 5px;font-size:19px;font-weight:700}
@@ -53,9 +58,16 @@
   <p class="lead" id="t-lead">3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.</p>
 
   <div class="grid">
+
+    <a class="card" href="FixIt-3D-01-PBR.html">
+      <span class="no">01</span>
+      <div><h2 id="t-c1-h">PBR-Textur aus einem Foto</h2><p id="t-c1-p">Nahtlos kachelbare Textur mit neun Maps – lokal, kostenlos, kommerziell nutzbar.</p></div>
+      <span class="arrow">&rarr;</span>
+    </a>
+
     <div class="card">
       <span class="no">3D</span>
-      <div><h2 id="t-c1-h">Tutorials in Arbeit</h2><p id="t-c1-p">Die ersten Workflows für diesen Bereich entstehen gerade.</p></div>
+      <div><h2 id="t-c2-h">Weitere Workflows</h2><p id="t-c2-p">Die nächsten Themen für diesen Bereich entstehen gerade.</p></div>
       <span class="soon-tag" id="t-soon">Bald</span>
     </div>
   </div>
@@ -71,9 +83,12 @@ const STR = {
   "t-h1":    {de:"3D", en:"3D"},
   "t-lead":  {de:"3D-Assets direkt aus Bildern generieren – für VFX, Games und Visualisierung.",
               en:"Generate 3D assets directly from images – for VFX, games and visualisation."},
-  "t-c1-h":  {de:"Tutorials in Arbeit", en:"Tutorials in progress"},
-  "t-c1-p":  {de:"Die ersten Workflows für diesen Bereich entstehen gerade.",
-              en:"The first workflows for this section are in the works."},
+  "t-c1-h":  {de:"PBR-Textur aus einem Foto", en:"PBR Texture from a Photo"},
+  "t-c1-p":  {de:"Nahtlos kachelbare Textur mit neun Maps – lokal, kostenlos, kommerziell nutzbar.",
+              en:"Seamlessly tileable texture with nine maps – local, free, commercially usable."},
+  "t-c2-h":  {de:"Weitere Workflows", en:"More workflows"},
+  "t-c2-p":  {de:"Die nächsten Themen für diesen Bereich entstehen gerade.",
+              en:"The next topics for this section are in the works."},
   "t-soon":  {de:"Bald", en:"Soon"}
 };
 function setLang(lang){
